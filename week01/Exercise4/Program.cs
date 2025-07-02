@@ -8,7 +8,7 @@ class Program
         Console.WriteLine("Hello World! This is the Exercise 4 Project.");
 
         List<float> numbers = new List<float>();
-        float number, sum = 0, average, large = 0;
+        float number, sum = 0, average, large = float.NegativeInfinity, minPos = float.PositiveInfinity;
         bool isNumeric;
         string input;
 
@@ -38,12 +38,18 @@ class Program
         foreach (float num in numbers)
         {
             sum += num;
+
+            if (num > 0 && num < minPos)
+            {
+                minPos = num;
+            }
+
             if (num > large)
             {
                 large = num;
             }
         }
         average = sum / numbers.Count;
-        Console.WriteLine($"The sum is: {sum}\nThe average is: {average}\nThe largest number is: {large}");
+        Console.WriteLine($"The sum is: {sum}\nThe average is: {average}\nThe largest number is: {large}\nThe smallest positive number is: {minPos}");
     }
 }
