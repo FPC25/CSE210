@@ -10,15 +10,15 @@ class Program
         // Declaring the variables used on the project
         bool isNumeric;
         string input;
-        float number, sum = 0, average, large = float.NegativeInfinity, minPos = float.PositiveInfinity;
+        float number, sum = 0, average, large = float.NegativeInfinity, minPos = float.PositiveInfinity, min;
 
         List<float> numbers = new List<float>();
         List<float> sorted = new List<float>();
 
-       // Initializing the project and set expectations
+        // Initializing the project and set expectations
         Console.WriteLine("Enter a list of numbers, type 0 when finished.");
         do
-        {   
+        {
             // Requesting the number to the user and verifying if is numeric or not
             isNumeric = false;
             do
@@ -41,7 +41,7 @@ class Program
             }
         } while (number != 0);
 
-        //Processing the values on the list, summing, selecting largest, smallest positive and sorting
+        //Processing the values on the list, summing, selecting largest, smallest positive
         foreach (float num in numbers)
         {
             sum += num;
@@ -59,7 +59,19 @@ class Program
         // Calculating the average
         average = sum / numbers.Count;
 
+        //sorting
+        while (numbers.Count > 0)
+        {
+            min = numbers.Min();
+            sorted.Add(min);
+            numbers.Remove(min);
+        }
+
         //Presenting the results
         Console.WriteLine($"The sum is: {sum}\nThe average is: {average}\nThe largest number is: {large}\nThe smallest positive number is: {minPos}");
+        foreach (float num in sorted)
+        {
+            Console.WriteLine(num);
+        }
     }
 }
