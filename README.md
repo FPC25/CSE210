@@ -1,4 +1,6 @@
-# cse210-ww-student-template
-This is the starter code for students in the worldwide content version of CSE 210.
+# cse210-ww-student-template - Felipe Corral
+This is my copy of BYU's CSE 210 repository. 
 
-This repository contains the starter code for many different projects. They are arranged folders by week. There is also an an empty sandbox project that can be used to play around with any concept you would like.
+This repository contained the starter code for many different projects. They are arranged folders by week. There is also an an empty sandbox project that can be used to play around with any concept you would like.
+
+After this term all files should have been modified with my resolution for all activities.
