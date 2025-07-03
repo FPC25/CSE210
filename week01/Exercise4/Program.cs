@@ -7,14 +7,19 @@ class Program
     {
         Console.WriteLine("Hello World! This is the Exercise 4 Project.");
 
-        List<float> numbers = new List<float>();
-        float number, sum = 0, average, large = float.NegativeInfinity, minPos = float.PositiveInfinity;
+        // Declaring the variables used on the project
         bool isNumeric;
         string input;
+        float number, sum = 0, average, large = float.NegativeInfinity, minPos = float.PositiveInfinity;
 
+        List<float> numbers = new List<float>();
+        List<float> sorted = new List<float>();
+
+       // Initializing the project and set expectations
         Console.WriteLine("Enter a list of numbers, type 0 when finished.");
         do
-        {
+        {   
+            // Requesting the number to the user and verifying if is numeric or not
             isNumeric = false;
             do
             {
@@ -28,6 +33,7 @@ class Program
                 }
             } while (!isNumeric);
 
+            //Making sure only values != 0 enter the list
             if (number != 0)
             {
                 numbers.Add(number);
@@ -35,6 +41,7 @@ class Program
             }
         } while (number != 0);
 
+        //Processing the values on the list, summing, selecting largest, smallest positive and sorting
         foreach (float num in numbers)
         {
             sum += num;
@@ -49,7 +56,10 @@ class Program
                 large = num;
             }
         }
+        // Calculating the average
         average = sum / numbers.Count;
+
+        //Presenting the results
         Console.WriteLine($"The sum is: {sum}\nThe average is: {average}\nThe largest number is: {large}\nThe smallest positive number is: {minPos}");
     }
 }
