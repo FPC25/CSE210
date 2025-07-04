@@ -1,5 +1,21 @@
 # Classes
 
+## Preferences Class
+
+### Responsibilities
+<ul>
+    <li> _filePath: string <li>
+    <li> _userName: string </li>
+    <li> _dateFormat: string </li>
+    <li> _journalFormat: string</li>
+</ul>
+
+### Behaviors
+<ul>
+    <li> CreatePreferences(): file</li>
+    <li> ReadPreferences(): List&lt;string&gt; </li>
+</ul>
+
 ## PromptGuide Class
 
 ### Responsibilities
