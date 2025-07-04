@@ -12,7 +12,7 @@
 
 ### Behaviors
 <ul>
-    <li> CreatePreferencesFile(): void</li>
+    <li> CreatePreferencesFile(): List&lt;string&gt;</li>
     <li> ReadPreferences(): List&lt;string&gt; </li>
 </ul>
 
