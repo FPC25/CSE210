@@ -4,7 +4,7 @@
 
 ### Responsibilities
 <ul>
-    <li> _prompts: List&lt;string&gt; </li>
+    <li> _prompts: file; </li>
 </ul>
 
 ### Behaviors
