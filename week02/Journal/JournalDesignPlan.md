@@ -44,4 +44,15 @@
     <li> SaveJournal(): void</li>
     <li> LoadJournal(): List&lt;Entry&gt;</li>
     <li> DisplayJournal(): void</li>
+    <li> Search(): List&lt;Entry&gt;</li>
+</ul>
+
+# Libraries and Misc
+
+<ul>
+    <li> Random: I will use this to 'randomly' select the prompt the user will answer in their entries;</li>
+    <li> System.IO: to read the text</li>
+    <li> System.Text.Json: to read and save journal as Json if the user preferred</li>
+    <li> DateTime: To get the date and time the user makes the entry</li>
+    <li> CsvHelper: If the user prefers to use CSV to save their journal it can be done</li>
 </ul>
