@@ -14,12 +14,18 @@ class Preferences
         var matches = Directory.GetFiles(dir, baseName);
         if (matches.Length == 0)
         {
-            CreatePreferencesFile();
+            List<string> prefs = CreatePreferencesFile();
+            _userName = prefs[0];
+            _dateFormat = prefs[1];
+            _journalFormat = prefs[2];
         }
-        List<string> prefs= ReadPreferencesFile(matches[0]);
-        _userName = prefs[0];
-        _dateFormat = prefs[1];
-        _journalFormat = prefs[2];
+        else
+        {
+            List<string> prefs = ReadPreferencesFile(matches[0]);
+            _userName = prefs[0];
+            _dateFormat = prefs[1];
+            _journalFormat = prefs[2];
+        }
     }
 
     static private int Decision(List<string> options)
@@ -43,7 +49,7 @@ class Preferences
         return choice - 1;
     }
 
-    public void CreatePreferencesFile()
+    public List<string> CreatePreferencesFile()
     {
         Console.Write("What is your name: ");
         _userName = Console.ReadLine();
@@ -92,6 +98,8 @@ class Preferences
         string json = JsonSerializer.Serialize(prefsList, opts);
 
         File.WriteAllText(_filePath, json);
+
+        return prefsList;
     } 
 
     private List<string> ReadPreferencesFile(string fileName)
