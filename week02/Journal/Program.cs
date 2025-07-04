@@ -13,7 +13,9 @@ class Program
         // Don't touch nothing under here
         var prefs = new Preferences(prefsPath);
 
-        Console.WriteLine(prefs._userName);
+        string userName = prefs._userName;
+        string timeFormat = prefs._dateFormat;
+        string ext = prefs._journalExtension;
 
         var promptObg = new PromptGuide("./prompts.json");
 
