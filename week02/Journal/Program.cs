@@ -13,8 +13,7 @@ class Program
 
         Console.WriteLine(prefs._userName);
 
-        string pathToPrompts = "./prompts.json";
-        var promptObg = new PromptGuide(pathToPrompts);
+        var promptObg = new PromptGuide("./prompts.json");
 
         var newEntry = new Entry(promptObg.SelectPrompt());
         newEntry.Display();
