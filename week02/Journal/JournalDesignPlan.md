@@ -19,13 +19,15 @@
 ### Responsibilities
 <ul>
     <li> _prompt: string </li>
-    <li> _date: DateTime </li>
     <li> _humor: string</li>
     <li> _entry: string</li>
+    <li> _entryTime: DateTime </li>
 </ul>
 
 ### Behaviors
 <ul>
+    <li> AskHumor(): string </li>
+    <li> MakeEntry(): string </li>
     <li> Display(): void </li>
 </ul>
 
@@ -42,7 +44,7 @@
 <ul>
     <li> FindFile: string</li>
     <li> DisplayMenu(): int</li>
-    <li> MakeEntry: Entry</li>
+    <li> SaveEntry: Entry</li>
     <li> SaveJournal(): void</li>
     <li> LoadJournal(): List&lt;Entry&gt;</li>
     <li> DisplayJournal(): void</li>
