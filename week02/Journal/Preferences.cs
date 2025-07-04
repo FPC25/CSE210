@@ -3,7 +3,7 @@ using System.Text.Json;
 
 class Preferences
 {
-    public string _filePath, _userName, _dateFormat, _journalFormat;
+    public string _filePath, _userName, _dateFormat, _journalExtension;
 
     public Preferences(string filePath)
     {
@@ -17,14 +17,14 @@ class Preferences
             List<string> prefs = CreatePreferencesFile();
             _userName = prefs[0];
             _dateFormat = prefs[1];
-            _journalFormat = prefs[2];
+            _journalExtension = prefs[2];
         }
         else
         {
             List<string> prefs = ReadPreferencesFile(matches[0]);
             _userName = prefs[0];
             _dateFormat = prefs[1];
-            _journalFormat = prefs[2];
+            _journalExtension = prefs[2];
         }
     }
 
@@ -55,11 +55,12 @@ class Preferences
         _userName = Console.ReadLine();
 
         Console.WriteLine($"{_userName}, do you prefer to to use the Default preferences or do you want to choose yourself (Advanced)?");
-        List<string> options = new List<string>() { "Default", "Advanced" };
-        if (options[Decision(options)] == "Default")
+        List<string> options = new List<string>() { "Default (USA time format and journal format is '.json')", "Customized" };
+
+        if (options[Decision(options)] != "Customized")
         {
             _dateFormat = "mm/dd/yyyy HH:mm";
-            _journalFormat = "json";
+            _journalExtension = ".json";
         }
         else
         {
@@ -79,11 +80,11 @@ class Preferences
             options = new List<string> { "JSON (default)", "CSV" };
             if (options[Decision(options)] == "CSV")
             {
-                _journalFormat = ".csv";
+                _journalExtension = ".csv";
             }
             else
             {
-                _journalFormat = ".json";
+                _journalExtension = ".json";
             }
         }
 
@@ -91,7 +92,7 @@ class Preferences
         {
             _userName,
             _dateFormat,
-            _journalFormat
+            _journalExtension
         };
 
         var opts = new JsonSerializerOptions { WriteIndented = true };
