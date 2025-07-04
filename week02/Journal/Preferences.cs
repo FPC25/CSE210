@@ -1,9 +1,9 @@
-using System.IO;
 using System.Text.Json;
 
 class Preferences
 {
-    public string _filePath, _userName, _dateFormat, _journalExtension;
+    private string _filePath;
+    public string _userName, _dateFormat, _journalExtension;
 
     public Preferences(string filePath)
     {
@@ -28,27 +28,6 @@ class Preferences
         }
     }
 
-    static private int Decision(List<string> options)
-    {
-        // Display numbered choices
-        for (int i = 0; i < options.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {options[i]}");
-        }
-
-        int choice;
-        string input;
-        // Prompt until user enters a valid number
-        do
-        {
-            Console.Write("Please select an option by number: ");
-            input = Console.ReadLine();
-        } while (!int.TryParse(input, out choice) || choice < 1 || choice > options.Count);
-
-        // Return zero-based index
-        return choice - 1;
-    }
-
     public List<string> CreatePreferencesFile()
     {
         Console.Write("What is your name: ");
@@ -57,7 +36,7 @@ class Preferences
         Console.WriteLine($"{_userName}, do you prefer to to use the Default preferences or do you want to choose yourself (Advanced)?");
         List<string> options = new List<string>() { "Default (USA time format and journal format is '.json')", "Customized" };
 
-        if (options[Decision(options)] != "Customized")
+        if (options[Utils.Decision(options)] != "Customized")
         {
             _dateFormat = "mm/dd/yyyy HH:mm";
             _journalExtension = ".json";
@@ -67,7 +46,7 @@ class Preferences
             Console.WriteLine($"{_userName}, do you want to use the USA time format (month/day/year) or the standard time format that the rest of the world uses (day/month/year)?");
             options = new List<string> { "USA (default)", "Standard" };
 
-            if (options[Decision(options)] == "Standard")
+            if (options[Utils.Decision(options)] == "Standard")
             {
                 _dateFormat = "dd/MM/yyyy HH:mm";
             }
@@ -78,7 +57,7 @@ class Preferences
 
             Console.WriteLine($"{_userName}, do you want to use JSON or CSV format to save your journal?");
             options = new List<string> { "JSON (default)", "CSV" };
-            if (options[Decision(options)] == "CSV")
+            if (options[Utils.Decision(options)] == "CSV")
             {
                 _journalExtension = ".csv";
             }
@@ -103,7 +82,7 @@ class Preferences
         return prefsList;
     } 
 
-    private List<string> ReadPreferencesFile(string fileName)
+    public List<string> ReadPreferencesFile(string fileName)
     {
             var json = File.ReadAllText(fileName);
             return JsonSerializer.Deserialize<List<string>>(json);
