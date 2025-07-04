@@ -21,7 +21,7 @@
 
 <ul>
     <li> _name: string </li>
-    <li> _jobsList: List\<Job\> </li>
+    <li> <code>_jobsList: List&lt;Job&gt;</code> </li>
 </ul>
 
 ### Behaviors:
