@@ -16,7 +16,6 @@ class Preferences
         {
             CreatePreferencesFile();
         }
-
         List<string> prefs= ReadPreferencesFile(matches[0]);
         _userName = prefs[0];
         _dateFormat = prefs[1];
@@ -59,7 +58,7 @@ class Preferences
         else
         {
             Console.WriteLine($"{_userName}, do you want to use the USA time format (month/day/year) or the standard time format that the rest of the world uses (day/month/year)?");
-            options = ["USA (default)", "Standard"];
+            options = new List<string> { "USA (default)", "Standard" };
 
             if (options[Decision(options)] == "Standard")
             {
@@ -71,7 +70,7 @@ class Preferences
             }
 
             Console.WriteLine($"{_userName}, do you want to use JSON or CSV format to save your journal?");
-            options = ["JSON (default)", "CSV"];
+            options = new List<string> { "JSON (default)", "CSV" };
             if (options[Decision(options)] == "CSV")
             {
                 _journalFormat = ".csv";
