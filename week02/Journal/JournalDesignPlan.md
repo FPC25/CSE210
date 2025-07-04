@@ -51,7 +51,7 @@
     <li> Search(): List&lt;Entry&gt;</li>
 </ul>
 
-# Libraries and Misc
+# Libraries
 
 <ul>
     <li> Random: I will use this to 'randomly' select the prompt the user will answer in their entries;</li>
@@ -59,4 +59,13 @@
     <li> System.Text.Json: to read and save journal as Json if the user preferred</li>
     <li> DateTime: To get the date and time the user makes the entry</li>
     <li> CsvHelper: If the user prefers to use CSV to save their journal it can be done</li>
+</ul>
+
+# Files
+
+Here we find the json or csv files for each situation 
+<ul>
+    <li> prompts.json: I collection of questions to help and guide the user to write their entries</li>
+    <li> preferences.json: save the user's preferences such as data format, preferred journal file format to be saved</li>
+    <li> journal.json/.csv: the journal in itself</li>
 </ul>
