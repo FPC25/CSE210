@@ -4,11 +4,13 @@
 
 ### Responsibilities
 <ul>
-    <li> _prompts: file; </li>
+    <li> _promptsFilePath: file; </li>
+    <li> _prompts: List&lt;string&gt;<li>
 </ul>
 
 ### Behaviors
 <ul>
+    <li> ReadPromptsFile: List&lt;string&gt;</li>
     <li> SelectPrompt(): string </li>
 </ul>
 
