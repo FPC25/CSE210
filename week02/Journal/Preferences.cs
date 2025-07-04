@@ -3,7 +3,7 @@ using System.Text.Json;
 
 class Preferences
 {
-    string _filePath, _userName, _dateFormat, _journalFormat;
+    public string _filePath, _userName, _dateFormat, _journalFormat;
 
     public Preferences(string filePath)
     {
