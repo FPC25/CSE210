@@ -1,5 +1,5 @@
 using System;
-using System.Text; // add for StringBuilder
+using System.Text;
 
 class Entry
 {
