@@ -10,7 +10,7 @@
     <li> _endYear: int</li>
 </ul>
 
-### Behaviors:
+### Behaviors
 <ul>
     <li> DisplayJobInfo(): void </li>
 </ul>
@@ -24,7 +24,7 @@
     <li> <code>_jobsList: List&lt;Job&gt;</code> </li>
 </ul>
 
-### Behaviors:
+### Behaviors
 <ul>
     <li> DisplayResume(): void </li>
 </ul>
