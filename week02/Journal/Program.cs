@@ -7,7 +7,11 @@ class Program
     {
         Console.WriteLine("Hello World! This is the Journal Project.");
 
-        //string prefsPath = "./preferences.json";
+        string prefsPath = "./JournalConfig.json";
+
+        var prefs = new Preferences(prefsPath);
+
+        Console.WriteLine(prefs._userName);
 
         string pathToPrompts = "./prompts.json";
         var promptObg = new PromptGuide(pathToPrompts);
