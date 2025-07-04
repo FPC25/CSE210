@@ -80,6 +80,8 @@ class Preferences
 
         File.WriteAllText(_filePath, json);
 
+        Console.Clear();
+
         return prefsList;
     } 
 
