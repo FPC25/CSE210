@@ -13,12 +13,12 @@ class Program
         var prefs = new Preferences(prefsPath);
 
         string userName = prefs._userName;
-        string timeFormat = prefs._dateFormat;
+        string dateFormat = prefs._dateFormat;
         string ext = prefs._journalExtension;
 
         var promptObg = new PromptGuide("./prompts.json");
 
-        var newEntry = new Entry(promptObg.SelectPrompt());
+        var newEntry = new Entry(promptObg.SelectPrompt(), dateFormat);
         newEntry.Display();
 
     }
