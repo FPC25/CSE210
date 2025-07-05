@@ -37,7 +37,7 @@ class Preferences
         Console.WriteLine($"{_userName}, do you prefer to to use the Default preferences or do you want to choose yourself (Advanced)?");
         List<string> options = new List<string>() { "Default (USA time format and journal format is '.json')", "Customized" };
 
-        if (options[Utils.Decision(options)] != "Customized")
+        if (Utils.Decision(options) != "Customized")
         {
             _dateFormat = "mm/dd/yyyy HH:mm";
             _journalExtension = ".json";
@@ -47,7 +47,7 @@ class Preferences
             Console.WriteLine($"{_userName}, do you want to use the USA time format (month/day/year) or the standard time format that the rest of the world uses (day/month/year)?");
             options = new List<string> { "USA (default)", "Standard" };
 
-            if (options[Utils.Decision(options)] == "Standard")
+            if (Utils.Decision(options) == "Standard")
             {
                 _dateFormat = "dd/MM/yyyy HH:mm";
             }
@@ -56,11 +56,15 @@ class Preferences
                 _dateFormat = "MM/dd/yyyy HH:mm";
             }
 
-            Console.WriteLine($"{_userName}, do you want to use JSON or CSV format to save your journal?");
-            options = new List<string> { "JSON (default)", "CSV" };
-            if (options[Utils.Decision(options)] == "CSV")
+            Console.WriteLine($"{_userName}, do you want to use JSON, CSV or TXT format to save your journal?");
+            options = new List<string> { "JSON (default)", "CSV", "TXT" };
+            if (Utils.Decision(options) == "CSV")
             {
                 _journalExtension = ".csv";
+            }
+            else if (Utils.Decision(options) == "TXT")
+            {
+                _journalExtension = ".txt";
             }
             else
             {
