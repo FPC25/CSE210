@@ -8,7 +8,7 @@ public static class Utils
         return char.ToUpper(s[0]) + s.Substring(1);
     }
 
-    public static int Decision(List<string> options)
+    public static string Decision(List<string> options)
     {
         // Display numbered choices
         for (int i = 0; i < options.Count; i++)
@@ -26,6 +26,6 @@ public static class Utils
         } while (!int.TryParse(input, out choice) || choice < 1 || choice > options.Count);
 
         // Return zero-based index
-        return choice - 1;
+        return options[choice - 1];
     }
 }
