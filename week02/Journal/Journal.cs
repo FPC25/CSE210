@@ -45,27 +45,32 @@ class Journal
 
             string entryOption = Utils.Decision(_options);
 
+            if (entryOption == "Discard")
+            {
+                Menu();
+            }
+
             if (entryOption == "Save")
             {
                 SaveEntry();
+
             }
             else if (entryOption == "Edit")
             {
                 EditEntry();
             }
-            else
-            {
-                Menu();
-            }
+            Menu();
 
         }
         else if (selectedOption == "Display the Journal")
         {
-            // Display journal logic here
+            DisplayJournal();
+            Menu();
         }
         else if (selectedOption == "Save Journal")
         {
-            // Save journal logic here
+            SaveJournal();
+            Menu();
         }
         else
         {
@@ -75,7 +80,21 @@ class Journal
 
     public bool FindFile(string fileName)
     {
+        var dir = Path.GetDirectoryName(fileName);
+        var baseName = Path.GetFileNameWithoutExtension(fileName);
+        var originalExt = Path.GetExtension(fileName);
+        
+        // Try original first, then preferred
+        var extensionsToTry = new List<string> { originalExt, _preferredExtension };
 
+        foreach (string ext in extensionsToTry)
+        {
+            var fullPath = Path.Combine(dir, baseName + ext);
+            if (File.Exists(fullPath))
+                return true;
+        }
+
+        return false;
     }
 
     public List<Entry> LoadJournal(string fileName)
@@ -100,7 +119,10 @@ class Journal
 
     public void DisplayJournal()
     {
-
+        foreach (Entry entry in _entries)
+        {
+            entry.Display();
+        }
     }
 
 }
