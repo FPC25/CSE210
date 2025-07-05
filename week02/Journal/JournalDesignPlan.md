@@ -37,6 +37,7 @@
     <li> _prompt: string </li>
     <li> _humor: string</li>
     <li> _entry: string</li>
+    <li> _dateFormat: string </li>
     <li> _entryTime: DateTime </li>
 </ul>
 
@@ -51,20 +52,20 @@
 
 ### Responsibilities
 <ul>
-    <li> _name: string</li>
-    <li> _preferredFormat: string </li>
+    <li> _userName: string</li>
+    <li> _preferredExtension: string </li>
     <li> _entries: List&lt;Entry&gt;</li>
 </ul>
 
 ### Behaviors
 <ul>
-    <li> FindFile: string</li>
-    <li> DisplayMenu(): int</li>
-    <li> SaveEntry: Entry</li>
-    <li> SaveJournal(): void</li>
+    <li> FindFile: bool</li>
     <li> LoadJournal(): List&lt;Entry&gt;</li>
-    <li> DisplayJournal(): void</li>
-    <li> Search(): List&lt;Entry&gt;</li>
+    <li> Menu(): void</li>
+    <li> SaveEntry: Entry</li>
+    <li> EditEntry: Entry</li>
+    <li> SaveJournal(): void</li>
+    <li> DisplayJournal(): void</li>  
 </ul>
 
 # Libraries
