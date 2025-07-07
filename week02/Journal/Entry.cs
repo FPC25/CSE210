@@ -4,22 +4,42 @@ using System.Text.Json.Serialization;
 
 class Entry
 {
-    public string _prompt, _humor, _entry;
+    public string _prompt, _humor, _entry, _dateFormat;
     public DateTime _entryTime;
-    private string _dateFormat;
 
     // JSON serialization properties
     [JsonPropertyName("date")]
-    public string Date => _entryTime.ToString(_dateFormat);
-    
+    public string Date 
+    { 
+        get => _entryTime.ToString(_dateFormat ?? "MM/dd/yyyy HH:mm");
+        set => _entryTime = DateTime.Parse(value);
+    }
+
     [JsonPropertyName("humor")]
-    public string Humor => _humor;
-    
+    public string Humor 
+    {
+        get => _humor;
+        set => _humor = value;
+    }
+
     [JsonPropertyName("prompt")]
-    public string Prompt => _prompt;
+    public string Prompt 
+    {
+        get => _prompt;
+        set => _prompt = value;
+    }
 
     [JsonPropertyName("entry")]
-    public string EntryText => _entry;
+    public string EntryText 
+    {
+        get => _entry;
+        set => _entry = value;
+    }
+
+    public Entry()
+    {
+        // Empty constructor for deserialization
+    }
 
     public Entry(string prompt, string dateFormat)
     {
