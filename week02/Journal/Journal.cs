@@ -25,6 +25,7 @@ class Journal
 
         if (selectedOption == "Load a Journal")
         {
+            Console.Clear();
             Console.WriteLine($"I see {_userName} that you want to load your journal!");
             string fileName;
             do
@@ -42,6 +43,7 @@ class Journal
         }
         else if (selectedOption == "Write a new entry")
         {
+            Console.Clear();
             var promptObg = new PromptGuide("./prompts.json");
             Entry newEntry = new Entry(promptObg.SelectPrompt(), _dateFormat);
             DecisionNewEntry(newEntry);
@@ -115,7 +117,6 @@ class Journal
         return new JsonSerializerOptions
         {
             WriteIndented = true,
-            IncludeFields = true,
             PropertyNameCaseInsensitive = true
         };
     }
@@ -124,7 +125,15 @@ class Journal
     {
         string actualPath = GetFilePath(fileName);
         var json = File.ReadAllText(actualPath);
-        return JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
+        var entries = JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
+        
+        // Set the date format for all loaded entries using the Journal's format
+        foreach (var entry in entries)
+        {
+            entry._dateFormat = _dateFormat;  // Use the Journal's date format
+        }
+        
+        return entries;
     }
 
     public void SaveJournal()
