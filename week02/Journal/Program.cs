@@ -10,16 +10,10 @@ class Program
         string prefsPath = "./JournalConfig.json";
 
         // Don't touch nothing under here
-        var prefs = new Preferences(prefsPath);
+        Preferences prefs = new Preferences(prefsPath);
 
-        string userName = prefs._userName;
-        string dateFormat = prefs._dateFormat;
-        string ext = prefs._journalExtension;
-
-        var promptObg = new PromptGuide("./prompts.json");
-
-        var newEntry = new Entry(promptObg.SelectPrompt(), dateFormat);
-        newEntry.Display();
+        Journal personalLog = new Journal(prefs._userName, prefs._journalExtension, prefs._dateFormat);
+        personalLog.Menu();
 
     }
 }
