@@ -39,7 +39,7 @@ class Preferences
 
         if (Utils.Decision(options) != "Customized")
         {
-            _dateFormat = "mm/dd/yyyy HH:mm";
+            _dateFormat = "MM/dd/yyyy HH:mm";
             _journalExtension = ".json";
         }
         else
