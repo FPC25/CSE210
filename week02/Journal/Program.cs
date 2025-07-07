@@ -12,7 +12,7 @@ class Program
         // Don't touch nothing under here
         Preferences prefs = new Preferences(prefsPath);
 
-        Journal personalLog = new Journal(prefs._userName, prefs._journalExtension, prefs._dateFormat);
+        Journal personalLog = new Journal(prefs._userName, prefs._journalName, prefs._journalExtension, prefs._dateFormat);
         personalLog.Menu();
 
     }
