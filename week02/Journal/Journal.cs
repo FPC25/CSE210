@@ -64,6 +64,7 @@ class Journal
 
     public void DecisionNewEntry(Entry newEntry)
     {
+        Console.Clear();
         Console.WriteLine("Current entry:");
         newEntry.Display();
 
@@ -109,64 +110,73 @@ class Journal
         return GetFilePath(fileName) != null;
     }
 
+    private JsonSerializerOptions GetJsonOptions()
+    {
+        return new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            IncludeFields = true,
+            PropertyNameCaseInsensitive = true
+        };
+    }
+
     public List<Entry> LoadJournal(string fileName)
     {
         string actualPath = GetFilePath(fileName);
         var json = File.ReadAllText(actualPath);
-        return JsonSerializer.Deserialize<List<Entry>>(json);
-    }
-
-    public void SaveEntry(Entry newEntry)
-    {
-        _entries.Insert(0, newEntry);
-    }
-
-    public void EditEntry(Entry entryToEdit)
-    {        
-        Console.WriteLine("\nWhat would you like to edit?");
-        List<string> editOptions = new List<string> { "Entry text", "Humor", "Nothing (keep as it is)" };
-        
-        string choice = Utils.Decision(editOptions);
-        
-        if (choice.Contains("Entry"))
-        {
-            Console.WriteLine($"Current entry: {entryToEdit._entry}");
-            Console.WriteLine("Enter new text (type END on a new line when finished):");
-            entryToEdit._entry = entryToEdit.MakeEntry(entryToEdit._prompt);
-        }
-        else if (choice.Contains("Humor"))
-        {
-            Console.WriteLine($"Current humor: {entryToEdit._humor}");
-            Console.Write("Enter new humor: ");
-            entryToEdit._humor = Console.ReadLine();
-        }
-        
-        DecisionNewEntry(entryToEdit);
+        return JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
     }
 
     public void SaveJournal()
     {
-        if (_preferredExtension == ".json")
+        // Save to file
+        string ext = _preferredExtension;
+        Console.WriteLine($"The default file name is {_userName}_journal{ext}. Do you want to change it?");
+        _options = new List<string>() { "Yes", "No" };
+        string entryOption = Utils.Decision(_options);
+        string fileName;
+        if (entryOption == "Yes")
         {
-            // Create JSON serialization options for readable output
-            var options = new JsonSerializerOptions 
-            { 
-                WriteIndented = true 
-            };
-            
-            // Serialize the entries list to JSON
-            string json = JsonSerializer.Serialize(_entries, options);
-            
-            // Save to file
-            string fileName = $"journal{_preferredExtension}";
-            File.WriteAllText(fileName, json);
-            
-            Console.WriteLine($"Journal saved to {fileName}");
+            Console.Write("What is the new name you would prefer? ");
+            string userInput = Console.ReadLine();
+            string ext_new = Path.GetExtension(userInput);
+            if (!string.IsNullOrEmpty(ext_new))
+            {
+                ext = ext_new;
+            }
+            fileName = userInput + ext;
         }
         else
         {
-            Console.WriteLine("CSV and TXT formats not implemented yet.");
-        }                   
+            fileName = $"{_userName}_journal{ext}";
+        }
+
+        try
+        {
+            if (ext == ".json")
+            {
+                string json = JsonSerializer.Serialize(_entries, GetJsonOptions());
+                File.WriteAllText(fileName, json);
+                Console.WriteLine($"Journal saved to {fileName}. Press any key to continue...");
+            }
+            else if (ext == ".csv")
+            {
+                Console.WriteLine("CSV format not implemented yet.");
+            }
+            else if (ext == ".txt")
+            {
+                Console.WriteLine("TXT format not implemented yet.");
+            }
+            else
+            {
+                Console.WriteLine("Unsupported file format.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving journal: {ex.Message}. Press any key to continue...");
+        }
+        Console.ReadKey();                 
     }
 
     public void DisplayJournal()
@@ -215,5 +225,33 @@ class Journal
             }
         }
         Menu();
-    }   
+    }  
+
+    public void SaveEntry(Entry newEntry)
+    {
+        _entries.Insert(0, newEntry);
+    }
+
+    public void EditEntry(Entry entryToEdit)
+    {        
+        Console.WriteLine("\nWhat would you like to edit?");
+        List<string> editOptions = new List<string> { "Entry text", "Humor", "Nothing (keep as it is)" };
+        
+        string choice = Utils.Decision(editOptions);
+        
+        if (choice.Contains("Entry"))
+        {
+            Console.WriteLine($"Current entry: {entryToEdit._entry}");
+            Console.WriteLine("Enter new text (type END on a new line when finished):");
+            entryToEdit._entry = entryToEdit.MakeEntry(entryToEdit._prompt);
+        }
+        else if (choice.Contains("Humor"))
+        {
+            Console.WriteLine($"Current humor: {entryToEdit._humor}");
+            Console.Write("Enter new humor: ");
+            entryToEdit._humor = Console.ReadLine();
+        }
+        
+        DecisionNewEntry(entryToEdit);
+    }
 }
