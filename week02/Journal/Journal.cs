@@ -29,8 +29,12 @@ class Journal
             string fileName;
             do
             {
-                Console.Write($"What is the name of your file with the extension {_preferredExtension}?");
+                Console.Write($"Please enter the name of your journal file (with extension {_preferredExtension}): ");
                 fileName = Console.ReadLine();
+                if (!FindFile(fileName))
+                {
+                    Console.WriteLine("Sorry, the file was not found. Please try again.");
+                }
             } while (!FindFile(fileName));
 
             _entries = LoadJournal(fileName);
@@ -41,7 +45,6 @@ class Journal
             var promptObg = new PromptGuide("./prompts.json");
             Entry newEntry = new Entry(promptObg.SelectPrompt(), _dateFormat);
             DecisionNewEntry(newEntry);
-
         }
         else if (selectedOption == "Display the Journal")
         {
@@ -115,7 +118,7 @@ class Journal
 
     public void SaveEntry(Entry newEntry)
     {
-        _entries.Add(newEntry);
+        _entries.Insert(0, newEntry);
     }
 
     public void EditEntry(Entry entryToEdit)
@@ -129,7 +132,6 @@ class Journal
         {
             Console.WriteLine($"Current entry: {entryToEdit._entry}");
             Console.WriteLine("Enter new text (type END on a new line when finished):");
-            // Use your existing MakeEntry() logic here
             entryToEdit._entry = entryToEdit.MakeEntry(entryToEdit._prompt);
         }
         else if (choice.Contains("Humor"))
@@ -169,10 +171,49 @@ class Journal
 
     public void DisplayJournal()
     {
-        foreach (Entry entry in _entries)
+        if (_entries.Count == 0)
         {
-            entry.Display();
+            Console.WriteLine("No entries in your journal yet.");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+            Menu();
         }
-    }
 
+        int entriesPerPage = 5;
+        int currentPage = 0;
+        int totalPages = (_entries.Count + entriesPerPage - 1) / entriesPerPage;
+
+        while (currentPage < totalPages)
+        {
+            Console.Clear();
+            Console.WriteLine($"Journal Entries - Page {currentPage + 1} of {totalPages}");
+            Console.WriteLine(new string('=', 50));
+
+            int startIndex = currentPage * entriesPerPage;
+            int endIndex = Math.Min(startIndex + entriesPerPage, _entries.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                Console.WriteLine($"\nEntry {i + 1}:");
+                _entries[i].Display();
+                Console.WriteLine(new string('-', 30));
+            }
+
+            if (currentPage < totalPages - 1)
+            {
+                Console.WriteLine("\nPress any key for next page, 'q' to quit...");
+                var key = Console.ReadKey();
+                if (key.KeyChar == 'q' || key.KeyChar == 'Q')
+                    break;
+                currentPage++;
+            }
+            else
+            {
+                Console.WriteLine("\nEnd of journal. Press any key to continue...");
+                Console.ReadKey();
+                break;
+            }
+        }
+        Menu();
+    }   
 }
