@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 class Entry
 {
@@ -7,13 +8,26 @@ class Entry
     public DateTime _entryTime;
     private string _dateFormat;
 
+    // JSON serialization properties
+    [JsonPropertyName("date")]
+    public string Date => _entryTime.ToString(_dateFormat);
+    
+    [JsonPropertyName("humor")]
+    public string Humor => _humor;
+    
+    [JsonPropertyName("prompt")]
+    public string Prompt => _prompt;
+
+    [JsonPropertyName("entry")]
+    public string EntryText => _entry;
+
     public Entry(string prompt, string dateFormat)
     {
         _prompt = prompt;
         _entryTime = DateTime.Now;
         _dateFormat = dateFormat;
         _humor = AskHumor();
-        _entry = MakeEntry();
+        _entry = MakeEntry(prompt);
     }
 
     public string AskHumor()
@@ -22,9 +36,9 @@ class Entry
         return Console.ReadLine().CapitalizeFirst();
     }
 
-    public string MakeEntry()
+    public string MakeEntry(string prompt)
     {
-        Console.WriteLine(_prompt);
+        Console.WriteLine(prompt);
         string endMessage = "# Type 'End log' or '\\EL' on its own line to finish your entry. #";
         string box_lines = new string('#', endMessage.Length);
         Console.WriteLine($"\n{box_lines}");
@@ -36,7 +50,7 @@ class Entry
         while (true)
         {
             line = Console.ReadLine();
-            if (line.Equals("End Log", StringComparison.OrdinalIgnoreCase) || line.Equals(@"\EL", StringComparison.OrdinalIgnoreCase))
+            if (line.Equals("End log", StringComparison.OrdinalIgnoreCase) || line.Equals(@"\EL", StringComparison.OrdinalIgnoreCase))
             {
                 break;
             }
