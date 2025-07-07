@@ -4,7 +4,7 @@ using System.Text.Json;
 class Preferences
 {
     private string _filePath;
-    public string _userName, _dateFormat, _journalExtension;
+    public string _userName, _dateFormat, _journalName, _journalExtension;
 
     public Preferences(string filePath)
     {
@@ -18,13 +18,15 @@ class Preferences
             List<string> prefs = CreatePreferencesFile();
             _userName = prefs[0];
             _dateFormat = prefs[1];
-            _journalExtension = prefs[2];
+            _journalName = prefs[2]
+            _journalExtension = prefs[3];
         }
         else
         {
             List<string> prefs = ReadPreferencesFile(matches[0]);
             _userName = prefs[0];
             _dateFormat = prefs[1];
+            _journalName = prefs[2]
             _journalExtension = prefs[2];
         }
     }
@@ -35,15 +37,17 @@ class Preferences
         _userName = Console.ReadLine();
 
         Console.WriteLine($"{_userName}, do you prefer to to use the Default preferences or do you want to choose yourself (Advanced)?");
-        List<string> options = new List<string>() { "Default (USA time format and journal format is '.json')", "Customized" };
+        List<string> options = new List<string>() { $"Default (USA time format, {_userName}_journal is the default name for the journal file, journal format is '.json')", "Customized" };
 
         if (Utils.Decision(options) != "Customized")
         {
             _dateFormat = "MM/dd/yyyy HH:mm";
+            _journalName = $"{_userName}_journal"
             _journalExtension = ".json";
         }
         else
         {
+            // Customizing Date format
             Console.WriteLine($"{_userName}, do you want to use the USA time format (month/day/year) or the standard time format that the rest of the world uses (day/month/year)?");
             options = new List<string> { "USA (default)", "Standard" };
 
@@ -56,15 +60,36 @@ class Preferences
                 _dateFormat = "MM/dd/yyyy HH:mm";
             }
 
+            // Customizing Journal name
+            Console.WriteLine($"{_userName}, do you want to use the default '{_userName}_journal' name to save your journal, or do you want to customize it?");
+            options = new List<string> { "Default", "Customized" };
+            if (Utils.Decision(options) == "Default")
+            {
+                _journalName = $"{_userName}_journal"
+            }
+            else
+            {
+                List<string> yesNo = new List<string> { "Yes", "No" };
+                do
+                {
+                    Console.Write("Enter the new name to your journal: ");
+                    string input = Console.ReadLine();
+                    Console.WriteLine($"Perfect! Do you confirm that {input} is the new name to your journal?");
+
+                    if (Utils.Decision(yesNo) == "Yes")
+                    {
+                        _journalName = input; 
+                        break;
+                    }
+                } while (true);
+            }
+
+            // Customizing the Journal format
             Console.WriteLine($"{_userName}, do you want to use JSON, CSV or TXT format to save your journal?");
-            options = new List<string> { "JSON (default)", "CSV", "TXT" };
+            options = new List<string> { "JSON (default)", "CSV"};
             if (Utils.Decision(options) == "CSV")
             {
                 _journalExtension = ".csv";
-            }
-            else if (Utils.Decision(options) == "TXT")
-            {
-                _journalExtension = ".txt";
             }
             else
             {
@@ -76,6 +101,7 @@ class Preferences
         {
             _userName,
             _dateFormat,
+            _journalName,
             _journalExtension
         };
 
