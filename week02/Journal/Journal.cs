@@ -3,13 +3,14 @@ using System.Text.Json;
 
 class Journal
 {
-    public string _userName, _preferredExtension, _dateFormat;
+    public string _userName, _journalName, _preferredExtension, _dateFormat;
     public List<Entry> _entries;
     private List<string> _options;
 
-    public Journal(string name, string extension, string dateFormat)
+    public Journal(string name, string fileName, string extension, string dateFormat)
     {
         _userName = name;
+        _journalName = fileName;
         _preferredExtension = extension;
         _dateFormat = dateFormat;
         _entries = new List<Entry>();
@@ -27,18 +28,32 @@ class Journal
         {
             Console.Clear();
             Console.WriteLine($"I see {_userName} that you want to load your journal!");
-            string fileName;
-            do
+            
+            string fileToLoad = null;
+            string defaultFile = $"{_journalName}{_preferredExtension}";
+            Console.WriteLine(defaultFile);
+            
+            // If default exists, offer it as option
+            if (FindFile(defaultFile))
             {
-                Console.Write($"Please enter the name of your journal file (with extension {_preferredExtension}): ");
-                fileName = Console.ReadLine();
-                if (!FindFile(fileName))
+                Console.WriteLine($"Do you want to load your journal {defaultFile} or choose another file?");
+                List<string> options = new List<string>() { $"Load {defaultFile}", "Choose different file" };
+                
+                if (Utils.Decision(options).Contains(defaultFile))
                 {
-                    Console.WriteLine("Sorry, the file was not found. Please try again.");
+                    fileToLoad = defaultFile;
                 }
-            } while (!FindFile(fileName));
-
-            _entries = LoadJournal(fileName);
+            }
+            
+            // If no file selected yet, prompt for one
+            if (fileToLoad == null)
+            {
+                fileToLoad = PromptForValidFile();
+            }
+            
+            _entries = LoadJournal(fileToLoad);
+            Console.WriteLine("Journal loaded successfully! Press any key to continue...");
+            Console.ReadKey();
             Menu();
         }
         else if (selectedOption == "Write a new entry")
@@ -64,28 +79,21 @@ class Journal
         }
     }
 
-    public void DecisionNewEntry(Entry newEntry)
+    private string PromptForValidFile()
     {
-        Console.Clear();
-        Console.WriteLine("Current entry:");
-        newEntry.Display();
-
-        Console.WriteLine($"What do you want to do with your new Journal Entry?");
-        _options = new List<string>() { "Save", "Edit", "Discard" };
-        string entryOption = Utils.Decision(_options);
-        if (entryOption == "Discard")
+        string fileName;
+        do
         {
-            Menu();
-        }
-        if (entryOption == "Save")
-        {
-            SaveEntry(newEntry);
-        }
-        else if (entryOption == "Edit")
-        {
-            EditEntry(newEntry);
-        }
-        Menu();
+            Console.Write("Please enter the name of your journal file: ");
+            fileName = Console.ReadLine();
+            
+            if (!FindFile(fileName))
+            {
+                Console.WriteLine($"Sorry, the file {fileName} was not found. Please try again.");
+            }
+        } while (!FindFile(fileName));
+        
+        return fileName;
     }
 
     public string GetFilePath(string fileName)
@@ -140,24 +148,32 @@ class Journal
     {
         // Save to file
         string ext = _preferredExtension;
-        Console.WriteLine($"The default file name is {_userName}_journal{ext}. Do you want to change it?");
+        string defaultFileName = $"{_journalName}{ext}";
+        
+        Console.WriteLine($"The default file name is {defaultFileName}. Do you want to change it?");
         _options = new List<string>() { "Yes", "No" };
         string entryOption = Utils.Decision(_options);
         string fileName;
+        
         if (entryOption == "Yes")
         {
-            Console.Write("What is the new name you would prefer? ");
+            Console.Write("What is the new name? ");
             string userInput = Console.ReadLine();
-            string ext_new = Path.GetExtension(userInput);
-            if (!string.IsNullOrEmpty(ext_new))
+            string userExt = Path.GetExtension(userInput);
+            
+            if (!string.IsNullOrEmpty(userExt))
             {
-                ext = ext_new;
+                ext = userExt;
+                fileName = userInput;  // User provided full name with extension
             }
-            fileName = userInput + ext;
+            else
+            {
+                fileName = userInput + ext;  // Add preferred extension
+            }
         }
         else
         {
-            fileName = $"{_userName}_journal{ext}";
+            fileName = defaultFileName;  // Use the preference-based default
         }
 
         try
@@ -171,10 +187,6 @@ class Journal
             else if (ext == ".csv")
             {
                 Console.WriteLine("CSV format not implemented yet.");
-            }
-            else if (ext == ".txt")
-            {
-                Console.WriteLine("TXT format not implemented yet.");
             }
             else
             {
@@ -211,9 +223,9 @@ class Journal
             int startIndex = currentPage * entriesPerPage;
             int endIndex = Math.Min(startIndex + entriesPerPage, _entries.Count);
 
-            for (int i = startIndex; i < endIndex; i++)
+            for (int i = endIndex; i > startIndex; i--)
             {
-                Console.WriteLine($"\nEntry {i + 1}:");
+                Console.WriteLine($"\nEntry {i}:");
                 _entries[i].Display();
                 Console.WriteLine(new string('-', 30));
             }
@@ -235,6 +247,30 @@ class Journal
         }
         Menu();
     }  
+
+    public void DecisionNewEntry(Entry newEntry)
+    {
+        Console.Clear();
+        Console.WriteLine("Current entry:");
+        newEntry.Display();
+
+        Console.WriteLine($"What do you want to do with your new Journal Entry?");
+        _options = new List<string>() { "Save", "Edit", "Discard" };
+        string entryOption = Utils.Decision(_options);
+        if (entryOption == "Discard")
+        {
+            Menu();
+        }
+        if (entryOption == "Save")
+        {
+            SaveEntry(newEntry);
+        }
+        else if (entryOption == "Edit")
+        {
+            EditEntry(newEntry);
+        }
+        Menu();
+    }
 
     public void SaveEntry(Entry newEntry)
     {
