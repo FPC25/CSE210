@@ -110,8 +110,17 @@ class Journal
         string baseName = Path.GetFileNameWithoutExtension(fileName);
         string originalExt = Path.GetExtension(fileName);
         
-        // Try original first, then preferred
-        List<string> extensionsToTry = new List<string> { originalExt, _preferredExtension };
+        if (string.IsNullOrEmpty(originalExt))
+        {
+            originalExt = _preferredExtension;
+        }
+
+        // Create list without duplicates
+        List<string> extensionsToTry = new List<string> { originalExt };
+        if (originalExt != _preferredExtension)
+        {
+            extensionsToTry.Add(_preferredExtension); // Only add if different
+        }
 
         foreach (string ext in extensionsToTry)
         {
