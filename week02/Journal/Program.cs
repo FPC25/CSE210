@@ -4,20 +4,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the Journal Project.");
-
-        // Change the preferences config file if needed
-        string prefsPath = "./JournalConfig.json";
-
-        // Don't touch nothing under here
-        Preferences prefs = new Preferences(prefsPath);
-
-        Journal personalLog = new Journal(prefs._userName, prefs._journalName, prefs._journalExtension, prefs._dateFormat);
+        // Load preferences
+        var prefs = new Preferences("./JournalConfig.json");
+        List<string> preferences = prefs.LoadPreferences();
+        
+        // Create journal with preferences
+        var journal = new Journal(preferences[0], preferences[2], preferences[3], preferences[1]);
+        
+        // Main loop using ShowMenu()
         bool keepRunning = true;
         while (keepRunning)
         {
-            keepRunning = personalLog.ShowMenu(); // Return false when user quits
+            keepRunning = journal.ShowMenu(); // Returns false when user quits
         }
-
+        
+        Console.WriteLine("Thank you for using the journal!");
     }
 }
