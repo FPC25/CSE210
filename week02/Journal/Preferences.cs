@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Text.Json;
+using System.Collections.Generic;
 
 class Preferences
 {
@@ -10,25 +12,11 @@ class Preferences
     {
         _filePath = filePath;
 
-        string dir = Path.GetDirectoryName(filePath);
-        string baseName = Path.GetFileName(filePath);
-        var matches = Directory.GetFiles(dir, baseName);
-        if (matches.Length == 0)
-        {
-            List<string> prefs = CreatePreferencesFile();
-            _userName = prefs[0];
-            _dateFormat = prefs[1];
-            _journalName = prefs[2];
-            _journalExtension = prefs[3];
-        }
-        else
-        {
-            List<string> prefs = ReadPreferencesFile(matches[0]);
-            _userName = prefs[0];
-            _dateFormat = prefs[1];
-            _journalName = prefs[2];
-            _journalExtension = prefs[3];
-        }
+        List<string> prefs = LoadPreferences();
+        _userName = prefs[0];
+        _dateFormat = prefs[1];
+        _journalName = prefs[2];
+        _journalExtension = prefs[3];
     }
 
     public List<string> CreatePreferencesFile()
@@ -78,7 +66,7 @@ class Preferences
 
                     if (Utils.Decision(yesNo) == "Yes")
                     {
-                        _journalName = input; 
+                        _journalName = input;
                         break;
                     }
                 } while (true);
@@ -86,7 +74,7 @@ class Preferences
 
             // Customizing the Journal format
             Console.WriteLine($"{_userName}, do you want to use JSON or CSV format to save your journal?");
-            options = new List<string> { "JSON (default)", "CSV"};
+            options = new List<string> { "JSON (default)", "CSV" };
             if (Utils.Decision(options) == "CSV")
             {
                 _journalExtension = ".csv";
@@ -113,13 +101,49 @@ class Preferences
         Console.Clear();
 
         return prefsList;
-    } 
+    }
 
     public List<string> ReadPreferencesFile(string fileName)
     {
+        try
+        {
             var json = File.ReadAllText(fileName);
-            return JsonSerializer.Deserialize<List<string>>(json);
+            var prefs = JsonSerializer.Deserialize<List<string>>(json);
+            
+            // Validate that we have all 4 preferences
+            if (prefs != null && prefs.Count >= 4)
+            {
+                return prefs;
+            }
+            else
+            {
+                Console.WriteLine("Invalid preferences file. Creating new one...");
+                return CreatePreferencesFile();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error reading preferences: {ex.Message}. Creating new file...");
+            return CreatePreferencesFile();
+        }
+    }
 
+    public List<string> LoadPreferences()
+    {
+        string dir = Path.GetDirectoryName(_filePath);
+        string baseName = Path.GetFileName(_filePath);
+        var matches = Directory.GetFiles(dir, baseName);
+        
+        if (matches.Length == 0)
+        {
+            // No preferences file found, create one
+            return CreatePreferencesFile();
+        }
+        else
+        {
+            // Preferences file exists, read it
+            return ReadPreferencesFile(matches[0]);
+        }
     }
 
 }
