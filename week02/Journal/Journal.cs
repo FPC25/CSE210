@@ -165,12 +165,12 @@ class Journal
         string ext = _preferredExtension;
         string defaultFileName = $"{_journalName}{ext}";
         
-        Console.WriteLine($"The default file name is {defaultFileName}. Do you want to change it?");
+        Console.WriteLine($"The default file name is {defaultFileName}. Do you want to use it?");
         _options = new List<string>() { "Yes", "No" };
         string entryOption = Utils.Decision(_options);
         string fileName;
         
-        if (entryOption == "Yes")
+        if (entryOption == "No")
         {
             Console.Write("What is the new name? ");
             string userInput = Console.ReadLine();
