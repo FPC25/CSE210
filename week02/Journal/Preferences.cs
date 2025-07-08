@@ -27,7 +27,7 @@ class Preferences
             _userName = prefs[0];
             _dateFormat = prefs[1];
             _journalName = prefs[2];
-            _journalExtension = prefs[2];
+            _journalExtension = prefs[3];
         }
     }
 
