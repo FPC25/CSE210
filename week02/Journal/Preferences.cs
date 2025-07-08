@@ -18,7 +18,7 @@ class Preferences
             List<string> prefs = CreatePreferencesFile();
             _userName = prefs[0];
             _dateFormat = prefs[1];
-            _journalName = prefs[2]
+            _journalName = prefs[2];
             _journalExtension = prefs[3];
         }
         else
@@ -26,7 +26,7 @@ class Preferences
             List<string> prefs = ReadPreferencesFile(matches[0]);
             _userName = prefs[0];
             _dateFormat = prefs[1];
-            _journalName = prefs[2]
+            _journalName = prefs[2];
             _journalExtension = prefs[2];
         }
     }
@@ -42,7 +42,7 @@ class Preferences
         if (Utils.Decision(options) != "Customized")
         {
             _dateFormat = "MM/dd/yyyy HH:mm";
-            _journalName = $"{_userName}_journal"
+            _journalName = $"{_userName}_journal";
             _journalExtension = ".json";
         }
         else
@@ -65,7 +65,7 @@ class Preferences
             options = new List<string> { "Default", "Customized" };
             if (Utils.Decision(options) == "Default")
             {
-                _journalName = $"{_userName}_journal"
+                _journalName = $"{_userName}_journal";
             }
             else
             {
@@ -85,7 +85,7 @@ class Preferences
             }
 
             // Customizing the Journal format
-            Console.WriteLine($"{_userName}, do you want to use JSON, CSV or TXT format to save your journal?");
+            Console.WriteLine($"{_userName}, do you want to use JSON or CSV format to save your journal?");
             options = new List<string> { "JSON (default)", "CSV"};
             if (Utils.Decision(options) == "CSV")
             {
