@@ -1,5 +1,8 @@
 using System;
+using System.Text;
+using System.IO;   
 using System.Text.Json;
+using System.Collections.Generic;
 
 class Journal
 {
@@ -131,16 +134,29 @@ class Journal
     public List<Entry> LoadJournal(string fileName)
     {
         string actualPath = GetFilePath(fileName);
-        var json = File.ReadAllText(actualPath);
-        var entries = JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
+        string ext = Path.GetExtension(actualPath).ToLower();
         
-        // Set the date format for all loaded entries using the Journal's format
-        foreach (var entry in entries)
+        if (ext == ".json")
         {
-            entry._dateFormat = _dateFormat;  // Use the Journal's date format
+            var json = File.ReadAllText(actualPath);
+            var entries = JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
+            
+            // Set the date format for all loaded entries
+            foreach (var entry in entries)
+            {
+                entry._dateFormat = _dateFormat;
+            }
+            
+            return entries;
         }
-        
-        return entries;
+        else if (ext == ".csv")
+        {
+            return LoadCsvJournal(actualPath);
+        }
+        else
+        {
+            throw new NotSupportedException($"File format {ext} is not supported.");
+        }
     }
 
     public void SaveJournal()
@@ -185,7 +201,25 @@ class Journal
             }
             else if (ext == ".csv")
             {
-                Console.WriteLine("CSV format not implemented yet.");
+                // CSV Implementation
+                var csvLines = new List<string>();
+                
+                // Add header row
+                csvLines.Add("Date,Humor,Prompt,Entry");
+                
+                // Add each entry as a CSV row
+                foreach (var entry in _entries)
+                {
+                    string date = entry._entryTime.ToString(_dateFormat);
+                    string humor = EscapeCsvField(entry._humor);
+                    string prompt = EscapeCsvField(entry._prompt);
+                    string entryText = EscapeCsvField(entry._entry);
+                    
+                    csvLines.Add($"{date},{humor},{prompt},{entryText}");
+                }
+                
+                File.WriteAllLines(fileName, csvLines);
+                Console.WriteLine($"Journal saved to {fileName} in CSV format. Press any key to continue...");
             }
             else
             {
@@ -244,7 +278,86 @@ class Journal
                 break;
             }
         }
-    }  
+    }
+
+    private string EscapeCsvField(string field)
+    {
+        if (string.IsNullOrEmpty(field))
+            return "";
+
+        // If field contains comma, newline, or quotes, wrap in quotes and escape internal quotes
+        if (field.Contains(",") || field.Contains("\n") || field.Contains("\""))
+        {
+            field = field.Replace("\"", "\"\""); // Escape quotes by doubling them
+            return $"\"{field}\""; // Wrap in quotes
+        }
+
+        return field;
+    }
+
+    private List<Entry> LoadCsvJournal(string filePath)
+    {
+        var entries = new List<Entry>();
+        var lines = File.ReadAllLines(filePath);
+        
+        // Skip header row
+        for (int i = 1; i < lines.Length; i++)
+        {
+            var fields = ParseCsvLine(lines[i]);
+            
+            if (fields.Length >= 4)
+            {
+                var entry = new Entry(); // Use parameterless constructor
+                entry._entryTime = DateTime.Parse(fields[0]);
+                entry._humor = fields[1];
+                entry._prompt = fields[2];
+                entry._entry = fields[3];
+                entry._dateFormat = _dateFormat;
+                
+                entries.Add(entry);
+            }
+        }
+        
+        return entries;
+    }
+
+    private string[] ParseCsvLine(string line)
+    {
+        // Simple CSV parser - for production, consider using a CSV library
+        var fields = new List<string>();
+        bool inQuotes = false;
+        var currentField = new StringBuilder();
+        
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+            
+            if (c == '"')
+            {
+                if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+                {
+                    currentField.Append('"'); // Escaped quote
+                    i++; // Skip next quote
+                }
+                else
+                {
+                    inQuotes = !inQuotes; // Toggle quote state
+                }
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                fields.Add(currentField.ToString());
+                currentField.Clear();
+            }
+            else
+            {
+                currentField.Append(c);
+            }
+        }
+        
+        fields.Add(currentField.ToString()); // Last field
+        return fields.ToArray();
+    }
 
     public void DecisionNewEntry(Entry newEntry)
     {
