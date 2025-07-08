@@ -13,7 +13,11 @@ class Program
         Preferences prefs = new Preferences(prefsPath);
 
         Journal personalLog = new Journal(prefs._userName, prefs._journalName, prefs._journalExtension, prefs._dateFormat);
-        personalLog.Menu();
+        bool keepRunning = true;
+        while (keepRunning)
+        {
+            keepRunning = personalLog.ShowMenu(); // Return false when user quits
+        }
 
     }
 }
