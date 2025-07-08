@@ -31,7 +31,6 @@ class Journal
             
             string fileToLoad = null;
             string defaultFile = $"{_journalName}{_preferredExtension}";
-            Console.WriteLine(defaultFile);
             
             // If default exists, offer it as option
             if (FindFile(defaultFile))
@@ -207,7 +206,7 @@ class Journal
             Console.WriteLine("No entries in your journal yet.");
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
-            Menu();
+            return; // ← Fixed: return instead of Menu()
         }
 
         int entriesPerPage = 5;
@@ -223,9 +222,9 @@ class Journal
             int startIndex = currentPage * entriesPerPage;
             int endIndex = Math.Min(startIndex + entriesPerPage, _entries.Count);
 
-            for (int i = endIndex; i > startIndex; i--)
+            for (int i = startIndex; i < endIndex; i++) 
             {
-                Console.WriteLine($"\nEntry {i}:");
+                Console.WriteLine($"\nEntry {_entries.Count - i}:");
                 _entries[i].Display();
                 Console.WriteLine(new string('-', 30));
             }
@@ -245,7 +244,6 @@ class Journal
                 break;
             }
         }
-        Menu();
     }  
 
     public void DecisionNewEntry(Entry newEntry)
