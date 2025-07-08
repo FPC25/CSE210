@@ -19,66 +19,72 @@ class Journal
         _entries = new List<Entry>();
     }
 
-    public void Menu()
+    public bool ShowMenu()
     {
         Console.Clear();
-        Console.WriteLine($"Hello {_userName}! Please Select one of the following options: ");
+        Console.WriteLine($"Hello {_userName}! Please select an option:");
         _options = new List<string>() { "Load a Journal", "Write a new entry", "Display the Journal", "Save Journal", "Quit" };
 
         string selectedOption = Utils.Decision(_options);
 
-        if (selectedOption == "Load a Journal")
+        switch (selectedOption)
         {
-            Console.Clear();
-            Console.WriteLine($"I see {_userName} that you want to load your journal!");
-            
-            string fileToLoad = null;
-            string defaultFile = $"{_journalName}{_preferredExtension}";
-            
-            // If default exists, offer it as option
-            if (FindFile(defaultFile))
+            case "Load a Journal":
+                LoadJournalFlow();
+                break;
+            case "Write a new entry":
+                WriteNewEntryFlow();
+                break;
+            case "Display the Journal":
+                DisplayJournal();
+                break;
+            case "Save Journal":
+                SaveJournal();
+                break;
+            case "Quit":
+                return false; // Signal to exit
+        }
+
+        return true; // Continue running
+    }
+
+    public void LoadJournalFlow()
+    {
+        Console.Clear();
+        Console.WriteLine($"I see {_userName} that you want to load your journal!");
+
+        string fileToLoad = null;
+        string defaultFile = $"{_journalName}{_preferredExtension}";
+
+        // If default exists, offer it as option
+        if (FindFile(defaultFile))
+        {
+            Console.WriteLine($"Do you want to load your journal {defaultFile} or choose another file?");
+            List<string> options = new List<string>() { $"Load {defaultFile}", "Choose different file" };
+
+            if (Utils.Decision(options).Contains(defaultFile))
             {
-                Console.WriteLine($"Do you want to load your journal {defaultFile} or choose another file?");
-                List<string> options = new List<string>() { $"Load {defaultFile}", "Choose different file" };
-                
-                if (Utils.Decision(options).Contains(defaultFile))
-                {
-                    fileToLoad = defaultFile;
-                }
+                fileToLoad = defaultFile;
             }
-            
-            // If no file selected yet, prompt for one
-            if (fileToLoad == null)
-            {
-                fileToLoad = PromptForValidFile();
-            }
-            
-            _entries = LoadJournal(fileToLoad);
-            Console.WriteLine("Journal loaded successfully! Press any key to continue...");
-            Console.ReadKey();
-            Menu();
         }
-        else if (selectedOption == "Write a new entry")
+
+        // If no file selected yet, prompt for one
+        if (fileToLoad == null)
         {
-            Console.Clear();
-            var promptObg = new PromptGuide("./prompts.json");
-            Entry newEntry = new Entry(promptObg.SelectPrompt(), _dateFormat);
-            DecisionNewEntry(newEntry);
+            fileToLoad = PromptForValidFile();
         }
-        else if (selectedOption == "Display the Journal")
-        {
-            DisplayJournal();
-            Menu();
-        }
-        else if (selectedOption == "Save Journal")
-        {
-            SaveJournal();
-            Menu();
-        }
-        else
-        {
-            Environment.Exit(0);
-        }
+
+        _entries = LoadJournal(fileToLoad);
+        Console.WriteLine("Journal loaded successfully! Press any key to continue...");
+        Console.ReadKey();
+    }
+
+    public void WriteNewEntryFlow()
+    {
+        Console.Clear();
+        var promptObg = new PromptGuide("./prompts.json");
+        Entry newEntry = new Entry(promptObg.SelectPrompt(), _dateFormat);
+        DecisionNewEntry(newEntry);
     }
 
     private string PromptForValidFile()
@@ -133,29 +139,37 @@ class Journal
 
     public List<Entry> LoadJournal(string fileName)
     {
-        string actualPath = GetFilePath(fileName);
-        string ext = Path.GetExtension(actualPath).ToLower();
-        
-        if (ext == ".json")
+        try
         {
-            var json = File.ReadAllText(actualPath);
-            var entries = JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
-            
-            // Set the date format for all loaded entries
-            foreach (var entry in entries)
+            string actualPath = GetFilePath(fileName);
+            string ext = Path.GetExtension(actualPath).ToLower();
+
+            if (ext == ".json")
             {
-                entry._dateFormat = _dateFormat;
+                var json = File.ReadAllText(actualPath);
+                var entries = JsonSerializer.Deserialize<List<Entry>>(json, GetJsonOptions());
+
+                // Set the date format for all loaded entries
+                foreach (var entry in entries)
+                {
+                    entry._dateFormat = _dateFormat;
+                }
+
+                return entries;
             }
-            
-            return entries;
+            else if (ext == ".csv")
+            {
+                return LoadCsvJournal(actualPath);
+            }
+            else
+            {
+                throw new NotSupportedException($"File format {ext} is not supported.");
+            }
         }
-        else if (ext == ".csv")
+        catch (Exception ex)
         {
-            return LoadCsvJournal(actualPath);
-        }
-        else
-        {
-            throw new NotSupportedException($"File format {ext} is not supported.");
+            Console.WriteLine($"Error loading journal: {ex.Message}");
+            return new List<Entry>();
         }
     }
 
@@ -240,7 +254,7 @@ class Journal
             Console.WriteLine("No entries in your journal yet.");
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
-            return; // ← Fixed: return instead of Menu()
+            return;
         }
 
         int entriesPerPage = 5;
@@ -308,7 +322,14 @@ class Journal
             if (fields.Length >= 4)
             {
                 var entry = new Entry(); // Use parameterless constructor
-                entry._entryTime = DateTime.Parse(fields[0]);
+                if (DateTime.TryParse(fields[0], out DateTime parsedDate))
+                {
+                    entry._entryTime = parsedDate;
+                }
+                else
+                {
+                    entry._entryTime = DateTime.Now; // Fallback
+                }
                 entry._humor = fields[1];
                 entry._prompt = fields[2];
                 entry._entry = fields[3];
@@ -370,17 +391,18 @@ class Journal
         string entryOption = Utils.Decision(_options);
         if (entryOption == "Discard")
         {
-            Menu();
+            return; // Don't save, just exit
         }
-        if (entryOption == "Save")
+        else if (entryOption == "Save")
         {
             SaveEntry(newEntry);
+            return; // Exit after saving
         }
         else if (entryOption == "Edit")
         {
             EditEntry(newEntry);
+            return; // EditEntry handles its own flow
         }
-        Menu();
     }
 
     public void SaveEntry(Entry newEntry)
