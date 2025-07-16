@@ -48,7 +48,7 @@ class Fraction
 
     public double GetDecimalValue()
     {
-        return (double)this.GetTop() / this.GetBottom(); 
+        return (double)this.GetTop() / (double)this.GetBottom(); 
     }
     
 }
