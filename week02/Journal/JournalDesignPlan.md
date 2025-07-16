@@ -4,7 +4,7 @@
 
 ### Responsibilities
 <ul>
-    <li> _filePath: string <li>
+    <li> _filePath: string </li>
     <li> _userName: string </li>
     <li> _dateFormat: string </li>
     <li> _journalFormat: string</li>
@@ -21,7 +21,7 @@
 ### Responsibilities
 <ul>
     <li> _promptsFilePath: file; </li>
-    <li> _prompts: List&lt;string&gt;<li>
+    <li> _prompts: List&lt;string&gt;</li>
 </ul>
 
 ### Behaviors
