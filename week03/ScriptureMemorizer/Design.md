@@ -5,7 +5,7 @@
 ### Responsibilities
 <ul>
     <li>_text: string</li>
-    <li>_isHidden: bool -> initialize as false</li>
+    <li>_isHidden: bool</li>
 </ul>
 
 ### Constructor
@@ -16,26 +16,26 @@
 ### Behaviors
 <ul>
     <li>HideWord(): string</li>
-        <code>
-           hiddenword = len(word) * "_"
-           return hiddenword
-        </code>
+        <!--
+            hiddenword = len(word) * "_"
+            return hiddenword
+        -->
     <li>IsHidden: bool</li>
-        <code>
+        <!--
             return _ishidden;
-        </code>
-    <li>Hide: void<li>
-        <code>
+        -->
+    <li>Hide: void</li>
+        <!--
             _ishidden = true;
-        </code>
-    <li>Display()</li>
+        -->
+    <li>Display: void</li>
 </ul>
 
 ## Scripture
 
 ### Responsibilities
 <ul>
-    <li>_scripture: List<Word> </li>
+    <li>_scripture: List&lt;Word&gt; </li>
     <li>_reference: Reference </li>
 
 </ul>
@@ -48,11 +48,11 @@
 ### Behaviors
 <ul>
     <li>Display(): void</li>
-        <code>
+        <!--
             print(scripture)
-        </code>
+        -->
     <li>HideRandomWord(): void</li>
-        <code>
+        <!--
         scripture = list(text)
         word = random(scripture) # return a random Word obj
         index = scripture.index(word)
@@ -60,7 +60,7 @@
             word.HideWord()
             word.SetIsHidden()
             scripture[index] = hiddenword 
-        </code>
+        -->
     <li>IsCompletelyHidden(): bool</li>
 </ul>
 
@@ -82,5 +82,5 @@
 
 ### Behaviors
 <ul>
-    <li>Display</li>
+    <li>Display: void</li>
 </ul>
