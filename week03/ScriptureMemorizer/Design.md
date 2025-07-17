@@ -84,3 +84,14 @@
 <ul>
     <li>Display: void</li>
 </ul>
+
+## Other Materials
+
+### Possible idea for a stretch goal
+Githubs with scriptures in file (json, txt, csv, etc) so the user may select any and every sacred book to The Church of Jesus Christ of Latter Day Saints:
+<ul>
+    <li>https://github.com/bcbooks/scriptures-json</li>
+    <li>https://github.com/beandog/lds-scriptures</li>
+</ul>
+
+
