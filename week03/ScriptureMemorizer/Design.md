@@ -28,6 +28,7 @@
         <code>
             _ishidden = true;
         </code>
+    <li>Display()</li>
 </ul>
 
 ## Scripture
@@ -60,5 +61,26 @@
             word.SetIsHidden()
             scripture[index] = hiddenword 
         </code>
-    <li></li>
+    <li>IsCompletelyHidden(): bool</li>
+</ul>
+
+## Reference Class
+
+### Responsibilities
+<ul>
+    <li>_book: string</li>
+    <li>_chapter: int</li>
+    <li>_verse: int</li>
+    <li>_endVerse: int</li>
+</ul>
+
+### Constructor
+<ul>
+    <li>Reference(book: string, chapter: int, verse: int)</li>
+    <li>Reference(book: string, chapter: int, verse: int, endVerse: int)</li>
+</ul>
+
+### Behaviors
+<ul>
+    <li>Display</li>
 </ul>
