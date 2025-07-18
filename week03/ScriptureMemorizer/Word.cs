@@ -1,5 +1,5 @@
 using System;
-
+using System.Text.RegularExpressions;
 class Word
 {
     private string _text;
@@ -12,7 +12,7 @@ class Word
 
     public void HideWord()
     {
-        if (!this.IsHidden())
+        if (!this.IsHidden() && !Regex.IsMatch(_text, @"^\W+$"))
         {
             _text = new string('_', _text.Length);
             this.Hide();
