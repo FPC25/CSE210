@@ -69,6 +69,8 @@ class Scripture
 
     public bool IsCompletelyHidden()
     {
-        return false;
+        return _scripture
+            .Where(word => !Regex.IsMatch(word.GetWord(), @"^\p{P}$")) // Filter out punctuation)
+            .All(word => word.IsHidden()); // Check if all remaining words are hidden
     }
 }
