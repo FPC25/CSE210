@@ -12,7 +12,7 @@ class Word
 
     public void HideWord()
     {
-        if (!this.IsHidden() && !Regex.IsMatch(_text, @"^\W+$"))
+        if (!this.IsHidden() && !Regex.IsMatch(_text, @"^\p{P}$"))
         {
             _text = new string('_', _text.Length);
             this.Hide();
