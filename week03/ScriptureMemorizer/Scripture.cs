@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 class Scripture
@@ -32,13 +33,26 @@ class Scripture
 
     public void Display()
     {
-        _reference.Display();
-        Console.Write(" ");
-        foreach (Word word in _scripture)
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"{_reference.GetReference} ");
+
+        for (int i = 0; i < _scripture.Count; i++)
         {
-            word.Display();
+            Word currentWord = _scripture[i];
+            sb.Append(currentWord.GetWord());
+            
+            if (i < _scripture.Count - 1)
+            {
+                Word nextWord = _scripture[i + 1];
+
+                if (!Regex.IsMatch(nextWord.GetWord(), @"^\W+$"))
+                {
+                    sb.Append(" ");
+                }
+            }
         }
-        Console.WriteLine();
+
+        Console.WriteLine(sb.ToString());
     }
 
     public void HideRandomWord()
