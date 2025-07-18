@@ -58,6 +58,12 @@ class Scripture
 
     public void HideRandomWord()
     {
+        Random random = new Random();
+        if (_scripture.Count != 0)
+        {
+            int randomIndex = random.Next(_scripture.Count);
+            _scripture[randomIndex].HideWord();
+        }
 
     }
 
