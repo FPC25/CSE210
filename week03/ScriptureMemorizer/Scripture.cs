@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+
 class Scripture
 {
     private List<Word> _scripture;
@@ -27,5 +28,26 @@ class Scripture
             finalList.Add(new Word(item));
         }
         return finalList;
+    }
+
+    public void Display()
+    {
+        _reference.Display();
+        Console.Write(" ");
+        foreach (Word word in _scripture)
+        {
+            word.Display();
+        }
+        Console.WriteLine();
+    }
+
+    public void HideRandomWord()
+    {
+
+    }
+
+    public bool IsCompletelyHidden()
+    {
+        return false;
     }
 }
