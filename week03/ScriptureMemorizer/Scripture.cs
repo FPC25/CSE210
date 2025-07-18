@@ -16,9 +16,18 @@ class Scripture
     static private List<string> SplittingText(string text)
     {
         // Split on word boundaries, keeping both words and punctuation
-        return Regex.Split(text, @"(\W+)")
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-            .ToList();
+        // return Regex.Split(text, @"(\W+)")
+        //     .Where(s => !string.IsNullOrWhiteSpace(s))
+        //     .ToList();
+
+        List<string> list = Regex.Split(text, @"(\p{P}|\s+)")
+             .Where(s => !string.IsNullOrWhiteSpace(s))
+             .ToList();
+
+        Utils.PrintList(list);
+
+        return list;
+
     }
 
     static private List<Word> ConvertingStringToWord(List<string> initialList)
@@ -34,18 +43,20 @@ class Scripture
     public void Display()
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append($"{_reference.GetReference} ");
+        sb.Append(_reference.GetReference());
+        sb.Append(" ");
 
         for (int i = 0; i < _scripture.Count; i++)
         {
             Word currentWord = _scripture[i];
+            //Console.WriteLine(currentWord.GetWord());
             sb.Append(currentWord.GetWord());
             
             if (i < _scripture.Count - 1)
             {
                 Word nextWord = _scripture[i + 1];
 
-                if (!Regex.IsMatch(nextWord.GetWord(), @"^\W+$"))
+                if (!Regex.IsMatch(nextWord.GetWord(), @"^\p{P}$"))
                 {
                     sb.Append(" ");
                 }
