@@ -29,4 +29,16 @@ public static class Utils
         // Return zero-based index
         return options[choice - 1];
     }
+
+    public static void PrintList(List<string> list)
+    {
+        Console.Write("[");
+        for (int i = 0; i < list.Count; i++)
+        {
+            Console.Write($"\"{list[i]}\"");
+            if (i < list.Count - 1)
+                Console.Write(", ");
+        }
+        Console.WriteLine("]");
+    }
 }
