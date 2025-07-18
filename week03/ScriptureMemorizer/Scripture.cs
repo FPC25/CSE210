@@ -15,19 +15,9 @@ class Scripture
 
     static private List<string> SplittingText(string text)
     {
-        // Split on word boundaries, keeping both words and punctuation
-        // return Regex.Split(text, @"(\W+)")
-        //     .Where(s => !string.IsNullOrWhiteSpace(s))
-        //     .ToList();
-
-        List<string> list = Regex.Split(text, @"(\p{P}|\s+)")
+        return Regex.Split(text, @"(\p{P}|\s+)")
              .Where(s => !string.IsNullOrWhiteSpace(s))
              .ToList();
-
-        Utils.PrintList(list);
-
-        return list;
-
     }
 
     static private List<Word> ConvertingStringToWord(List<string> initialList)
