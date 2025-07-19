@@ -59,12 +59,16 @@ class Scripture
     public void HideRandomWord()
     {
         Random random = new Random();
-        if (_scripture.Count != 0)
-        {
-            int randomIndex = random.Next(_scripture.Count);
-            _scripture[randomIndex].HideWord();
-        }
 
+        List<Word> availableWords = _scripture
+            .Where(word => !Regex.IsMatch(word.GetWord(), @"^\p{P}$") && !word.IsHidden())
+            .ToList();
+
+        if (availableWords.Count > 0)
+        {
+            int randomIndex = random.Next(availableWords.Count);
+            availableWords[randomIndex].HideWord();
+        }
     }
 
     public bool IsCompletelyHidden()
