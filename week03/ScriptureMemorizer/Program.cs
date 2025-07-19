@@ -36,6 +36,7 @@ class Program
 
             if (line.Equals("quit", StringComparison.OrdinalIgnoreCase))
             {
+                Console.WriteLine();
                 break;
             }
 
@@ -47,6 +48,9 @@ class Program
 
             if (scripture.IsCompletelyHidden())
             {
+                Console.Clear();
+                DisplayMessage(scripture, endLine);
+                Console.WriteLine();
                 break;
             }
         }
