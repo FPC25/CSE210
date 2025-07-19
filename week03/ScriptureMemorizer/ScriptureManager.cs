@@ -166,45 +166,62 @@ class ScriptureManager
         }
     }
 
-    // Add this method for single verse selection:
     private Scripture SelectSingleVerse(List<Verse> verses, Chapter chapter, string bookName)
     {
-        Console.Write($"Enter verse number (1-{verses.Count}): ");
-        string input = Console.ReadLine();
+        int verseNum;
+        do
+        {
+            Console.Write($"Enter verse number (1-{verses.Count}): ");
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out verseNum) && verseNum >= 1 && verseNum <= verses.Count)
+            {
+                break; // Valid input, exit loop
+            }
+            else
+            {
+                Console.WriteLine($"Invalid verse number! Please enter a number between 1 and {verses.Count}.");
+            }
+        } while (true);
         
-        if (int.TryParse(input, out int verseNum) && verseNum >= 1 && verseNum <= verses.Count)
-        {
-            var selectedVerse = verses[verseNum - 1];
-            Reference reference = new Reference(bookName, chapter.GetChapter(), selectedVerse.GetVerse());
-            return new Scripture(reference, selectedVerse.GetText());
-        }
-        else
-        {
-            Console.WriteLine("Invalid verse number!");
-            return null;
-        }
+        var selectedVerse = verses[verseNum - 1];
+        Reference reference = new Reference(bookName, chapter.GetChapter(), selectedVerse.GetVerse());
+        return new Scripture(reference, selectedVerse.GetText());
     }
 
-    // Add this method for verse range selection:
     private Scripture SelectVerseRange(List<Verse> verses, Chapter chapter, string bookName)
     {
-        Console.Write($"Enter start verse (1-{verses.Count}): ");
-        string startInput = Console.ReadLine();
-        
-        if (!int.TryParse(startInput, out int startVerse) || startVerse < 1 || startVerse > verses.Count)
+        int startVerse;
+        do
         {
-            Console.WriteLine("Invalid start verse!");
-            return null;
-        }
+            Console.Write($"Enter start verse (1-{verses.Count}): ");
+            string startInput = Console.ReadLine();
+            
+            if (int.TryParse(startInput, out startVerse) && startVerse >= 1 && startVerse <= verses.Count)
+            {
+                break; // Valid input, exit loop
+            }
+            else
+            {
+                Console.WriteLine($"Invalid start verse! Please enter a number between 1 and {verses.Count}.");
+            }
+        } while (true);
         
-        Console.Write($"Enter end verse ({startVerse}-{verses.Count}): ");
-        string endInput = Console.ReadLine();
-        
-        if (!int.TryParse(endInput, out int endVerse) || endVerse < startVerse || endVerse > verses.Count)
+        int endVerse;
+        do
         {
-            Console.WriteLine("Invalid end verse!");
-            return null;
-        }
+            Console.Write($"Enter end verse ({startVerse}-{verses.Count}): ");
+            string endInput = Console.ReadLine();
+            
+            if (int.TryParse(endInput, out endVerse) && endVerse >= startVerse && endVerse <= verses.Count)
+            {
+                break; // Valid input, exit loop
+            }
+            else
+            {
+                Console.WriteLine($"❌ Invalid end verse! Please enter a number between {startVerse} and {verses.Count}.");
+            }
+        } while (true);
         
         // Get the selected verses
         var selectedVerses = new List<Verse>();
