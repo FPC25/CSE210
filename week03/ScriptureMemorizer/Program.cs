@@ -1,16 +1,72 @@
 using System;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the ScriptureMemorizer Project.");
+        Console.WriteLine("Scripture Memorizer");
+        Console.WriteLine("===================\n");
 
-        string text = "Trust in the Lord with all thine heart and lean not unto thine own understanding; In all thy ways acknowledge him, and he shall direct thy paths.";
+        // Initialize the ScriptureManager
+        ScriptureManager manager = new ScriptureManager("scriptures");
 
-        Scripture test = new Scripture(new Reference("Proverbs", 3, 5, 6), text);
+        // Check if we have scripture files
+        if (manager.GetAvailableFiles().Count == 0)
+        {
+            Console.WriteLine("No scripture files found in 'scriptures' folder!");
+            Console.WriteLine("Please add JSON files to the scriptures directory.");
+            return;
+        }
 
-        Run(test);
+        List<string> options = new List<string> 
+        { 
+            "Browse and select a scripture", 
+            "Enter a scripture reference to search", 
+            "Quit" 
+        };
+
+        // Main menu loop
+        while (true)
+        {
+            Console.WriteLine("\nHow would you like to find a scripture?"); 
+            int choice = Utils.Decision(options);
+            
+            Scripture scripture = null;
+            
+            try
+            {
+                switch (choice)
+                {
+                    case 0: // Manual browsing
+                        scripture = manager.SelectScriptureManually();
+                        break;
+                        
+                    case 1: // Search by reference
+                        scripture = manager.SearchByReference();
+                        break;
+                        
+                    case 2: // Quit
+                        Console.WriteLine("Thank you for using the Scripture Memorizer!");
+                        return;
+                }
+                
+                if (scripture != null)
+                {                  
+                    Run(scripture);
+                }
+                else
+                {
+                    Console.WriteLine("No scripture selected. Please try again.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }
+        }
     }
 
     static void DisplayMessage(Scripture scripture, string text)
