@@ -50,7 +50,7 @@ class Chapter
                 return verse;
             }
         }
-        return null;
+        return null; //Verse not Found
     }
 
     public int GetVerseCount()
