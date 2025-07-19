@@ -48,6 +48,7 @@ class Program
                         break;
                         
                     case 2: // Quit
+                        Console.Clear();
                         Console.WriteLine("Thank you for using the Scripture Memorizer!");
                         return;
                 }
