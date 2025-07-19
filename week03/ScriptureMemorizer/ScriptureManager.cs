@@ -1,35 +1,83 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 class ScriptureManager
 {
-    private List<string> _options, _bom_list, _nt_list, _ot_list, _pog_list;
-    private List<int> _dec_list;
     private string _path;
+    private List<string> _availableFiles;
 
     public ScriptureManager(string pathToFolder)
     {
         _path = pathToFolder;
-        _options = new List<string> { "Enter a scripture.", "I am feeling lucky!" };
-
+        LoadAvailableFiles();
     }
 
-    public string Menu()
+    private void LoadAvailableFiles()
     {
-        Console.WriteLine("Welcome to the ScriptureMemorizer, a tool to help you memorize the scriptures! Please, select the number of the option you prefer: ");
-
-        string option = Utils.Decision(_options);
-
-        string scripture = "a";
-        if (option.Contains("Enter"))
+        _availableFiles = new List<string>();
+        
+        if (Directory.Exists(_path))
         {
-            //ask to the user enter the scripture
+            var jsonFiles = Directory.GetFiles(_path, "*.json");
+            foreach (var file in jsonFiles)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                _availableFiles.Add(fileName);
+            }
         }
-        else
-        {
-            //randomly select a scripture for any book 
-        }
+    }
 
-        return scripture;
+    public List<string> GetAvailableFiles()
+    {
+        return new List<string>(_availableFiles);
+    }
+
+    public List<string> GetCollectionTitles()
+    {
+        List<string> titles = new List<string>();
+        
+        foreach (string fileName in _availableFiles)
+        {
+            string title = GetTitleFromFile(fileName);
+            titles.Add(title);
+        }
+        
+        return titles;
+    }
+
+    private string GetTitleFromFile(string fileName)
+    {
+        try
+        {
+            string filePath = Path.Combine(_path, $"{fileName}.json");
+            string jsonContent = File.ReadAllText(filePath);
+            
+            using JsonDocument document = JsonDocument.Parse(jsonContent);
+            JsonElement root = document.RootElement;
+            
+            // Try to get the title from JSON
+            if (root.TryGetProperty("title", out JsonElement titleElement))
+            {
+                return titleElement.GetString();
+            }
+            
+            // Fallback to formatted filename
+            return Utils.ToTitleCase(fileName.Replace("-", " "));
+        }
+        catch
+        {
+            // If anything fails, just format the filename
+            return Utils.ToTitleCase(fileName.Replace("-", " "));
+        }
+    }
+    
+    public ScriptureCollection LoadCollection(string fileName)
+    {
+        string filePath = Path.Combine(_path, $"{fileName}.json");
+        ScriptureCollection collection = new ScriptureCollection();
+        collection.LoadFromFile(filePath);
+        return collection;
     }
 }
