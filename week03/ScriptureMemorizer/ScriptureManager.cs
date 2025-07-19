@@ -245,18 +245,268 @@ class ScriptureManager
 
     public Scripture SearchByReference()
     {
-        Console.Write("\nEnter scripture reference (e.g., 'John 3:16' or '1 Nephi 3:7-8'): ");
-        string referenceInput = Console.ReadLine();
-        
-        if (string.IsNullOrWhiteSpace(referenceInput))
+        string referenceInput;
+        do
         {
-            Console.WriteLine("Invalid reference entered.");
+            Console.Write("\nEnter scripture reference (e.g., 'John 3:16' or '1 Nephi 3:5-6'): ");
+            referenceInput = Console.ReadLine();
+            
+            if (!string.IsNullOrWhiteSpace(referenceInput))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid reference entered. Please try again.");
+            }
+        } while (true);
+        
+        // Parse the reference
+        var parsedRef = ParseReference(referenceInput);
+        if (parsedRef == null)
+        {
+            Console.WriteLine("Could not parse the reference. Please check the format and try again.");
             return null;
         }
         
         Console.WriteLine($"Searching for: {referenceInput}");
-        Console.WriteLine("(Search functionality will be implemented next...)");
-        return null;
+        
+        // Find the right collection based on book name
+        string targetCollection = FindCollectionByBookName(parsedRef.Value.bookName);
+        if (targetCollection == null)
+        {
+            Console.WriteLine("Book not found in any collection.");
+            return null;
+        }
+        
+        // Search in the specific collection
+        try
+        {
+            ScriptureCollection collection = LoadCollection(targetCollection);
+            Scripture found = SearchInCollection(collection, parsedRef.Value);
+            if (found != null)
+            {
+                Console.WriteLine($"Found in {GetTitleFromFile(targetCollection)}");
+                return found;
+            }
+            else
+            {
+                Console.WriteLine("Scripture reference not found.");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error searching: {ex.Message}");
+            return null;
+        }
     }
     
+    private (string bookName, int chapter, List<int> verses)? ParseReference(string reference)
+    {
+        try
+        {
+            // Split into words: "1 Nephi 3:5-6" -> ["1", "Nephi", "3:5-6"]
+            string[] parts = reference.Trim().Split(' ');
+            if (parts.Length < 2) return null;
+            
+            // Last part contains chapter:verse(s)
+            string chapterVersePart = parts[parts.Length - 1];
+            
+            // Everything before is the book name
+            string bookName = string.Join(" ", parts.Take(parts.Length - 1));
+            
+            // Parse chapter:verse - "3:5-6" -> chapter=3, verses=[5,6]
+            if (!chapterVersePart.Contains(':')) return null;
+            
+            string[] chapterVerse = chapterVersePart.Split(':');
+            if (chapterVerse.Length != 2) return null;
+            
+            if (!int.TryParse(chapterVerse[0], out int chapter)) return null;
+            
+            string versePart = chapterVerse[1];
+            List<int> verses = new List<int>();
+            
+            if (versePart.Contains('-'))
+            {
+                // Range: "5-6" -> [5, 6]
+                string[] verseRange = versePart.Split('-');
+                if (verseRange.Length != 2) return null;
+                
+                if (!int.TryParse(verseRange[0], out int startVerse) || 
+                    !int.TryParse(verseRange[1], out int endVerse)) return null;
+                
+                for (int i = startVerse; i <= endVerse; i++)
+                {
+                    verses.Add(i);
+                }
+            }
+            else
+            {
+                // Single verse: "5" -> [5]
+                if (!int.TryParse(versePart, out int singleVerse)) return null;
+                verses.Add(singleVerse);
+            }
+            
+            return (bookName, chapter, verses);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private string FindCollectionByBookName(string bookName)
+    {
+        string lowerBookName = bookName.ToLower();
+        
+        // Define book keywords for each collection
+        List<string> bookOfMormonKeywords = new List<string> { "nephi", "jacob", "enos", "jarom", "omni", 
+                                        "words of mormon", "mosiah", "alma", "helaman", "mormon", "ether", 
+                                        "moroni" };
+        
+        List<string> oldTestamentKeywords = new List<string> { "genesis", "exodus", "leviticus", "numbers", 
+                                        "deuteronomy", "joshua", "judges", "ruth", "samuel", "kings", "chronicles",
+                                        "ezra", "nehemiah", "esther", "job", "psalms", "proverbs", "ecclesiastes", 
+                                        "song", "isaiah", "jeremiah", "lamentations", "ezekiel", "daniel", "hosea", 
+                                        "joel", "amos", "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah", 
+                                        "haggai", "zechariah", "malachi" };
+        
+        List<string> newTestamentKeywords = new List<string> { "matthew", "mark", "luke", "john", "acts", "romans", 
+                                        "corinthians", "galatians", "ephesians", "philippians", "colossians", 
+                                        "thessalonians", "timothy", "titus", "philemon", "hebrews", "james", 
+                                        "peter", "jude", "revelation" };
+        
+        List<string> doctrineKeywords = new List<string> { "d&c", "doctrine", "covenants" };
+        
+        List<string> pearlKeywords = new List<string> { "moses", "abraham", "joseph smith-matthew", "joseph smith-history", "articles of faith" };
+        
+        // Check each collection
+        foreach (string keyword in bookOfMormonKeywords)
+        {
+            if (lowerBookName.Contains(keyword))
+            {
+                return "book-of-mormon";
+            }
+        }
+        
+        foreach (string keyword in oldTestamentKeywords)
+        {
+            if (lowerBookName.Contains(keyword))
+            {
+                return "old-testament";
+            }
+        }
+        
+        foreach (string keyword in newTestamentKeywords)
+        {
+            if (lowerBookName.Contains(keyword))
+            {
+                return "new-testament";
+            }
+        }
+        
+        foreach (string keyword in doctrineKeywords)
+        {
+            if (lowerBookName.Contains(keyword))
+            {
+                return "doctrine-and-covenants";
+            }
+        }
+        
+        foreach (string keyword in pearlKeywords)
+        {
+            if (lowerBookName.Contains(keyword))
+            {
+                return "pearl-of-great-price";
+            }
+        }
+        
+        return null; // Book not found
+    }
+
+    private Scripture SearchInCollection(ScriptureCollection collection, (string bookName, int chapter, List<int> verses) parsedRef)
+    {
+        List<Book> books = collection.GetAllBooks();
+        
+        // Find the book (partial matching)
+        Book foundBook = null;
+        string searchBook = parsedRef.bookName.ToLower();
+
+        foreach (Book book in books)
+        {
+            string bookTitle = book.GetBook().ToLower();
+            
+            // Special case for D&C - match "d&c" with "doctrine and covenants"
+            if (searchBook.Contains("d&c") || (bookTitle.Contains("doctrine") && bookTitle.Contains("covenants")))
+            {
+                foundBook = book;
+                break;
+            }
+            else if (bookTitle.Contains(searchBook) || searchBook.Contains(bookTitle))
+            {
+                foundBook = book;
+                break;
+            }
+        }
+        
+        if (foundBook == null) return null;
+        
+        // Find the chapter
+        Chapter foundChapter = foundBook.GetChapter(parsedRef.chapter);
+        if (foundChapter == null) return null;
+        
+        // Get verses and find matching references
+        var allVerses = foundChapter.GetVerses();
+        List<string> texts = new List<string>();
+        
+        foreach (int verseNum in parsedRef.verses)
+        {
+            // Look for verse by reference string
+            string targetReference = $"{foundBook.GetBook()} {parsedRef.chapter}:{verseNum}";
+            
+            Verse foundVerse = null;
+            foreach (var verse in allVerses)
+            {
+                if (verse.GetReference() != null && verse.GetReference().Equals(targetReference, StringComparison.OrdinalIgnoreCase))
+                {
+                    foundVerse = verse;
+                    break;
+                }
+                // Fallback: match by verse number
+                else if (verse.GetVerse() == verseNum)
+                {
+                    foundVerse = verse;
+                    break;
+                }
+            }
+            
+            if (foundVerse != null && !string.IsNullOrEmpty(foundVerse.GetText()))
+            {
+                texts.Add(foundVerse.GetText());
+            }
+            else
+            {
+                Console.WriteLine($"Warning: Verse {verseNum} not found or has no text");
+            }
+        }
+        
+        if (texts.Count == 0) return null;
+        
+        // Combine texts
+        string combinedText = string.Join(" ", texts);
+        
+        // Create reference
+        Reference reference;
+        if (parsedRef.verses.Count == 1)
+        {
+            reference = new Reference(foundBook.GetBook(), parsedRef.chapter, parsedRef.verses[0]);
+        }
+        else
+        {
+            reference = new Reference(foundBook.GetBook(), parsedRef.chapter, parsedRef.verses[0], parsedRef.verses[parsedRef.verses.Count - 1]);
+        }
+        
+        return new Scripture(reference, combinedText);
+    }
 }
