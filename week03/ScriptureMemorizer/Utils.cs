@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public static class Utils
 {
-    public static string CapitalizeFirst(this string s)
+    public static string ToTitleCase(this string s)
     {
         if (string.IsNullOrEmpty(s)) return s;
         return char.ToUpper(s[0]) + s.Substring(1);
     }
 
-    public static string Decision(List<string> options)
+    public static int Decision(List<string> options)
     {
         // Display numbered choices
         for (int i = 0; i < options.Count; i++)
@@ -27,7 +27,11 @@ public static class Utils
         } while (!int.TryParse(input, out choice) || choice < 1 || choice > options.Count);
 
         // Return zero-based index
-        return options[choice - 1];
+        return choice - 1;
+    }
+
+    public static string DecisionString(List<string> options){
+        return options[Decision(options)]
     }
 
     public static void PrintList(List<string> list)
