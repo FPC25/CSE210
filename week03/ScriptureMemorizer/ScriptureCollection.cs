@@ -33,14 +33,21 @@ class ScriptureCollection
             else if (root.TryGetProperty("sections", out JsonElement sectionsElement))
             {
                 Book book = new Book();
-                book.SetBook("Doctrine and Covenants");
+                if (root.TryGetProperty("book", out JsonElement titleElement))
+                {
+                    book.SetBook(titleElement.GetString());
+                }
+                else
+                {
+                    book.SetBook("Doctrine and Covenants"); // Default name
+                }
 
                 List<Chapter> chapters = new List<Chapter>();
                 
                 foreach (JsonElement sectionElement in sectionsElement.EnumerateArray())
                 {   
                     Chapter chapter = new Chapter()
-                    
+
                     if (sectionElement.TryGetProperty("section", out JsonElement sectionNum))
                     {
                         chapter.SetChapter(sectionNum.GetInt32());
