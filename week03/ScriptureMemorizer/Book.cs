@@ -6,6 +6,7 @@ class Book
     private string _book;
     private List<Chapter> _chapters;
 
+    //adding this properties so the JSON parser can be used
     public string book { get => _book; set => _book = value; }
     public List<Chapter> chapters { get => _chapters; set => _chapters = value; }
 
