@@ -85,14 +85,14 @@ class ScriptureManager
     public Scripture SelectScriptureManually()
     {
         // Step 1: Choose collection
+        Console.Clear();
         Console.WriteLine("\nChoose a Scripture Collection:");
         List<string> titles = GetCollectionTitles();
         int collectionChoice = Utils.Decision(titles);
         string selectedFile = _availableFiles[collectionChoice];
         
-        Console.WriteLine($"Selected: {titles[collectionChoice]}");
-        
         // Step 2: Load collection and choose book
+        Console.Clear();
         ScriptureCollection collection = LoadCollection(selectedFile);
         var books = collection.GetAllBooks();
         
@@ -112,9 +112,8 @@ class ScriptureManager
         int bookChoice = Utils.Decision(bookNames);
         Book selectedBook = books[bookChoice];
         
-        Console.WriteLine($"Selected book: {selectedBook.GetBook()}");
-        
         // Step 3: Choose chapter
+        Console.Clear();
         var chapters = selectedBook.GetChapters();
         
         if (chapters.Count == 0)
@@ -133,9 +132,8 @@ class ScriptureManager
         int chapterChoice = Utils.Decision(chapterNumbers);
         Chapter selectedChapter = chapters[chapterChoice];
         
-        Console.WriteLine($"Selected: Chapter {selectedChapter.GetChapter()}");
-        
         // Step 4: Choose verse or verse range
+        Console.Clear();
         return SelectVerseFromChapter(selectedChapter, selectedBook.GetBook());
     }
 
@@ -158,10 +156,12 @@ class ScriptureManager
         
         if (choice == 0) // Single verse
         {
+            Console.Clear();
             return SelectSingleVerse(verses, chapter, bookName);
         }
         else // Range of verses
         {
+            Console.Clear();
             return SelectVerseRange(verses, chapter, bookName);
         }
     }
@@ -245,6 +245,7 @@ class ScriptureManager
 
     public Scripture SearchByReference()
     {
+        Console.Clear();
         string referenceInput;
         do
         {
@@ -268,8 +269,6 @@ class ScriptureManager
             Console.WriteLine("Could not parse the reference. Please check the format and try again.");
             return null;
         }
-        
-        Console.WriteLine($"Searching for: {referenceInput}");
         
         // Find the right collection based on book name
         string targetCollection = FindCollectionByBookName(parsedRef.Value.bookName);
