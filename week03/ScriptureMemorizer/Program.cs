@@ -7,10 +7,10 @@ class Program
     // - 6 more classes than the required ones;
     // - Modular design with separation of concerns, robust file system integration, and extensible structure
     // - Dynamic Scripture Library: JSON-based collections supporting multiple formats (Old and New Testament, Book of Mormon, D&C, Pearl of Great price) instead of hardcoded text -> JSON files made available in https://github.com/bcbooks/scriptures-json
-    // - Dual Discovery Methods: Manual browsing (Collections->Books->Chapters->Verses) and intelligent reference search ("John 3:16", "D&C 3:1")
+    // - Dual Discovery Methods: Manual browsing (Collections->Books->Chapters->Verses) and intelligent reference search ("John 3:16", "D&C 3:1-3")
     // - UX Design: Clean terminal interface with strategic screen clearing, input validation, progress breadcrumbs, and comprehensive error handling 
     // - Text Processing: Smart reference parsing, verse range concatenation, and alias support (D&C <-> Doctrine and Covenants) 
-    
+
     static void Main(string[] args)
     {
         Console.Clear();
