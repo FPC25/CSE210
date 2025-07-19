@@ -7,6 +7,10 @@ class Chapter
     private string _reference;
     private List<Verse> _verses;
 
+    public int chapter { get => _chapter; set => _chapter = value; }
+    public string reference { get => _reference; set => _reference = value; }
+    public List<Verse> verses { get => _verses; set => _verses = value; }
+
     public Chapter()
     {
         _verses = new List<Verse>();

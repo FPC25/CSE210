@@ -6,6 +6,10 @@ class Verse
     private string _reference, _text;
     private int _verse;
 
+    public int verse { get => _verse; set => _verse = value; }
+    public string reference { get => _reference; set => _reference = value; }
+    public string text { get => _text; set => _text = value; }
+
     public Verse()
     {
     }

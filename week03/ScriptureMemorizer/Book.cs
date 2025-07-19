@@ -6,6 +6,9 @@ class Book
     private string _book;
     private List<Chapter> _chapters;
 
+    public string book { get => _book; set => _book = value; }
+    public List<Chapter> chapters { get => _chapters; set => _chapters = value; }
+
     public Book()
     {
         _chapters = new List<Chapter>();
