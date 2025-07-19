@@ -13,25 +13,24 @@ class Verse
     {
         return _reference;
     }
+    public void SetReference(string reference)
+    {
+        _reference = reference;
+    }
 
     public string GetText()
     {
         return _text;
     }
 
-    public int GetVerse()
-    {
-        return _verse;
-    }
-
-    public void SetReference(string reference)
-    {
-        _reference = reference;
-    }
-
     public void SetText(string text)
     {
         _text = text;
+    }
+
+    public int GetVerse()
+    {
+        return _verse;
     }
 
     public void SetVerse(int verse)
