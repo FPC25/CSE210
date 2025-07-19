@@ -31,7 +31,7 @@ public static class Utils
     }
 
     public static string DecisionString(List<string> options){
-        return options[Decision(options)]
+        return options[Decision(options)];
     }
 
     public static void PrintList(List<string> list)
