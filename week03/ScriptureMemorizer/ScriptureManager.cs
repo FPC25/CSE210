@@ -219,7 +219,7 @@ class ScriptureManager
             }
             else
             {
-                Console.WriteLine($"❌ Invalid end verse! Please enter a number between {startVerse} and {verses.Count}.");
+                Console.WriteLine($"Invalid end verse! Please enter a number between {startVerse} and {verses.Count}.");
             }
         } while (true);
         
