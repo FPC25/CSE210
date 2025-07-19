@@ -46,7 +46,7 @@ class ScriptureCollection
                 
                 foreach (JsonElement sectionElement in sectionsElement.EnumerateArray())
                 {   
-                    Chapter chapter = new Chapter()
+                    Chapter chapter = new Chapter();
 
                     if (sectionElement.TryGetProperty("section", out JsonElement sectionNum))
                     {
