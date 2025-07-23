@@ -4,7 +4,7 @@
 
 ### Responsibilities
 <ul>
-    <li>_var: type</li>
+    <li>_varName: type</li>
 </ul>
 
 ### Constructor
@@ -14,6 +14,6 @@
 
 ### Behaviors
 <ul>
-    <li>method: type</li>
+    <li>MethodName: type</li>
 </ul>
 
