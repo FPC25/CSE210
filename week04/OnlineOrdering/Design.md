@@ -34,7 +34,7 @@
 
 ### Constructor
 <ul>
-    <li>Address(string: street, string: city, string: state, string: country)</li>
+    <li>Address(string street, string city, string state, string country)</li>
 </ul>
 
 ### Behaviors
@@ -53,7 +53,7 @@
 
 ### Constructor
 <ul>
-    <li>Customer(string: name, Address userAddress)</li>
+    <li>Customer(string name, Address userAddress)</li>
 </ul>
 
 ### Behaviors
@@ -72,7 +72,7 @@
 
 ### Constructor
 <ul>
-    <li>Order(Customer: customerInfo, List&lt;Product&gt;: orderList)</li>
+    <li>Order(Customer customerInfo, List&lt;Product&gt; orderList)</li>
 </ul>
 
 ### Behaviors
