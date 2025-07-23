@@ -60,6 +60,7 @@
 <ul>
     <li>IsFromUS: bool</li>
     <li>CustomerName: string</li>
+    <li>CustomerAddress: string</li>
 </ul>
 
 ## Order
