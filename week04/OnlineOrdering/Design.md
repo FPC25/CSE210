@@ -67,7 +67,7 @@
 
 ### Responsibilities
 <ul>
-    <li>_customer: Customer</li>
+    <li>_customerInfo: Customer</li>
     <li>_order: List&lt;Product&gt;</li>
 </ul>
 
@@ -78,8 +78,8 @@
 
 ### Behaviors
 <ul>
+    <li>ShippingCost: int</li>
     <li>TotalPrice: float</li>
     <li>PackingLabel: string</li>
     <li>ShippingLabel: string</li>
-    <li>ShippingCost: float</li>
 </ul>
