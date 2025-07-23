@@ -14,8 +14,8 @@ class Order
 
     public int ShippingCost()
     {
-        // if the customer is from the US than the shipping cost is $5, otherwise is $35
-        if (_customerInfo.IsFromUS()) return 5;
+        // if the customer is in the US than the shipping cost is $5, otherwise is $35
+        if (_customerInfo.IsInUS()) return 5;
         return 35;
     }
 

@@ -15,16 +15,19 @@ class Product
 
     public string GetProductName()
     {
+        //getter to the product name
         return _name;
     }
 
     public string GetProductId()
     {
+        //getter to the product id
         return _id;
     }
 
     public float TotalCostPerProduct()
     {
+        //returns the full price of a given amount of a product 
         return _price * _quantity;
     }
 }

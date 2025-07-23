@@ -13,11 +13,9 @@ class Address
 
     public bool IsExportation()
     {
-        if (_country.Equals("USA") || _country.Equals("US") || _country.Equals("United States of America"))
-        {
-            return true;
-        }
-        return false;
+        //if the customer is from the US the return false, otherwise is true
+        if (_country.Equals("USA") || _country.Equals("US") || _country.Equals("United States of America")) return false;
+        return true;
     }
 
     public string FullAddress()
