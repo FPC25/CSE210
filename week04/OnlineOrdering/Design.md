@@ -17,7 +17,7 @@
 
 ### Behaviors
 <ul>
-    <li>CostPerProduct: float</li>
+    <li>TotalCostPerProduct: float</li>
     <li>GetProductId: string</li>
     <li>GetProductName: string</li>
 </ul>
