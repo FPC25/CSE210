@@ -48,7 +48,7 @@ class Program
 
         string shipping, packing;
         float total;
-        Console.Clear();
+        //Console.Clear();
         foreach (Order order in orders)
         {
             shipping = order.ShippingLabel();
