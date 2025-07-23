@@ -48,7 +48,7 @@
 ### Responsibilities
 <ul>
     <li>_name: string</li>
-    <li>_address: Address</li>
+    <li>_userAddress: Address</li>
 </ul>
 
 ### Constructor
