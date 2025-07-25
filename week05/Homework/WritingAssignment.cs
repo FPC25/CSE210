@@ -10,6 +10,6 @@ class WritingAssignment : Assignment
 
     public string GetWritingInfo()
     {
-        return $"{this.GetSummary()}\n{_title}\n";
+        return $"{this.GetSummary()}\n{_title} by {this.GetStudentName()}\n";
     }
 }
