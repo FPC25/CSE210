@@ -4,8 +4,8 @@
 
 ### Responsibilities
 <ul>
-    <li>_Name: string</li>
-    <li>_Text: string</li>
+    <li>_name: string</li>
+    <li>_text: string</li>
 </ul>
 
 ### Constructor
