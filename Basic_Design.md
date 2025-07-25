@@ -9,7 +9,7 @@
 
 ### Constructor
 <ul>
-    <li>Class(type: var)</li>
+    <li>Class(type var)</li>
 </ul>
 
 ### Behaviors
