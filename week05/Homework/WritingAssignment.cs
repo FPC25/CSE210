@@ -1,16 +1,15 @@
 using System;
 
-class MathAssignment : Assignment
+class WritingAssignment : Assignment
 {
-    private string _textbookSection, _problems;
-    public MathAssignment(string name, string topic, string textbookSection, string problems) : base(name, topic)
+    private string _title;
+    public WritingAssignment(string name, string topic, string title) : base(name, topic)
     {
-        _textbookSection = textbookSection;
-        _problems = problems;
+        _title = title;
     }
 
-    public string GetHomeworkList()
+    public string GetWritingInfo()
     {
-        return $"{this.GetSummary()}\nSection {_textbookSection} Problems {_problems}\n";
+        return $"{this.GetSummary()}\n{_title}\n";
     }
 }
