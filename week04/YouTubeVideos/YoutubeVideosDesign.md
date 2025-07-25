@@ -43,4 +43,5 @@
     <li>GetLengthInSec: int</li>
     <li>SecToMin: (int, int)</li>
     <li>MinToHour: (int, int, int)</li>
+    <li>GetComments: List&lt;Comment&gt;</li>
 </ul>
