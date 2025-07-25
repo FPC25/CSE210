@@ -10,7 +10,7 @@
 
 ### Constructor
 <ul>
-    <li>Class(string name, string text)</li>
+    <li>Comment(string name, string text)</li>
 </ul>
 
 ### Behaviors
@@ -31,8 +31,7 @@
 
 ### Constructor
 <ul>
-    <li>Class(string title, string author, int length, List&lt;Comment&gt; comments)</li>
-    <li>Class(string title, string author, int length)</li>
+    <li>Video(string title, string author, int length, List&lt;Comment&gt; comments)</li>
 </ul>
 
 ### Behaviors
