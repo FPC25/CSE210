@@ -36,10 +36,11 @@
 
 ### Behaviors
 <ul>
-    <li>GetAmountComment: int</li>
     <li>GetTitle: string</li>
     <li>GetAuthor: string</li>
-    <li>GetLength: string</li>
-    <li>SecToMin: int</li>
-    <li>MinToHour: int</li>
+    <li>GetFormattedLength: string</li>
+    <li>CountComment: int</li>
+    <li>GetLengthInSec: int</li>
+    <li>SecToMin: (int, int)</li>
+    <li>MinToHour: (int, int, int)</li>
 </ul>
