@@ -12,7 +12,7 @@
 
 #### Constructor
 <ul>
-    <li>Class(string name, string topic)</li>
+    <li>Assignment(string name, string topic)</li>
 </ul>
 
 #### Behaviors
@@ -32,7 +32,7 @@
 
 #### Constructor
 <ul>
-    <li>Class(string name, string topic, string textbookSection, string problems)</li>
+    <li>MathAssignment(string name, string topic, string textbookSection, string problems)</li>
 </ul>
 
 #### Behaviors
@@ -49,7 +49,7 @@
 
 #### Constructor
 <ul>
-    <li>Class(string name, string topic, string title)</li>
+    <li>WritingAssignment(string name, string topic, string title)</li>
 </ul>
 
 #### Behaviors
