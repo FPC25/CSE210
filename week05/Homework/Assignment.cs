@@ -1,14 +1,16 @@
 using System;
 
-class ClassName
+class Assignment
 {
-    private int varName;
-    public ClassName()
+    private string _studentName, _topic;
+    public Assignment(string name, string topic)
     {
+        _studentName = name;
+        _topic = topic;
     }
 
-    public void MethodName()
+    public string GetSummary()
     {
-
+        return $"{_studentName} - {_topic}";
     }
 }
