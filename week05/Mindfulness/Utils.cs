@@ -62,6 +62,15 @@ public static class Utils
         return number.ToString().Length;
     }
 
+    //depending the number of characters presented it changes the amount of backspace and space on it
+    private static string BuiltCleanTerminalString(int numElements)
+    {
+        string cleanLine = new String('\b', numElements);
+        string spaces = new String(' ', numElements); ;
+
+        return $"{cleanLine}{spaces}{cleanLine}";
+    }
+
     //Make the animation works for a given amount of time
     public static void RepeatListString(List<string> animationList, int timeInSeconds)
     {
@@ -76,10 +85,7 @@ public static class Utils
 
             Console.Write(s);
             Thread.Sleep(1000);
-            //depending the number of characters presented it changes the amount of backspace and space on it
-            String backspace = new String('\b', s.Length);
-            String space = new String(' ', s.Length);
-            Console.Write($"{backspace}{space}{backspace}");
+            Console.Write(BuiltCleanTerminalString(s.Length));
 
             i++;
 
