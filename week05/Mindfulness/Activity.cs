@@ -2,32 +2,51 @@ using System;
 
 class Activity
 {
-    private int varName;
-    public Activity()
+    private string _activityName, _message;
+    private int _activityDurationInSeconds;
+
+    public Activity(string name, string message)
     {
+        _activityName = name;
+        _message = message;
+        _activityDurationInSeconds = DisplayStartMessage();
     }
 
-    public void StartMessage()
+    public int DisplayStartMessage()
     {
+        Console.WriteLine($"Welcome to the {_activityName} Activity.\n");
+        Console.WriteLine(_message+"\n");
+        int time;
+        string input;
+        do
+        {
+            Console.Write("For how long, in seconds, would you like to do this session?");
+            input = Console.ReadLine();
+        } while (!int.TryParse(input, out time));
 
+        return time;
     }
 
-    public void EndMessage()
+    public void DisplayEndMessage()
     {
-
+        Console.WriteLine($"Great Job!!\n");
+        Spinner(8);
+        Console.Clear();
+        Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
+        Spinner(12);
     }
+
+
 
     public void Countdown(int timeInSeconds)
     {
-        string cleanLine;
-        string spaces;
+        int numDigits;
         for (int i = timeInSeconds; i > 0; i--)
         {
             Console.Write(i);
             Thread.Sleep(1000);
-            cleanLine = new String('\b', Utils.CountDigit(i));
-            spaces = new String(' ', Utils.CountDigit(i));
-            Console.Write($"{cleanLine}{spaces}{cleanLine}");
+            numDigits = Utils.CountDigit(i);
+            Console.Write(Utils.BuiltCleanTerminalString(numDigits));
         }
     }
 
