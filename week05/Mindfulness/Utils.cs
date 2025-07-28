@@ -2,12 +2,16 @@ using System;
 
 public static class Utils
 {
-    public static string ToTitleCase(this string s)
+    //A function to Capitaliza a string
+    public static string ToTitleCase(string s)
     {
         if (string.IsNullOrEmpty(s)) return s;
         return char.ToUpper(s[0]) + s.Substring(1);
     }
 
+    // Functions to create a menu from each the user can interact given a list of options
+
+    //returns the option index
     public static int Decision(List<string> options)
     {
         // Display numbered choices
@@ -29,11 +33,13 @@ public static class Utils
         return choice - 1;
     }
 
+    //returns the text of the option
     public static string DecisionString(List<string> options)
     {
         return options[Decision(options)];
     }
 
+    // A function to print all the elements in a list in a python style
     public static void PrintList(List<string> list)
     {
         Console.Write("[");
@@ -46,6 +52,9 @@ public static class Utils
         Console.WriteLine("]");
     }
 
+    //Functions to help to create an animation
+
+    //Counts the number of digits of a number
     public static int CountDigit(int number)
     {
         if (number < 0) number = Math.Abs(number);
@@ -53,6 +62,7 @@ public static class Utils
         return number.ToString().Length;
     }
 
+    //Make the animation works for a given amount of time
     public static void RepeatListString(List<string> animationList, int timeInSeconds)
     {
         DateTime startTime = DateTime.Now;
@@ -66,6 +76,7 @@ public static class Utils
 
             Console.Write(s);
             Thread.Sleep(1000);
+            //depending the number of characters presented it changes the amount of backspace and space on it
             String backspace = new String('\b', s.Length);
             String space = new String(' ', s.Length);
             Console.Write($"{backspace}{space}{backspace}");
