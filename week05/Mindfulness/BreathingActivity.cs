@@ -30,7 +30,7 @@ class BreathingActivity : Activity
 
     public void Hold(int timeInSeconds)
     {
-        Console.Write($"Hold for {timeInSeconds} seconds:");
+        Console.Write($"Hold your breath for {timeInSeconds} seconds:");
         Countdown(timeInSeconds);
     }
 }
