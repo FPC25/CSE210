@@ -33,7 +33,12 @@ class Activity
 
     public void DisplayEndMessage()
     {
-        Console.WriteLine($"Great Job!!\n");
+        Console.Write($"Great Job!!");
+        if (_activityName.ToLower().Contains("breathe"))
+        {
+            Console.WriteLine($" Breathe normally now!");
+        }
+        Console.WriteLine("\n");
         Spinner(8);
         Console.Clear();
         Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
