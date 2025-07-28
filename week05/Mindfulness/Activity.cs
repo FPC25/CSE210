@@ -26,7 +26,7 @@ class Activity
         return time;
     }
 
-    protected void setTimer(int time)
+    protected void SetTimer(int time)
     {
         _activityDurationInSeconds = time;
     }
