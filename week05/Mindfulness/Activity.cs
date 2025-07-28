@@ -9,13 +9,12 @@ class Activity
     {
         _activityName = name;
         _message = message;
-        _activityDurationInSeconds = DisplayStartMessage();
     }
 
     public int DisplayStartMessage()
     {
         Console.WriteLine($"Welcome to the {_activityName} Activity.\n");
-        Console.WriteLine(_message+"\n");
+        Console.WriteLine(_message + "\n");
         int time;
         string input;
         do
@@ -25,6 +24,11 @@ class Activity
         } while (!int.TryParse(input, out time));
 
         return time;
+    }
+
+    protected void setTimer(int time)
+    {
+        _activityDurationInSeconds = time;
     }
 
     public void DisplayEndMessage()
