@@ -2,14 +2,17 @@ using System;
 
 class BreathingActivity : Activity
 {
+    //constants to run this program 
     const string NAME = "Breathing";
     const string MESSAGE = "This activity will help you relax by walking your through breathing routine. Clear your mind and focus on your breathing.";
     const int STEP_TIME = 4; //s
     const int NUM_STEPS = 4; // per cycle
+
+    //An empty constructor
     public BreathingActivity() : base(NAME, MESSAGE)
     {
     }
-
+    
     public void Run()
     {
         //initiate the program running it, displaying the messages and getting for how long it should run
@@ -18,10 +21,11 @@ class BreathingActivity : Activity
         time = NextFullCycle(time, STEP_TIME, NUM_STEPS);
         SetTimer(time);
 
-
+        //setting the initial moment and the end time to the routine
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(time);
 
+        //running the breathing routine
         while (DateTime.Now < endTime)
         {
             BreatheIn(STEP_TIME);
@@ -31,15 +35,22 @@ class BreathingActivity : Activity
         }
     }
 
-    private static int NextFullCycle(int ogTime, int stepTime, int numSteps)
+    //Since a full routine takes a time that is defined by the num of steps x the time each step takes, and the user may not enter a time that completes the full cycle we must find the next grater amount of seconds that completes a full cycle, in order to finish the breathing activity cycle
+    private int NextFullCycle(int ogTime, int stepTime, int numSteps)
     {
+        //calculate how many seconds each full cycle takes
         int totalCycleTime = stepTime * numSteps;
+        //Calculating the remainder for the entered time, if takes a full cycle or if takes less
         int remainder = ogTime % totalCycleTime;
+        //verifying if the value entered by the user already takes a number of full cycles 
         if (remainder == 0)
             return ogTime;
+        //if takes more than a full cycle, calculate the next amount of seconds to complete one more cycle 
         return ogTime + (totalCycleTime - remainder);
     }
-    public static void BreatheIn(int timeInSeconds)
+
+    //Functions to show the animations and messages to, breath in, breath out and to hold your breathe 
+    public void BreatheIn(int timeInSeconds)
     {
         List<string> breathIn = new List<string> { " ", ".", "o", "O" };
 
@@ -47,7 +58,7 @@ class BreathingActivity : Activity
         Utils.RepeatListString(breathIn, timeInSeconds);
     }
 
-    public static void BreatheOut(int timeInSeconds)
+    public void BreatheOut(int timeInSeconds)
     {
         List<string> breathIn = new List<string> { "O", "o", ".", " " };
 
