@@ -3,8 +3,7 @@ using System;
 class BreathingActivity : Activity
 {
     //constants to run this program 
-    const string NAME = "Breathing";
-    const string MESSAGE = "This activity will help you relax by walking your through breathing routine. Clear your mind and focus on your breathing.";
+    const string NAME = "Breathing", MESSAGE = "This activity will help you relax by walking your through breathing routine. Clear your mind and focus on your breathing.";
     const int STEP_TIME = 4; //s
     const int NUM_STEPS = 4; // per cycle
 
