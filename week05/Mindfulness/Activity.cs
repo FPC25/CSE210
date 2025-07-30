@@ -11,12 +11,18 @@ class Activity
         _message = message;
     }
 
+    //a method to display a start message, based on the name of the activity and request the time it should take
     public int DisplayStartMessage()
     {
+        //Display basic messages of welcoming and description of the activity
         Console.WriteLine($"Welcome to the {_activityName} Activity.\n");
         Console.WriteLine(_message + "\n");
+
+        //setting some variables of time and input
         int time;
         string input;
+
+        //requesting the user to enter the how long each activity will take, but added some safe guards in order to guarantee that the value entered can be converted to int, otherwise request keep requesting
         do
         {
             Console.Write("For how long, in seconds, would you like to do this session?");
@@ -26,27 +32,33 @@ class Activity
         return time;
     }
 
+    //setter to the _activityDurationInSeconds variable
     protected void SetTimer(int time)
     {
         _activityDurationInSeconds = time;
     }
 
+    //a method to display the activity end message
     public void DisplayEndMessage()
     {
+        //printing the basic message
         Console.Write($"Great Job!!");
-        if (_activityName.ToLower().Contains("breathe"))
+        //if it is a breathing activity, make sure the user to breathe normally again.
+        if (_activityName.ToLower().Contains("breath"))
         {
-            Console.WriteLine($" Breathe normally now!");
+            Console.Write($" Breathe normally now!");
         }
         Console.WriteLine("\n");
+        //show the spinner animation and clear terminal 
         Spinner(8);
         Console.Clear();
+        //show a new message informing the last activity and how long it took
         Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
+        //another spinner animation
         Spinner(12);
     }
 
-
-
+    //countdown animation
     public void Countdown(int timeInSeconds)
     {
         int numDigits;
@@ -59,6 +71,7 @@ class Activity
         }
     }
 
+    //spinner animation
     public void Spinner(int timeInSeconds)
     {
         List<string> spinner = new List<string> { "|", "/", "-", "\\" };
