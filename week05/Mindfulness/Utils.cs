@@ -65,9 +65,8 @@ public static class Utils
     //depending the number of characters presented it changes the amount of backspace and space on it
     public static string BuiltCleanTerminalString(int numElements)
     {
-        string cleanLine = new String('\b', numElements);
-        string spaces = new String(' ', numElements); ;
-
+        string cleanLine = new String('\b', numElements); 
+        string spaces = new String(' ', numElements); 
         return $"{cleanLine}{spaces}{cleanLine}";
     }
 
