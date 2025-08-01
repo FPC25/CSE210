@@ -43,9 +43,9 @@ class Program
                     break;
 
                 case LIST:
-                    //ListingActivity listing = new ListingActivity();
-                    //listing.Run();
-                    Console.WriteLine("Work in Progress");
+                    ListingActivity listing = new ListingActivity();
+                    listing.Run();
+                    //Console.WriteLine("Work in Progress");
                     break;
 
                 case QUIT:
