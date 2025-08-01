@@ -24,11 +24,11 @@ class Program
         };
 
         //Menu Calling and run logic depending on the selected option that keeps running while not selecting the QUIT option;
-        Console.WriteLine("Menu Options:");
         string selectedOption;
 
         do
         {
+            Console.WriteLine("Menu Options:");
             selectedOption = Utils.DecisionString(options);
             switch (selectedOption)
             {
