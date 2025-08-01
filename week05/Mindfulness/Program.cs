@@ -6,13 +6,14 @@ class Program
     {
         Console.WriteLine("Hello World! This is the Mindfulness Project.");
 
+        //creating the constants that are the options to the menu
         const string
         BREATH = "Start breathing activity",
         REFLECT = "Start reflecting activity",
         LIST = "Start listing activity",
         QUIT = "Quit";
 
-
+        //Creating the List to call the menu function
         List<string> options = new List<string>()
         {
             BREATH,
@@ -21,6 +22,7 @@ class Program
             QUIT
         };
 
+        //Menu Calling and run logic depending on the selected option that keeps running while not selecting the QUIT option;
         Console.WriteLine("Menu Options:");
         string selectedOption;
 
