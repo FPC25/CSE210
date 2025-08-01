@@ -43,6 +43,7 @@ class Activity
         Console.Clear();
         Console.WriteLine("Get ready...");
         Spinner(10);
+        Console.WriteLine();
     }
 
     //A method to display the activity end message
@@ -55,13 +56,13 @@ class Activity
         {
             Console.Write($" Breathe normally now!");
         }
-        Console.WriteLine();
+        Console.WriteLine("\n");
         //Show the spinner animation and clear terminal 
-        Spinner(8);
+        Spinner(10);
         //Show a new message informing the last activity and how long it took
         Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
         //Another spinner animation
-        Spinner(12);
+        Spinner(10);
         Console.Clear();
     }
 
@@ -83,7 +84,7 @@ class Activity
     {
         List<string> spinner = new List<string> { "|", "/", "-", "\\" };
 
-        Utils.RepeatListString(spinner, timeInSeconds, 500);
+        Utils.RepeatListString(spinner, timeInSeconds, 250);
     }
 
     //Ellipsis (... symbol) animation
