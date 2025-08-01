@@ -49,20 +49,20 @@ class Activity
     public void DisplayEndMessage()
     {
         //Printing the basic message
-        Console.Write($"Well Done!!");
+        Console.Write("\nWell Done!!");
         //If it is a breathing activity, make sure the user to breathe normally again.
         if (_activityName.ToLower().Contains("breath"))
         {
             Console.Write($" Breathe normally now!");
         }
-        Console.WriteLine("\n");
+        Console.WriteLine();
         //Show the spinner animation and clear terminal 
         Spinner(8);
-        Console.Clear();
         //Show a new message informing the last activity and how long it took
         Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
         //Another spinner animation
         Spinner(12);
+        Console.Clear();
     }
 
     //Countdown animation
@@ -83,7 +83,7 @@ class Activity
     {
         List<string> spinner = new List<string> { "|", "/", "-", "\\" };
 
-        Utils.RepeatListString(spinner, timeInSeconds);
+        Utils.RepeatListString(spinner, timeInSeconds, 500);
     }
 
     //Ellipsis (... symbol) animation
