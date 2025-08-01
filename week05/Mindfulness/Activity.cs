@@ -41,8 +41,8 @@ class Activity
     public void DisplayGetReady()
     {
         Console.Clear();
-        Console.WriteLine("Get ready...");
-        Spinner(10);
+        Console.Write("Get ready");
+        Ellipsis(12);
         Console.WriteLine();
     }
 
