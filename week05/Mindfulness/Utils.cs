@@ -71,7 +71,7 @@ public static class Utils
     }
 
     //Make the animation works for a given amount of time
-    public static void RepeatListString(List<string> animationList, int timeInSeconds)
+    public static void RepeatListString(List<string> animationList, int timeInSeconds, int sleepTimeInMiliSeconds = 1000)
     {
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(timeInSeconds);
@@ -83,7 +83,7 @@ public static class Utils
             string s = animationList[i];
 
             Console.Write(s);
-            Thread.Sleep(1000);
+            Thread.Sleep(sleepTimeInMiliSeconds);
             Console.Write(BuiltCleanTerminalString(s.Length));
 
             i++;
