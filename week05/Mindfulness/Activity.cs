@@ -25,7 +25,7 @@ class Activity
         //Requesting the user to enter the how long each activity will take, but added some safe guards in order to guarantee that the value entered can be converted to int, otherwise request keep requesting
         do
         {
-            Console.Write("For how long, in seconds, would you like to do this session?");
+            Console.Write("For how long, in seconds, would you like to do this session? ");
             input = Console.ReadLine();
         } while (!int.TryParse(input, out time));
 
