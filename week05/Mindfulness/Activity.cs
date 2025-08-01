@@ -56,12 +56,13 @@ class Activity
         {
             Console.Write($" Breathe normally now!");
         }
-        Console.WriteLine("\n");
-        //Show the spinner animation and clear terminal 
+        Console.WriteLine();
+        //Show the spinner animation
         Spinner(10);
+        Console.WriteLine();
         //Show a new message informing the last activity and how long it took
         Console.WriteLine($"You have completed another {_activityDurationInSeconds} seconds of the {_activityName} Activity.");
-        //Another spinner animation
+        //Another spinner animation and clear terminal
         Spinner(10);
         Console.Clear();
     }
