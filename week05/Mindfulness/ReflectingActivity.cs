@@ -41,6 +41,7 @@ class ReflectingActivity : Activity
     public void Run()
     {
         Console.Clear();
+        DisplayGetReady();
         int time = DisplayStartMessage();
         SetTimer(time);
         DisplayPrompt();
@@ -61,7 +62,7 @@ class ReflectingActivity : Activity
         //While the question selected randomly was already used, try again
         do
         {
-            question = _questions[_random.Next()];
+            question = _questions[_random.Next(_questions.Count)];
         } while (usedQuestionList.Contains(question));
         
         // add the new question to the used list to future reference and return the question
@@ -71,7 +72,7 @@ class ReflectingActivity : Activity
 
     private void DisplayPrompt()
     {
-        
+        Console.Clear();
         //Get a random prompt
         string prompt = GetRandomPrompt();
 
@@ -107,6 +108,7 @@ class ReflectingActivity : Activity
         {
             Console.Write($"> {GetRandomQuestion(usedQuestions)}");
             Spinner(10);
+            Console.WriteLine();
         }        
     }
 }
