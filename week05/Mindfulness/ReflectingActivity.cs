@@ -73,12 +73,10 @@ class ReflectingActivity : Activity
     private void DisplayPrompt()
     {
         Console.Clear();
-        //Get a random prompt
-        string prompt = GetRandomPrompt();
 
         //Present the prompt formatted as shown
         Console.WriteLine("Considering the following prompt:");
-        Console.WriteLine($"--- {prompt} ---\n");
+        Console.WriteLine($"--- {GetRandomPrompt()} ---\n");
 
         //create this wait time until the user thing on something and then they press the enter to continue
         Console.WriteLine("When you have something in mind, press Enter to continue.");
