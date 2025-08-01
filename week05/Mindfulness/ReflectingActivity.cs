@@ -41,9 +41,9 @@ class ReflectingActivity : Activity
     public void Run()
     {
         Console.Clear();
-        DisplayGetReady();
         int time = DisplayStartMessage();
         SetTimer(time);
+        DisplayGetReady();
         DisplayPrompt();
         DisplayQuestion(time);
         DisplayEndMessage();
