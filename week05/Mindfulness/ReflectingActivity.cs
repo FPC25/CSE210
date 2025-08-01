@@ -3,7 +3,7 @@ using System;
 class ReflectingActivity : Activity
 {
     const string NAME = "Reflection", MESSAGE = "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.";
-    private List<string>
+    private readonly List<string>
         _prompts = new List<string>() {
         "Think of a time when you stood up for someone else.",
         "Think of a time when you did something really difficult.",
@@ -32,52 +32,79 @@ class ReflectingActivity : Activity
         "How can you use what you learned to help others?",
         "How can you practice gratitude for this experience?"
     };
+    private Random _random = new Random();
+
     public ReflectingActivity() : base(NAME, MESSAGE)
     {
     }
 
     public void Run()
     {
-        List<string> usedQuestions = new List<string>();
         int time = DisplayStartMessage();
-        DateTime startime = new DateTime();
-        startime = DateTime.Now;
         SetTimer(time);
         DisplayPrompt();
-        DisplayQuestion(startime);
+        DisplayQuestion(time);
         DisplayEndMessage();
     }
 
     private string GetRandomPrompt()
     {
-        return "";
+        // Select a random prompt from the list
+        return _prompts[_random.Next(_prompts.Count)];
     }
 
     private string GetRandomQuestion(List<string> usedQuestionList)
     {
-        return "";
+        string question;
+
+        //While the question selected randomly was already used, try again
+        do
+        {
+            question = _questions[_random.Next()];
+        } while (usedQuestionList.Contains(question));
+        
+        // add the new question to the used list to future reference and return the question
+        usedQuestionList.Add(question);
+        return question;
     }
 
     private void DisplayPrompt()
     {
-        string prompt;
-        prompt = GetRandomPrompt();
+        //Get a random prompt
+        string prompt = GetRandomPrompt();
 
+        //Present the prompt formatted as shown
         Console.WriteLine("Considering the following prompt:");
         Console.WriteLine($"--- {prompt} ---\n");
 
+        //create this wait time until the user thing on something and then they press the enter to continue
         Console.WriteLine("When you have something in mind, press Enter to continue.");
         Console.ReadLine();
     }
 
-    private void DisplayQuestion(DateTime time)
+    private void DisplayQuestion(int timeInSeconds)
     {
+        //Setting the list of to track the used questions and the start and end times 
         List<string> usedQuestions = new List<string>();
-        string question;
-        question = GetRandomQuestion(usedQuestions);
+        DateTime startTime = new DateTime();
+        DateTime endTime = new DateTime();
 
-        
-        Console.WriteLine("Answer the questions: ");
-        Console.WriteLine(question);
+        //Beginning the questions
+
+        //Advise the user the questions will begin in n seconds 
+        Console.Write("You may begin in: ");
+        Countdown(5);
+        Console.Clear();
+
+        //Set the start and end times for the activity. 
+        startTime = DateTime.Now;
+        endTime = startTime.AddSeconds(timeInSeconds);
+
+        //While the time is not finished keep asking questions 
+        while (DateTime.Now <= endTime)
+        {
+            Console.Write($"> {GetRandomQuestion(usedQuestions)}");
+            Spinner(10);
+        }        
     }
 }
