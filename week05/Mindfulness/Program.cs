@@ -1,5 +1,12 @@
 using System;
 
+// This project exceeds the core requirements in several ways:
+// - Added creative and enhanced animations for breathing in, breathing out including a custom ellipsis animation.
+// - Expanded the set of prompts and questions in the Reflecting and Listing activities to provide a richer mindfulness experience.
+// - Used constants and collections to simplify menu management and improve code maintainability.
+// - Implemented utility methods for user input and string formatting to streamline interaction and improve usability.
+// - Created a precaution in order to prevent repeating questions for a prompt in a section for the listing activity.
+
 class Program
 {
     static void Main(string[] args)
@@ -45,7 +52,6 @@ class Program
                 case LIST:
                     ListingActivity listing = new ListingActivity();
                     listing.Run();
-                    //Console.WriteLine("Work in Progress");
                     break;
 
                 case QUIT:
