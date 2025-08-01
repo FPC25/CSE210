@@ -4,7 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the Mindfulness Project.");
+        Console.Clear();
+        Console.WriteLine("Hello World! This is the Mindfulness Project.\n");
 
         //creating the constants that are the options to the menu
         const string
