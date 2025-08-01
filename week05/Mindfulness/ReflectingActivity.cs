@@ -40,6 +40,7 @@ class ReflectingActivity : Activity
 
     public void Run()
     {
+        Console.Clear();
         int time = DisplayStartMessage();
         SetTimer(time);
         DisplayPrompt();
@@ -70,6 +71,7 @@ class ReflectingActivity : Activity
 
     private void DisplayPrompt()
     {
+        
         //Get a random prompt
         string prompt = GetRandomPrompt();
 
