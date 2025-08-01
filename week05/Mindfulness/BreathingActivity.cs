@@ -11,7 +11,7 @@ class BreathingActivity : Activity
     public BreathingActivity() : base(NAME, MESSAGE)
     {
     }
-    
+
     public void Run()
     {
         Console.Clear();
@@ -20,8 +20,8 @@ class BreathingActivity : Activity
         //get the next value that creates a complete breathing cycle and set it;
         time = NextFullCycle(time, STEP_TIME, NUM_STEPS);
         SetTimer(time);
-
         DisplayGetReady();
+
         //setting the initial moment and the end time to the routine
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(time);
@@ -29,11 +29,14 @@ class BreathingActivity : Activity
         //running the breathing routine
         while (DateTime.Now < endTime)
         {
+            Console.WriteLine();
             BreatheIn(STEP_TIME);
             Hold(STEP_TIME);
             BreatheOut(STEP_TIME);
             Hold(STEP_TIME);
         }
+
+        DisplayEndMessage();
     }
 
     //Since a full routine takes a time that is defined by the num of steps x the time each step takes, and the user may not enter a time that completes the full cycle we must find the next grater amount of seconds that completes a full cycle, in order to finish the breathing activity cycle
