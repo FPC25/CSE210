@@ -23,6 +23,7 @@ class ListingActivity : Activity
         "What are some challenges you have overcome?"
     };
     private int _count;
+    private Random _random = new Random();
 
     public ListingActivity() : base(NAME, MESSAGE)
     {
@@ -30,20 +31,62 @@ class ListingActivity : Activity
 
     public void Run()
     {
-        SetTimer(DisplayStartMessage());
-        GetRandomPrompt();
-        Countdown(10);
-        GetListFromUser();
+        Console.Clear();
+        int time = DisplayStartMessage();
+        SetTimer(time);
+        DisplayGetReady();
+        DisplayPrompt();
+        GetListFromUser(time);
         DisplayEndMessage();
     }
 
-    private void GetRandomPrompt()
+    private string GetRandomPrompt()
     {
-
+        // Select a random prompt from the list
+        return _prompts[_random.Next(_prompts.Count)];
     }
 
-    private List<string> GetListFromUser()
+    private void DisplayPrompt()
     {
-        return new List<string>();
+        Console.Clear();
+        
+        //Present the prompt formatted as shown
+        Console.WriteLine("List as many responses you can to the following prompt:");
+        Console.WriteLine($"--- {GetRandomPrompt()} ---\n");
+    }
+
+    private void SetCount(int count)
+    {
+        _count = count;
+    }
+
+    private void GetListFromUser(int timeInSeconds)
+    {
+        //Setting the list of to track the used questions and the start and end times 
+        List<string> userInput = new List<string>();
+        string input;
+        DateTime startTime = new DateTime();
+        DateTime endTime = new DateTime();
+
+        //Beginning the questions
+
+        //Advise the user the questions will begin in n seconds 
+        Console.Write("You may begin in: ");
+        Countdown(5);
+        Console.WriteLine();
+
+        //Set the start and end times for the activity. 
+        startTime = DateTime.Now;
+        endTime = startTime.AddSeconds(timeInSeconds);
+
+        //While the time is not finished keep asking questions 
+        while (DateTime.Now <= endTime)
+        {
+            Console.Write("> ");
+            input = Console.ReadLine();
+            userInput.Add(input);
+        }
+        SetCount(userInput.Count);
+        Console.WriteLine($"You listed {_count} itens!");
     }
 }
