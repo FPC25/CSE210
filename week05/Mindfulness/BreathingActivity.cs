@@ -14,12 +14,14 @@ class BreathingActivity : Activity
     
     public void Run()
     {
+        Console.Clear();
         //initiate the program running it, displaying the messages and getting for how long it should run
         int time = DisplayStartMessage();
         //get the next value that creates a complete breathing cycle and set it;
         time = NextFullCycle(time, STEP_TIME, NUM_STEPS);
         SetTimer(time);
 
+        DisplayGetReady();
         //setting the initial moment and the end time to the routine
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(time);
@@ -55,6 +57,7 @@ class BreathingActivity : Activity
 
         Console.Write($"Breathe in for {timeInSeconds} seconds: ");
         Utils.RepeatListString(breathIn, timeInSeconds);
+        Console.WriteLine();
     }
 
     public void BreatheOut(int timeInSeconds)
@@ -63,11 +66,13 @@ class BreathingActivity : Activity
 
         Console.Write($"Breathe out for {timeInSeconds} seconds: ");
         Utils.RepeatListString(breathIn, timeInSeconds);
+        Console.WriteLine();
     }
 
     public void Hold(int timeInSeconds)
     {
-        Console.Write($"Hold your breath for {timeInSeconds} seconds:");
+        Console.Write($"Hold your breath for {timeInSeconds} seconds: ");
         Countdown(timeInSeconds);
+        Console.WriteLine();
     }
 }
