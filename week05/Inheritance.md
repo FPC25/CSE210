@@ -27,7 +27,7 @@ class Activity
 {
     private string _activityName, _message;
     private int _activityDurationInSeconds;
-    
+
     public Activity(string name, string message)
     {
         _activityName = name;
@@ -54,7 +54,7 @@ class Activity
     //... rest of the code
 }
 
-   //derived classes
+//derived classes
 class BreathingActivity : Activity
 {
     //constants to run this program 
