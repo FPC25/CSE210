@@ -17,7 +17,7 @@ Inheritance is a fundamental concept in Object-Oriented programming (OOP) where 
 To better visualize imagine a game in which we have multiple kind of animals, all of them have their specificities, but at the same time they also share some characteristics and behaviors. To program this we can simplify our code by creating a class <code>Animal()</code> that have all the shared attributes and methods such as <code>_numberOfLegs</code>, <code>Sleep()</code>, <code>Eat()</code> and other classes, such as <code>Wolf()</code> and <code>Bird()</code> will share it and on top of it, they will aso have the specific attributes and methods, such as <code>Run()</code> and <code>Fly()</code>, respectively.
 
 
-### Code Example from the Mindfulness project
+### Code example from the Mindfulness project
 
 
 ```csharp
@@ -109,7 +109,4 @@ To better visualize imagine a game in which we have multiple kind of animals, al
         }
 ```
 
-Here we can see that the base class <code>Activity()</code> we see that all activities have at least a name and a message that describes it that are required to a method called <code>ADisplayStartMessage()</code> that with the simple declarations <code>class ListingActivity : Activity</code> and the constructor <code>public ListingActivity() : base(NAME, MESSAGE){}</code>, for example inherits from <code>Activity()</code> not only the behaviors, although can access them due them being private, but its methods.
- 
-
-### Real-World Application
+Here we can see that the base class <code>Activity()</code> we see that all activities have at least a name and a message that describes it that are required to a method called <code>DisplayStartMessage()</code> that with the simple declarations <code>class ListingActivity : Activity</code> and the constructor <code>public ListingActivity() : base(NAME, MESSAGE){}</code>, for example inherits from <code>Activity()</code> not only the behaviors, although can't access them due them being private, but also its methods, as shown in the <code>Run()</code> method (for both the breathing and Listing activities) access the <code>DisplayStartMessage()</code> method from the base class, removing the necessity of declaring the same code in each specific activity class.
