@@ -22,91 +22,84 @@ To better visualize imagine a game in which we have multiple kind of animals, al
 
 ```csharp
 
-    //base class
-    class Activity
+//base class
+class Activity
+{
+    private string _activityName, _message;
+    private int _activityDurationInSeconds;
+    
+    public Activity(string name, string message)
     {
-        private string _activityName, _message;
-        private int _activityDurationInSeconds;
-
-        public Activity(string name, string message)
-        {
-            _activityName = name;
-            _message = message;
-        }
-
-        //A method to display a start message, based on the name of the activity and request the time it should take
-        public int DisplayStartMessage()
-        {
-            //Display basic messages of welcoming and description of the activity
-            Console.WriteLine($"Welcome to the {_activityName} Activity.\n");
-            Console.WriteLine(_message + "\n");
-
-            //Setting some variables of time and input
-            int time;
-            string input;
-
-            //Requesting the user to enter the how long each activity will take, but added some safe guards in order to guarantee that the value entered can be converted to int, otherwise request keep requesting
-            do
-            {
-                Console.Write("For how long, in seconds, would you like to do this session? ");
-                input = Console.ReadLine();
-            } while (!int.TryParse(input, out time));
-
-            return time;
-        }
-
-        //... rest of the code
+        _activityName = name;
+        _message = message;
     }
 
-    //derived classes
-    class BreathingActivity : Activity
+    //A method to display a start message, based on the name of the activity and request the time it should take
+    public int DisplayStartMessage()
     {
-        //constants to run this program 
-        const string NAME = "Breathing", MESSAGE = "This activity will help you relax by walking your through breathing routine. Clear your mind and focus on your breathing.";
-        const int STEP_TIME = 4; //s
-        const int NUM_STEPS = 4; // per cycle
-
-        //An empty constructor
-        public BreathingActivity() : base(NAME, MESSAGE)
+        //Display basic messages of welcoming and description of the activity
+        Console.WriteLine($"Welcome to the {_activityName} Activity.\n");
+        Console.WriteLine(_message + "\n");
+        //Setting some variables of time and input
+        int time;
+        string input;
+        //Requesting the user to enter the how long each activity will take, but added some safe guards in order to guarantee that the value entered can be converted to int, otherwise request keep requesting
+        do
         {
-        }
+            Console.Write("For how long, in seconds, would you like to do this session? ");
+            input = Console.ReadLine();
+        } while (!int.TryParse(input, out time));
+        return time;
+    }
+    //... rest of the code
+}
 
-        public void Run()
-        {
-            Console.Clear();
-            //initiate the program running it, displaying the messages and getting for how long it should run
-            int time = DisplayStartMessage();
-            //... rest of the method
-        }
+   //derived classes
+class BreathingActivity : Activity
+{
+    //constants to run this program 
+    const string NAME = "Breathing", MESSAGE = "This activity will help you relax by walking your through breathing routine. Clear your mind and focus on your breathing.";
+    const int STEP_TIME = 4; //s
+    const int NUM_STEPS = 4; // per cycle
+    //An empty constructor
 
-        //... rest of the code
+    public BreathingActivity() : base(NAME, MESSAGE)
+    {
     }
 
-    class ListingActivity : Activity
+    public void Run()
     {
-        const string NAME = "Listing", MESSAGE = "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.";
+        Console.Clear();
+        //initiate the program running it, displaying the messages and getting for how long it should run
+        int time = DisplayStartMessage();
+        //... rest of the method
+    }
+    //... rest of the code
+}
 
-        private List<string> _prompts = new List<string>() {
-            "Who are people that you appreciate?",
-            "What are personal strengths of yours?"
-            //rest of the prompts
-        };
-        private int _count;
-        private Random _random = new Random();
+class ListingActivity : Activity
+{
+    const string NAME = "Listing", MESSAGE = "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.";
+    private List<string> _prompts = new List<string>() {
+        "Who are people that you appreciate?",
+        "What are personal strengths of yours?"
+        //rest of the prompts
+    };
+    private int _count;
+    private Random _random = new Random();
 
-        public ListingActivity() : base(NAME, MESSAGE)
-        {
-        }
+    public ListingActivity() : base(NAME, MESSAGE)
+    {
+    }
 
-        public void Run()
-        {
-            Console.Clear();
-            int time = DisplayStartMessage();
-            //... rest of the method
-            }
-
-            //... rest of the code
-        }
+    public void Run()
+    {
+        Console.Clear();
+        int time = DisplayStartMessage();
+        //... rest of the method
+    }
+    //... rest of the code
+}
 ```
 
 Here we can see that the base class <code>Activity()</code> we see that all activities have at least a name and a message that describes it that are required to a method called <code>DisplayStartMessage()</code> that with the simple declarations <code>class ListingActivity : Activity</code> and the constructor <code>public ListingActivity() : base(NAME, MESSAGE){}</code>, for example inherits from <code>Activity()</code> not only the behaviors, although can't access them due them being private, but also its methods, as shown in the <code>Run()</code> method (for both the breathing and Listing activities) access the <code>DisplayStartMessage()</code> method from the base class, removing the necessity of declaring the same code in each specific activity class.
