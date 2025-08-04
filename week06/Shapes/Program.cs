@@ -15,7 +15,7 @@ class Program
 
         foreach (Shape shape in shapes)
         {
-            Console.WriteLine($"The {shape.GetColor()} shape has a area of {shape.GetArea()} u^2");
+            Console.WriteLine($"The {shape.GetColor()} shape has an area of {shape.GetArea():F2} u^2");
         }
     }
 }
