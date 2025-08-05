@@ -114,7 +114,7 @@
     <li>DisplayActiveQuests: void</li>
     <li>ActivateTimeQuest: bool -> activate quest that depends on the time</li>
     <li>CalculateChecklistDifficulty: int</li>
-    <li>CalculateXpPerLevel: int</li>
+    <li>CalculateXpPerQuest: int</li>
     <li>GetNotTimedQuests: List&lt;Quest&gt;</li>
     <li>GetWeeklyQuests: List&lt;Quest&gt;</li>
     <li>GetMonthlyQuests: List&lt;Quest&gt;</li>
@@ -127,17 +127,22 @@
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_shortName: string</li>
+    <li>_description: string</li>
+    <li>_xpPoints: int</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Quest(type var)</li>
-</ul>
+    <li>Quest(string shortName, string description, int xpPoints)</li>
+</ul> 
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void Abstract</li>
+    <li>IsComplete(): bool Abstract</li>
+    <li>GetDetailsString(): string Abstract</li>
+    <li>GetStringRepresentation(): string Abstract</li>
 </ul>
 
 
@@ -245,7 +250,7 @@
     <li>MethodName: type</li>
 </ul>
 
-### AgeQuest
+
 
 #### Responsibilities
 <ul>
