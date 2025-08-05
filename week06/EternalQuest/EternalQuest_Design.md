@@ -130,6 +130,7 @@
     <li>_shortName: string</li>
     <li>_description: string</li>
     <li>_xpPoints: int</li>
+    <li>_status: string -> it it was completed or failed to completed</li>
 </ul>
 
 #### Constructor
@@ -145,31 +146,13 @@
     <li>GetStringRepresentation(): string Abstract</li>
 </ul>
 
-
 ## Child Classes
-
-### TutorialQuest
-
-#### Responsibilities
-<ul>
-    <li>_varName: type</li>
-</ul>
-
-#### Constructor
-<ul>
-    <li>Class(type var)</li>
-</ul>
-
-#### Behaviors
-<ul>
-    <li>MethodName: type</li>
-</ul>
 
 ### SimpleQuest
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_active: bool</li>
 </ul>
 
 #### Constructor
@@ -220,7 +203,7 @@
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_period: string</li>
 </ul>
 
 #### Constructor
