@@ -75,8 +75,6 @@ simples
     * Incluir informações dos bisavós no familysearch
     * Dar ao menos uma referencia para os missionários
     * Obter recomendação de tempo limitado para o templo
-    * se batizado, mas com ~1 anos de membro
-        -> obter recomendação completa para investidura
     * Aceitar fazer um discurso quando convidado
     * Se não tirou a benção patriarcal:
         -> tirar a benção patriarcal
@@ -109,20 +107,21 @@ timeQuest
         -> iniciar a quest de marcar entrevista para renovar recomendação
     * Se chamado para discursar 
         -> quest na semana de preparar o discurso com antecedência
+    se batizado, mas com ~1 anos de membro
+        -> obter recomendação completa para investidura
+    * Por idade 
+        -> Seminário: 14-17
+            -> Frequentar o seminário
+            -> Força dos jovens
+            -> Decorar o tema (Rapazes/Moças)
+            -> Participar atividades (OR/OM/ORM)
+                -> se menino
+                    pedir entrevistas para avançar no sacerdócio
+
+        -> Instituto: 18-35
+            -> Frequentar o Instituto
+            -> níveis do Instituto
+            -> Participar atividades JAS
 
 Custom
     * Usuário entra com uma quest, tipo, dificuldade, (se quiser um prazo)
-
-Por idade 
-    * Seminário: 14-17
-        -> Frequentar o seminário
-        -> Força dos jovens
-        -> Decorar o tema (Rapazes/Moças)
-        -> Participar atividades (OR/OM/ORM)
-            -> se menino
-                pedir entrevistas para avançar no sacerdócio
-
-    * Instituto: 18-35
-        -> Frequentar o Instituto
-        -> níveis do Instituto
-        -> Participar atividades JAS
