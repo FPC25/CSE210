@@ -59,15 +59,13 @@ Profile Menu:
 Quests
 
 tutorial
-    * criar conta sud
-    * criar conta familysearch
-    * adicionar data de batismo e confirmação
     * adicionar horario da Sacramental
-    * working?
-
+    * criar conta sud
+    * aprender a dar o dizimo online com secretário
+    * adicionar data de batismo e confirmação
+    * criar conta familysearch
 
 simples
-    * aprender a dar o dizimo online
     * Conseguir um chamado ou designação
     * Incluir suas proprias informações no familysearch
     * Incluir informações dos pais no familysearch
@@ -89,18 +87,23 @@ checklist
         -> estudar a benção patriarcal 1 vez ao mes
 
 eternal quests (repete num dado periodo de tempo)
-    * pagar o dizimo e dar ofertas
-    * estudar as escrituras (n) min por dia
-    * Tomar o sacramento
-    * Fazer indexação n horas semanais
-    * se tem chamado
-        -> Trabalhar no chamado n horas semanais
-    * Buscar informações familiares e colocar no family search
-    * Ir ao templo fazer ordenanças n vezes ao mes
-    * Realizar trabalho de ministração pelo menos 4 vezes por mes
-    * Fazer jejum pelo menos 1 vez ao mes
-    * Orar ao acordar e dormir;
-    * Orar antes das refeições
+    -> diarias
+        * estudar as escrituras (n) min por dia
+        * Orar ao acordar e dormir;
+        * Orar antes das refeições
+
+    -> semanal
+        * Tomar o sacramento
+        * Fazer indexação n horas semanais
+        * se tem chamado
+           -> Trabalhar no chamado n horas semanais
+        * Buscar informações familiares e colocar no family search
+
+    -> mensal
+        * pagar o dizimo e dar ofertas
+        * Ir ao templo fazer ordenanças n vezes ao mes
+        * Realizar trabalho de ministração pelo menos 4 vezes por mes
+        * Fazer jejum pelo menos 1 vez ao mes
 
 timeQuest
     * Se tem recomendação para o templo e proximo da validade:
@@ -125,3 +128,7 @@ timeQuest
 
 Custom
     * Usuário entra com uma quest, tipo, dificuldade, (se quiser um prazo)
+
+
+função de escalonamento de quantidade de experiencia por nível
+f(x) = 2650 * 1.5^(1/2 * ln(2*x-1))
