@@ -21,14 +21,10 @@ Nome: [string]
 Level: [int]
 Idade: [int]
     -> ensino:
-        -> Seminario:
-            Frequenta: [bool]
-        -> Instituto:
-            Frequenta: [bool]
-            nivel: [string]
-            cursos: [lista]
-Sexo: [string]
-    -> se masc: [string de uma lista]
+        -> Seminario
+        -> Instituto
+male: [bool]
+    -> se male então libera sacerdócio
     Sacerdócio: diácono(ano que completa 12)/mestre (ano que completa 14)/sacerdote(ano que completa 16)/Elder(pode a partir dos 18 se tem mais de 1 ano de membro se não tem q esperar pelo menos 6 meses antes)/Sumo Sacerdote
 
 Ordenaças: [dictionary]
