@@ -8,6 +8,7 @@
 <ul>
     <li>_name: string</li>
     <li>_level: int</li>
+    <li>_currentXP: int</li>
     <li>_age: int</li>
     <li>_ensign: ?string</li>
     <li>_sex: string</li>
@@ -52,10 +53,9 @@
     <li>SetWorking: string</li>
     <li>ProfileMenu: void</li>
     <li>GetLevel: void</li>
-    <li>AddExperience</li>
+    <li>GetXP</li>
+    <li>AddXP</li>
     <li>CalculateNextLevelXp</li>
-    <li>DisplayCompletedQuests: void</li>
-    <li>DisplayFailedQuests: void</li>
     <li>DisplayLevelProgress</li>
     <li>DisplayUserInfo</li>
 </ul>
@@ -119,6 +119,11 @@
     <li>GetWeeklyQuests: List&lt;Quest&gt;</li>
     <li>GetMonthlyQuests: List&lt;Quest&gt;</li>
     <li>DisplayActiveQuests: void</li>
+    <li>DisplayFailedQuests: void</li>
+    <li>DisplayCompletedQuests: void</li>
+    <li>DisplayDailyQuest: void</li>
+    <li>DisplayWeeklyQuest: void</li>
+    <li>DisplayMonthlyQuest: void</li>
 </ul>
 
 ## Parent Class
@@ -142,7 +147,7 @@
 <ul>
     <li>RecordEvent(): void Abstract</li>
     <li>IsComplete(): bool Abstract</li>
-    <li>GetDetailsString(): string Abstract</li>
+    <li>GetDetailsString(): string</li>
     <li>GetStringRepresentation(): string Abstract</li>
 </ul>
 
@@ -153,50 +158,64 @@
 #### Responsibilities
 <ul>
     <li>_active: bool</li>
+    <li>const XPMAX: double</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Class(type var)</li>
+    <li>SimpleQuest(string shortName, string description, int xpPoints)</li>
 </ul>
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void</li>
+    <li>IsComplete(): bool</li>
+    <li>GetDetailsString(): string</li>
 </ul>
 
 ### ChecklistQuest
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_amountCompleted: int</li>
+    <li>_target: int</li>
+    <li>_bonusXP: int</li>
+    <li>const XPMAXSTEP: double</li>
+    <li>const XPMAXBONUS: double</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Class(type var)</li>
+    <li>ChecklistQuest(string shortName, string description, int xpPoints, int bonus, int target)</li>
 </ul>
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void</li>
+    <li>IsComplete(): bool</li>
+    <li>GetDetailsString(): string</li>
+    <li>GetStringRepresentation(): string</li>
 </ul>
 
 ### TimedQuest
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_initialDate: DateTime</li>
+    <li>const XPMAX: double</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Class(type var)</li>
+    <li>TimedQuest(string shortName, string description, int xpPoints, DateTime initialDate)</li>
 </ul>
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void</li>
+    <li>IsComplete(): bool</li>
+    <li>GetDetailsString(): string</li>
+    <li>ActivateQuest(): bool</li>
 </ul>
 
 ### EternalQuest
@@ -204,48 +223,40 @@
 #### Responsibilities
 <ul>
     <li>_period: string</li>
+    <li>const XPMAX: double</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Class(type var)</li>
+    <li>EternalQuest(string shortName, string description, int xpPoints, string _period)</li>
 </ul>
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void</li>
+    <li>IsComplete(): bool</li>
+    <li>GetStringRepresentation(): string</li>
 </ul>
 
 ### CustomQuest
 
 #### Responsibilities
 <ul>
-    <li>_varName: type</li>
+    <li>_difficulty: string</li>
+    <li>const XPEASEY: double</li>
+    <li>const XPMEDIUM: double</li>
+    <li>const XPHARD: double</li>
 </ul>
 
 #### Constructor
 <ul>
-    <li>Class(type var)</li>
+    <li>CustomQuest(string shortName, string description, int xpPoints, string _difficulty)</li>
 </ul>
 
 #### Behaviors
 <ul>
-    <li>MethodName: type</li>
-</ul>
-
-
-
-#### Responsibilities
-<ul>
-    <li>_varName: type</li>
-</ul>
-
-#### Constructor
-<ul>
-    <li>Class(type var)</li>
-</ul>
-
-#### Behaviors
-<ul>
-    <li>MethodName: type</li>
+    <li>RecordEvent(): void</li>
+    <li>IsComplete(): bool</li>
+    <li>GetStringRepresentation(): string</li>
+    <li>CreateQuestByDifficulty(): void</li>
 </ul>
