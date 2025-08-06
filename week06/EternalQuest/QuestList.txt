@@ -45,7 +45,8 @@ Trabalhando: [bool]
 Profile Menu:
 -> Register ordinance: [DateTime]
 -> Change Sacramental Time: [DateTime]
--> Change Institute Courses: [List<string>] -> se estiver no instituto
+-> Se tive mais de 18 anos e mais de 1 ano de membro 
+    -> Change Melchizedek Priesthood:  
 -> See Completed Quests: [list]
 -> See Failed Quests: [list]
 -> Quit
