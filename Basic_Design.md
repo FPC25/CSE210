@@ -3,17 +3,13 @@
 ## Class Name
 
 ### Responsibilities
-<ul>
-    <li>_varName: type</li>
-</ul>
+
+- _varName: type</li>
 
 ### Constructor
-<ul>
-    <li>Class(type var)</li>
-</ul>
+
+- Class(type var)</li>
 
 ### Behaviors
-<ul>
-    <li>MethodName: type</li>
-</ul>
 
+- MethodName: type</li>
