@@ -1,14 +1,17 @@
+#nullable enable
+
 using System;
+using Quests;
 
 class Profile
 {
     private int _level, _currentXP, _age;
-    private bool _sex, _married, _patriarcalBlessing, _working, _activeRecommendation;
+    private bool _male, _married, _patriarcalBlessing, _working, _activeRecommendation;
     private DateTime _sacramentalTime, _recommendationDueDate;
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
     private string _name, __familysearchLink, _ldsAccount;
-    private ?string _dominicalEducation, _priesthood;
+    private string? _dominicalEducation, _priesthood;
     private List<string> _calling;
 
 
@@ -17,6 +20,8 @@ class Profile
         _name = name;
         _age = age;
         _male = male;
+        _level = 1;
+        _currentXP = 0;
         _calling = new List<string>();
         _ordinances = ordinances;
         SetDominicalEducation();
@@ -39,7 +44,7 @@ class Profile
         }
     }
 
-    public ?string GetDominicalEducation()
+    public string? GetDominicalEducation()
     {
         return _dominicalEducation;
     }
@@ -67,14 +72,24 @@ class Profile
         }
     }
 
-    public void SetMelchizedekPriesthood()
+    public void SetMelchizedekPriesthood(string level)
     {
-        DateTime now = new DateTime;
-        now = DateTime.Now; 
-        if (_male && _age )
+        //I know there is great levels of priesthood, but greater than this I doubt they would still 'play' this game
+        DateTime today = new DateTime();
+        today = DateTime.Now;
+
+
+        if (_male && _age >= 18 && today >= _ordinances["confirmation"].AddYears(1))
+        {
+            if (level.ToLower() == "elder")
+            {
+                _priesthood = "Elder";
+            }
+
+        }
     }
 
-    public ?string GetPriesthood()
+    public string? GetPriesthood()
     {
         return _priesthood;
     }
