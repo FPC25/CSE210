@@ -8,16 +8,17 @@ class Profile
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
     private string _name, __familysearchLink, _ldsAccount;
-    private ?string _dominicalEducation, priesthood;
+    private ?string _dominicalEducation, _priesthood;
     private List<string> _calling;
 
 
-    public Profile(string name, int age, bool male)
+    public Profile(string name, int age, bool male, Dictionary<string, DateTime> ordinances)
     {
         _name = name;
         _age = age;
         _male = male;
         _calling = new List<string>();
+        _ordinances = ordinances;
         SetDominicalEducation();
 
     }
@@ -43,9 +44,34 @@ class Profile
         return _dominicalEducation;
     }
 
-    public SetPriesthood()
+    public void SetAaronicPriesthood()
     {
+        if (_male)
+        {
+            if (_age >= 11 && _age < 14)
+            {
+                _priesthood = "Deacon";
+            }
+            else if (_age >= 14 && _age < 16)
+            {
+                _priesthood = "Teacher";
+            }
+            else if (_age >= 16)
+            {
+                _priesthood = "Priest";
+            } 
+        }
+        else
+        {
+            _priesthood = null;
+        }
+    }
 
+    public void SetMelchizedekPriesthood()
+    {
+        DateTime now = new DateTime;
+        now = DateTime.Now; 
+        if (_male && _age )
     }
 
     public ?string GetPriesthood()
