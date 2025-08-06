@@ -10,8 +10,9 @@
     <li>_level: int</li>
     <li>_currentXP: int</li>
     <li>_age: int</li>
-    <li>_ensign: ?string</li>
-    <li>_sex: string</li>
+    <li>_married: bool</li>
+    <li>_dominicalEducation: ?string</li>
+    <li>_male: bool</li>
     <li>_priesthood: ?string</li>
     <li>_ordinances: dictionary&lt;string, DateTime&gt;</li>
     <li>_calling: List<String></li>
@@ -21,6 +22,7 @@
     <li>_sacramentalTime: DateTime</li>
     <li>_working: bool</li>
     <li>_activeRecommendation: bool</li>
+    <li>_recommendationDueDate: DateTime</li>
     <li>_quests: Dict&lt;string, List&lt;Quest&gt;&gt;</li>
 </ul>
 
@@ -31,33 +33,32 @@
 
 #### Behaviors
 <ul>
-    <li>GetEnsign: void</li>
-    <li>SetSeminar: string</li>
-    <li>SetInstitute: Dict</li>
-    <li>GetPriesthood: void</li>
-    <li>SetPriesthood: string</li>
-    <li>GetOrdinances: void</li>
-    <li>AddOrdinance: DateTime</li>
-    <li>GetCalling: void</li>
-    <li>AddCalling: string</li>
-    <li>RemoveCalling: string</li>
-    <li>GetFamilysearchLink: void</li>
-    <li>SetFamilysearchLink: string</li>
-    <li>GetAccount: void</li>
-    <li>SetAccount: string</li>
-    <li>GetPatriarcalBlessing: void</li>
-    <li>SetPatriarcalBlessing: bool</li>
-    <li>GetSacramentalTime: void</li>
-    <li>SetSacramentalTime: DateTime</li>
-    <li>GetWorking: void</li>
-    <li>SetWorking: string</li>
+    <li>GetDominicalEducation: string</li>
+    <li>SetDominicalEducation: void</li>
+    <li>GetPriesthood: string</li>
+    <li>SetPriesthood: void</li>
+    <li>GetOrdinances: Dict<string, DateTime></li>
+    <li>AddOrdinance: void</li>
+    <li>GetCalling: List<string></li>
+    <li>AddCalling: void</li>
+    <li>RemoveCalling: void</li>
+    <li>GetFamilysearchLink: string</li>
+    <li>SetFamilysearchLink: void</li>
+    <li>GetAccount: string</li>
+    <li>SetAccount: void</li>
+    <li>GetPatriarcalBlessing: bool</li>
+    <li>SetPatriarcalBlessing: void</li>
+    <li>GetSacramentalTime: DateTime</li>
+    <li>SetSacramentalTime: void</li>
+    <li>GetWorking: bool</li>
+    <li>SetWorking: void</li>
     <li>ProfileMenu: void</li>
-    <li>GetLevel: void</li>
-    <li>GetXP</li>
-    <li>AddXP</li>
-    <li>CalculateNextLevelXp</li>
-    <li>DisplayLevelProgress</li>
-    <li>DisplayUserInfo</li>
+    <li>GetLevel: int</li>
+    <li>GetXP: int</li>
+    <li>AddXP: void</li>
+    <li>CalculateNextLevelXp: int</li>
+    <li>DisplayLevelProgress: void</li>
+    <li>DisplayUserInfo: void</li>
 </ul>
 
 ### Game
