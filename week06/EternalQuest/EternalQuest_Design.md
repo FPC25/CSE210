@@ -36,7 +36,8 @@
     <li>GetDominicalEducation: string</li>
     <li>SetDominicalEducation: void</li>
     <li>GetPriesthood: string</li>
-    <li>SetPriesthood: void</li>
+    <li>SetAaronicPriesthood: void</li>
+    <li>SetMelchizedekPriesthood: void</li>
     <li>GetOrdinances: Dict<string, DateTime></li>
     <li>AddOrdinance: void</li>
     <li>GetCalling: List<string></li>
