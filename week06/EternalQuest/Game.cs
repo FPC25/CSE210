@@ -8,8 +8,15 @@ class Game
     {
     }
 
-    public void MethodName()
+    public void Tutorial()
     {
 
     }
+
+    public void InitialMenu()
+    {
+
+    }
+
+    
 }
