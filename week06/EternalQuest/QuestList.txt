@@ -108,8 +108,6 @@ eternal quests (repete num dado periodo de tempo)
 timeQuest
     * Se tem recomendação para o templo e proximo da validade:
         -> iniciar a quest de marcar entrevista para renovar recomendação
-    * Se chamado para discursar 
-        -> quest na semana de preparar o discurso com antecedência
     se batizado, mas com ~1 anos de membro
         -> obter recomendação completa para investidura
     * Por idade 
@@ -131,4 +129,45 @@ Custom
 
 
 função de escalonamento de quantidade de experiencia por nível
-f(x) = 2650 * 1.5^(1/2 * ln(2*x-1))
+f(l) = 2650 * 1.5^(1/2 * ln(2*l-1))
+
+funções para ganho de experiência por tipo de quest:
+
+    * tutorial
+        -> Setado para fazer pessoa chegar a nível 1, então por volta de f(1)/n , onde n é quantidade de quests
+
+    * simples
+        -> 5 a 10% de f(l)
+    
+    * Eternal
+        -> daily
+            1 a 3% de f(l)
+        -> weekly
+            4 a 6% de f(l)
+        -> monthly
+            7 a 9% de f(l)
+    
+    * Timed
+        -> 15 a 20% de f(l)
+
+    * Checklist
+        -> para cada repetição
+            5 a 7.5 % de f(l)
+
+        -> ao completar
+            10 a 15% de f(l)
+
+    * Custom
+        -> easy
+            simple (max)
+            2 a 5% de f(l)
+        -> medium (simple max or check min)
+            simple ou checklist
+            7 a 10% de f(l)
+        -> hard check max
+            -> checklist 
+            12 a 15% de f(l)
+        
+    calculo do valor da porcentagem vai ser feita pela equação:
+        -> g(l) = f(l) * (%max/(1+k(l-1)))
+        onde k = 0.5%
