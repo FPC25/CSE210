@@ -52,6 +52,24 @@ public static class Utils
         }
         Console.WriteLine("]");
     }
+
+    public static int ReadInt(string questionToUser)
+    {
+        //setting variables
+        string input;
+        int number;
+
+        //while the input cannot be convert to integer continue to prompt
+        do
+        {
+            Console.WriteLine(questionToUser);
+            input = Console.ReadLine();
+
+        } while (!int.TryParse(input, out number));
+        
+        return number;
+    }
+
     //Counts the number of digits of a number
     public static int CountDigit(int number)
     {
