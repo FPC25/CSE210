@@ -67,12 +67,13 @@
 
 #### Constructor
 
-- Run()
+- Game()
 
 #### Behaviors
 
 - InitialMenu(): void
 - GameMenu(): void
+- Run()
 
 ### SaveLoadProgress
 
