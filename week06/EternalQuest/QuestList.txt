@@ -57,6 +57,7 @@ Quests
 tutorial
     * adicionar nome
     * adicionar aniversario
+    * adicionar idade
     * adicionar sexo;
     * adicionar horario da Sacramental
     * adicionar data de batismo e confirmação
