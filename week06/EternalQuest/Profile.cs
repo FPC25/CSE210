@@ -7,7 +7,7 @@ using Microsoft.VisualBasic;
 class Profile
 {
     private int _level, _currentXP, _age;
-    private bool _male, _married, _patriarcalBlessing, _working, _activeRecommendation;
+    private bool _male, _married, _patriarchalBlessing, _working, _activeRecommendation;
     private TimeSpan? _sacramentalTime;
     private DateTime _birthday;
     private DateTime? _recommendationDueDate;
@@ -31,7 +31,7 @@ class Profile
         _familysearchLink = "";
         _ldsAccount = "";
         _married = false;
-        _patriarcalBlessing = false;
+        _patriarchalBlessing = false;
         _working = false;
         _activeRecommendation = false;
         _sacramentalTime = null;
@@ -201,7 +201,7 @@ class Profile
         _calling.Remove(callingToRemove);
     }
 
-    private bool invertBoolStatus(string yesNoQuestion, bool status)
+    public bool InvertBoolStatus(string yesNoQuestion, bool status)
     {
         Console.WriteLine(yesNoQuestion);
         if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
@@ -221,6 +221,7 @@ class Profile
             CALLING = "Add or Remove a Calling",
             WORKING = "Change Work Status",
             RECOMMENDATION = "Renovate Temple Recommendation",
+            PATRIARCHAL = "Change Patriarchal Blessing",
             COMPLETED = "See Completed Quests",
             QUIT = "Quit";
 
@@ -230,23 +231,28 @@ class Profile
             SACRAMENT, CALLING, RECOMMENDATION
         };
 
-        //Some conditional options the menu can have, the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
-        if (_age >= 18)
+        //Some conditional options the menu can have,
+        if (!_patriarchalBlessing)
         {
-            options.Add(MARRIAGE);
-            options.Add(WORKING);
-
-            //Since man can seal more than once and women don't we need to separate those situations 
-            if (_male)
-            {
-                options.Add(PRIESTHOOD);
-                options.Add(REGISTER);
-            }
-            else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
-            {
-                options.Add(REGISTER);
-            }
+            options.Add(PATRIARCHAL);
         }
+        
+        if (_age >= 18)
+            {
+                options.Add(MARRIAGE);
+                options.Add(WORKING);
+
+                //Since man can seal more than once and women don't we need to separate those situations 
+                if (_male)
+                {
+                    options.Add(PRIESTHOOD);
+                    options.Add(REGISTER); //the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
+                }
+                else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
+                {
+                    options.Add(REGISTER);
+                }
+            }
 
         //The one that must go at the end of the list
         options.Add(COMPLETED);
@@ -303,7 +309,7 @@ class Profile
                     break;
 
                 case MARRIAGE:
-                    _married = invertBoolStatus("Do you want to change the your marital status?", _married);
+                    _married = InvertBoolStatus("Do you want to change the your marital status?", _married);
                     break;
 
                 case CALLING:
@@ -333,11 +339,30 @@ class Profile
                     break;
 
                 case WORKING:
-                    _working = invertBoolStatus("Are you working at the moment?", _working);
+                    _working = InvertBoolStatus("Are you working at the moment?", _working);
+                    break;
+
+                case PATRIARCHAL:
+                    _patriarchalBlessing = InvertBoolStatus("Did you received your patriarchal blessing?", _patriarchalBlessing);
                     break;
 
                 case RECOMMENDATION:
-                    Console.WriteLine("Work in progress.");
+                    string recommendationPrompt;
+                    bool newRecommendation = false;
+                    if (!_activeRecommendation && _recommendationDueDate == null)
+                    {
+                        recommendationPrompt = "Did you received your recommendation?";
+                    }
+                    else
+                    {
+                        recommendationPrompt = "Did you renovated your recommendation?";
+                    }
+                    newRecommendation = InvertBoolStatus(recommendationPrompt, newRecommendation);
+                    if (newRecommendation)
+                    {
+                        Console.WriteLine("Congratulations! Please informe the new due Date!");
+                        _recommendationDueDate = Utils.ReadDate("In what year your new recommendation will expire? (e.g., 1995 or 95)\n", "In what month your new recommendation will expire? (Enter the number, e.g., 1 for January)\n", "In what month your new recommendation will expire?");
+                    }
                     break;
 
                 case COMPLETED:
