@@ -18,7 +18,7 @@ class Game
         Console.WriteLine("What is your name?");
         name = Console.ReadLine();
 
-        birthday = ReadDate($"Hello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
+        birthday = Utils.ReadDate($"Hello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
 
         int age = DateTime.Now.Year - birthday.Year;
         if (DateTime.Now < birthday.AddYears(age))
@@ -73,30 +73,15 @@ class Game
                     else
                     {
                         Console.WriteLine("Baptism date not found. Please enter confirmation date manually.");
-                        ordinancesDict["confirmation"] = ReadDate(yearCall, monthCall, dayCall);
+                        ordinancesDict["confirmation"] = Utils.ReadDate(yearCall, monthCall, dayCall);
                     }
                     continue;
                 }
             }
-            ordinancesDict[ordinance] = ReadDate(yearCall, monthCall, dayCall);
+            ordinancesDict[ordinance] = Utils.ReadDate(yearCall, monthCall, dayCall);
         }
 
         return ordinancesDict;
-    }
-    
-    private DateTime ReadDate(string yearCall, string monthCall, string dayCall)
-    {
-        int year = Utils.ReadInt(yearCall);
-        if (year < 100)
-        {
-            int currentYear = DateTime.Now.Year % 100;
-            int century = (year > currentYear ? 1900 : 2000);
-            year += century;
-        }
-        int month = Utils.ReadInt(monthCall);
-        int day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
-
-        return new DateTime(year, month, day);
     }
 
     public void Run()
