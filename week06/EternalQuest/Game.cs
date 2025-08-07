@@ -6,33 +6,19 @@ class Game
     {
     }
 
-    public Profile Tutorial()
+    private Profile Tutorial()
     {
-        Profile player;
-        string input, name;
-        int yearBorn, dayBorn, monthBorn;
+        string input, name, genderPrompt;
         DateTime birthday;
         bool male = false;
-        List<string> ordinances = new List<string>() { "baptism", "confirmation" };
-
+        List<string> ordinancesList = new List<string>() { "baptism", "confirmation" }, genderOptions;
 
         Console.WriteLine("Welcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!");
 
         Console.WriteLine("What is your name?");
         name = Console.ReadLine();
 
-        yearBorn = Utils.ReadInt($"Hello {name}! Please enter your birth year (e.g., 1995 or 95): ");
-        // Normalize yearBorn to four digits (handles 2-digit input intelligently)
-        if (yearBorn < 100)
-        {
-            int currentYear = DateTime.Now.Year % 100;
-            int century = (yearBorn > currentYear ? 1900 : 2000);
-            yearBorn += century;
-        }
-
-        monthBorn = Utils.ReadInt("Which month were you born in? (Enter the number, e.g., 1 for January) ");
-        dayBorn = Utils.ReadInt($"Which day of the month were you born? (1-{DateTime.DaysInMonth(yearBorn, monthBorn)}): ");
-        birthday = new DateTime(yearBorn, monthBorn, dayBorn);
+        birthday = ReadDate($"Hello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
 
         int age = DateTime.Now.Year - birthday.Year;
         if (DateTime.Now < birthday.AddYears(age))
@@ -40,102 +26,114 @@ class Game
             age--;
         }
 
-        List<string> gender;
         if (age < 18)
         {
-            Console.WriteLine("Are you a boy or a girl?");
-            gender = new List<string>() { "boy", "girl" };
-
+            genderPrompt = "Are you a boy or a girl?";
+            genderOptions = new List<string>() { "Boy", "Girl" };
         }
         else
         {
-            Console.WriteLine("Are you a man or a woman?");
-            gender = new List<string>() { "man", "woman" };
-        }
-        input = Utils.DecisionString(gender);
-        if (input == "man" || input == "boy")
-        {
-            male = true;
+            genderPrompt = "Are you a man or a woman?";
+            genderOptions = new List<string>() { "Man", "Woman" };
         }
 
+        Console.WriteLine(genderPrompt);
+        input = Utils.DecisionString(genderOptions);
 
+        male = input.Equals("Man", StringComparison.OrdinalIgnoreCase) || input.Equals("Boy", StringComparison.OrdinalIgnoreCase);
+        
+        Dictionary<string, DateTime> ordinances = GetOrdinance(ordinancesList);
 
-        return player;
+        return new Profile(name, birthday, age, male, ordinances);
     }
 
     private Dictionary<string, DateTime> GetOrdinance(List<string> ordinances)
     {
         Dictionary<string, DateTime> ordinancesDict = new Dictionary<string, DateTime>();
-        DateTime ordinanceDate;
-        int year, month, day;
-        string input, confirmationDateEqualsBaptism;
+        string confirmationDateEqualsBaptism;
 
+        string yearCall, monthCall, dayCall;
         foreach (string ordinance in ordinances)
         {
-            if (ordinance.ToLower() == "confirmation" && ordinances[0] != "confirmation")
+            yearCall = $"Please enter the year the {ordinance} occurred (e.g., 1995 or 95): ";
+            monthCall = $"Please enter the month the {ordinance} occurred? (Enter the number, e.g., 1 for January): ";
+            dayCall = $"Please enter the day the {ordinance} occurred?";
+            if (ordinance.ToLower() == "confirmation" && ordinances.Contains("baptism"))
             {
                 Console.WriteLine("Is your confirmation date the same as your baptism date? (yes/no)");
                 confirmationDateEqualsBaptism = Utils.DecisionString(new List<string>() { "Yes", "No" });
 
                 if (confirmationDateEqualsBaptism == "Yes")
                 {
-                    ordinancesDict[ordinance] = ordinanceDate;
-                    break;
+                    // Use baptism date for confirmation
+                    if (ordinancesDict.ContainsKey("baptism"))
+                    {
+                        ordinancesDict["confirmation"] = ordinancesDict["baptism"];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Baptism date not found. Please enter confirmation date manually.");
+                        ordinancesDict["confirmation"] = ReadDate(yearCall, monthCall, dayCall);
+                    }
+                    continue;
                 }
             }
-
-            year = Utils.ReadInt($"Please enter the year the {ordinance} occurred (e.g., 1995 or 95): ");
-            // Normalize yearBorn to four digits (handles 2-digit input intelligently)
-            if (year < 100)
-            {
-                int currentYear = DateTime.Now.Year % 100;
-                int century = (year > currentYear ? 1900 : 2000);
-                year += century;
-            }
-            month = Utils.ReadInt("Which month were you born in? (Enter the number, e.g., 1 for January) ");
-            day = Utils.ReadInt($"Which day of the month were you born? (1-{DateTime.DaysInMonth(year, month)}): ");
-
-
-
+            ordinancesDict[ordinance] = ReadDate(yearCall, monthCall, dayCall);
         }
+
         return ordinancesDict;
+    }
+    
+    private DateTime ReadDate(string yearCall, string monthCall, string dayCall)
+    {
+        int year = Utils.ReadInt(yearCall);
+        if (year < 100)
+        {
+            int currentYear = DateTime.Now.Year % 100;
+            int century = (year > currentYear ? 1900 : 2000);
+            year += century;
+        }
+        int month = Utils.ReadInt(monthCall);
+        int day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
+
+        return new DateTime(year, month, day);
     }
     
     public void InitialMenu()
     {
-    const string
-        NEW = "New Game",
-        LOAD = "Load Game",
-        QUIT = "Quit";
+        const string
+            NEW = "New Game",
+            LOAD = "Load Game",
+            QUIT = "Quit";
 
-    List<string> options = new List<string>()
+        List<string> options = new List<string>()
+            {
+                NEW, LOAD, QUIT
+            };
+
+        string selectedOption;
+
+        do
         {
-            NEW, LOAD, QUIT
-        };
+            Console.WriteLine("Welcome to Eternal Quest:");
+            selectedOption = Utils.DecisionString(options);
+            switch (selectedOption)
+            {
+                case NEW:
+                    Profile player = Tutorial();
+                    GameMenu();
+                    break;
 
-    string selectedOption;
+                case LOAD:
+                    Console.WriteLine("Still in development");
+                    break;
 
-    do
-    {
-        Console.WriteLine("Welcome to Eternal Quest:");
-        selectedOption = Utils.DecisionString(options);
-        switch (selectedOption)
-        {
-            case NEW:
-                Profile player = Tutorial();
-                GameMenu();
-                break;
+                case QUIT:
+                    break;
+            }
+        } while (selectedOption != QUIT);
 
-            case LOAD:
-                Console.WriteLine("Still in development");
-                break;
-
-            case QUIT:
-                break;
-        }
-    } while (selectedOption != QUIT);
-
-}
+    }
 
     public void GameMenu()
     {
@@ -185,6 +183,4 @@ class Game
             }
         } while (selectedOption != QUIT);
     }
-
-
 }
