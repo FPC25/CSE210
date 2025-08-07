@@ -6,114 +6,114 @@
 
 #### Responsibilities
 
-- _name: string</li>
-- _level: int</li>
-- _currentXP: int</li>
-- _age: int</li>
-- _married: bool</li>
-- _dominicalEducation: string?</li>
-- _male: bool</li>
-- _priesthood: string?</li>
-- _ordinances: `dictionary<string, DateTime>`</li>
-- _calling: `List<String>`</li>
-- _familysearchLink: string</li>
-- _ldsAccount: string</li>
-- _patriarcalBlessing: bool</li>
-- _sacramentalTime: DateTime</li>
-- _working: bool</li>
-- _activeRecommendation: bool</li>
-- _recommendationDueDate: DateTime</li>
-- _quests: `Dict<string, List<Quest>>`</li>
+- _name: string
+- _level: int
+- _currentXP: int
+- _birthday: DateTime
+- _age: int
+- _married: bool
+- _dominicalEducation: string?
+- _male: bool
+- _priesthood: string?
+- _ordinances: `dictionary<string, DateTime>`
+- _calling: `List<String>`
+- _familysearchLink: string
+- _ldsAccount: string
+- _patriarcalBlessing: bool
+- _sacramentalTime: DateTime
+- _working: bool
+- _activeRecommendation: bool
+- _recommendationDueDate: DateTime
+- _quests: `Dict<string, List<Quest>>`
 
 #### Constructor
 
-- Profile(string Name, int age, string sex)</li>
+- Profile(string Name, int age, string sex)
 
 #### Behaviors
 
-- GetDominicalEducation: string</li>
-- SetDominicalEducation: void</li>
-- GetPriesthood: string</li>
-- SetAaronicPriesthood: void</li>
-- SetMelchizedekPriesthood: void</li>
-- GetOrdinances: Dict<string, DateTime></li>
-- AddOrdinance: void</li>
-- GetCalling: `List<string>`</li>
-- AddCalling: void</li>
-- RemoveCalling: void</li>
-- GetFamilysearchLink: string</li>
-- SetFamilysearchLink: void</li>
-- GetAccount: string</li>
-- SetAccount: void</li>
-- GetPatriarcalBlessing: bool</li>
-- SetPatriarcalBlessing: void</li>
-- GetSacramentalTime: DateTime</li>
-- SetSacramentalTime: void</li>
-- GetWorking: bool</li>
-- SetWorking: void</li>
-- ProfileMenu: void</li>
-- GetLevel: int</li>
-- GetXP: int</li>
-- AddXP: void</li>
-- CalculateNextLevelXp: int</li>
-- DisplayLevelProgress: void</li>
-- DisplayUserInfo: void</li>
+- GetAge(): int
+- GetDominicalEducation: string
+- SetDominicalEducation: void
+- GetPriesthood: string
+- SetAaronicPriesthood: void
+- SetMelchizedekPriesthood: void
+- GetOrdinances: Dict<string, DateTime>
+- AddOrdinance: void
+- GetCalling: `List<string>`
+- AddCalling: void
+- RemoveCalling: void
+- GetFamilysearchLink: string
+- SetFamilysearchLink: void
+- GetAccount: string
+- SetAccount: void
+- GetPatriarcalBlessing: bool
+- SetPatriarcalBlessing: void
+- GetSacramentalTime: DateTime
+- SetSacramentalTime: void
+- GetWorking: bool
+- SetWorking: void
+- ProfileMenu: void
+- GetLevel: int
+- GetXP: int
+- AddXP: void
+- CalculateNextLevelXp: int
+- DisplayLevelProgress: void
+- DisplayUserInfo: void
 
 ### Game
 
 #### Responsibilities
 
-- _user: Profile</li>
-
 #### Constructor
 
-- Run()</li>
+- Run()
 
 #### Behaviors
 
-- InitialMenu(): void</li>
-- GameMenu(): void</li>
+- InitialMenu(): void
+- GameMenu(): void
 
 ### SaveLoadProgress
 
 #### Responsibilities
 
-- _file: string</li>
+- _file: string
 
 #### Constructor
 
-- SaveLoadProgress(string filepath)</li>
+- SaveLoadProgress(string filepath)
 
 #### Behaviors
 
-- SaveProgress(): void</li>
-- LoadProgress(): Profile</li>
+- SaveProgress(): void
+- LoadProgress(): Profile
 
 ### QuestManager
 
 #### Responsibilities
 
-- _user: Profile</li>
+- _user: Profile
 
 #### Constructor
 
-- QuestManager(Profile player)</li>
+- QuestManager(Profile player)
 
 #### Behaviors
 
-- DisplayActiveQuests: void</li>
-- ActivateTimeQuest: bool -> activate quest that depends on the time</li>
-- CalculateChecklistDifficulty: int</li>
-- CalculateXpPerQuest: int</li>
-- GetNotTimedQuests: List&lt;Quest&gt;</li>
-- GetWeeklyQuests: List&lt;Quest&gt;</li>
-- GetMonthlyQuests: List&lt;Quest&gt;</li>
-- DisplayActiveQuests: void</li>
-- DisplayFailedQuests: void</li>
-- DisplayCompletedQuests: void</li>
-- DisplayDailyQuest: void</li>
-- DisplayWeeklyQuest: void</li>
-- DisplayMonthlyQuest: void</li>
+- DisplayActiveQuests: void
+- ActivateTimeQuest: bool -> activate quest that depends on the time
+- CalculateChecklistDifficulty: int
+- CalculateXpPerQuest: int
+- GetNotTimedQuests: `List<Quest>`;
+- GetWeeklyQuests: `List<Quest>`;
+- GetMonthlyQuests: `List<Quest>`;
+- DisplayActiveQuests: void
+- DisplayFailedQuests: void
+- DisplayCompletedQuests: void
+- DisplayDailyQuest: void
+- DisplayWeeklyQuest: void
+- DisplayMonthlyQuest: void
 
 ## Parent Class
 
@@ -121,21 +121,21 @@
 
 #### Responsibilities
 
-- _shortName: string</li>
-- _description: string</li>
-- _xpPoints: int</li>
-- _status: string -> it it was completed or failed to completed</li>
+- _shortName: string
+- _description: string
+- _xpPoints: int
+- _status: string -> it it was completed or failed to completed
 
 #### Constructor
 
-- Quest(string shortName, string description, int xpPoints)</li>
+- Quest(string shortName, string description, int xpPoints)
 
 #### Behaviors
 
-- RecordEvent(): void Abstract</li>
-- IsComplete(): bool Abstract</li>
-- GetDetailsString(): string</li>
-- GetStringRepresentation(): string Abstract</li>
+- RecordEvent(): void Abstract
+- IsComplete(): bool Abstract
+- GetDetailsString(): string
+- GetStringRepresentation(): string Abstract
 
 ## Child Classes
 
@@ -143,91 +143,103 @@
 
 #### Responsibilities
 
-- _active: bool</li>
-- const XPMAX: double</li>
+- _active: bool
+- const XPMAX: double
 
 #### Constructor
 
-- SimpleQuest(string shortName, string description, int xpPoints)</li>
+- SimpleQuest(string shortName, string description, int xpPoints)
 
 #### Behaviors
 
-- RecordEvent(): void</li>
-- IsComplete(): bool</li>
-- GetDetailsString(): string</li>
+- RecordEvent(): void
+- IsComplete(): bool
+- GetDetailsString(): string
 
 ### ChecklistQuest
 
 #### Responsibilities
 
-- _amountCompleted: int</li>
-- _target: int</li>
-- _bonusXP: int</li>
-- const XPMAXSTEP: double</li>
-- const XPMAXBONUS: double</li>
+- _amountCompleted: int
+- _target: int
+- _bonusXP: int
+- const XPMAXSTEP: double
+- const XPMAXBONUS: double
 
 #### Constructor
 
-- ChecklistQuest(string shortName, string description, int xpPoints, int bonus, int target)</li>
+- ChecklistQuest(string shortName, string description, int xpPoints, int bonus, int target)
 
 #### Behaviors
 
-- RecordEvent(): void</li>
-- IsComplete(): bool</li>
-- GetDetailsString(): string</li>
-- GetStringRepresentation(): string</li>
+- RecordEvent(): void
+_amountComplete++
+if (IsCompleted())
+{
+    do something
+}
+else
+{
+    do another thing;
+}
+
+- IsComplete(): bool
+return _amountCompleted == _target;
+
+- GetDetailsString(): string
+- GetStringRepresentation(): string
 
 ### TimedQuest
 
 #### Responsibilities
 
-- _initialDate: DateTime</li>
-- const XPMAX: double</li>
+- _initialDate: DateTime
+- const XPMAX: double
 
 #### Constructor
 
-- TimedQuest(string shortName, string description, int xpPoints, DateTime initialDate)</li>
+- TimedQuest(string shortName, string description, int xpPoints, DateTime initialDate)
 
 #### Behaviors
 
-- RecordEvent(): void</li>
-- IsComplete(): bool</li>
-- GetDetailsString(): string</li>
-- ActivateQuest(): bool</li>
+- RecordEvent(): void
+- IsComplete(): bool
+- GetDetailsString(): string
+- ActivateQuest(): bool
 
 ### EternalQuest
 
 #### Responsibilities
 
-- _period: string</li>
-- const XPMAX: double</li>
+- _period: string
+- const XPMAX: double
 
 #### Constructor
 
-- EternalQuest(string shortName, string description, int xpPoints, string _period)</li>
+- EternalQuest(string shortName, string description, int xpPoints, string _period)
 
 #### Behaviors
 
-- RecordEvent(): void</li>
-- IsComplete(): bool</li>
-- GetStringRepresentation(): string</li>
+- RecordEvent(): void
+- IsComplete(): bool
+- GetStringRepresentation(): string
 
 ### CustomQuest
 
 #### Responsibilities
 
-- _difficulty: string</li>
-- const XPEASEY: double</li>
-- const XPMEDIUM: double</li>
-- const XPHARD: double</li>
+- _difficulty: string
+- const XPEASEY: double
+- const XPMEDIUM: double
+- const XPHARD: double
 
 #### Constructor
 
-- CustomQuest(string shortName, string description, int xpPoints, string _difficulty)</li>
+- CustomQuest(string shortName, string description, int xpPoints, string _difficulty)
 
 #### Behaviors
 
-- RecordEvent(): void</li>
-- IsComplete(): bool</li>
-- GetStringRepresentation(): string</li>
-- CreateQuestByDifficulty(): void</li>
+- RecordEvent(): void
+- IsComplete(): bool
+- GetStringRepresentation(): string
+- CreateQuestByDifficulty(): void
