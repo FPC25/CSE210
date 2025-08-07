@@ -13,7 +13,7 @@ class Profile
     private DateTime? _recommendationDueDate;
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
-    private string _name,_familysearchLink, _ldsAccount;
+    private string _name, _familysearchLink, _ldsAccount;
     private string? _dominicalEducation, _priesthood;
     private List<string> _calling;
 
@@ -141,6 +141,76 @@ class Profile
     {
         return _sacramentalTime;
     }
+
+    public Dictionary<string, DateTime> GetOrdinances()
+    {
+        return _ordinances;
+    }
+
+    public void AddOrdinance()
+    {
+        List<string> ordinances = new List<string>();
+        string highOrdinance = "initiatory and endowment";
+        if (!_ordinances.ContainsKey(highOrdinance))
+        {
+            ordinances.Add(highOrdinance);
+        }
+        if (_married)
+        {
+            Console.WriteLine("Do you want to add the sealing date?");
+            if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
+            {
+                string spouse = Utils.ValidStringInput("What is the name of your spouse?");
+                ordinances.Add($"sealing with {spouse}");
+            }
+        }
+        if (ordinances.Count != 0) Utils.GetOrdinance(ordinances);
+    }
+
+    public List<string> GetCalling()
+    {
+        return _calling;
+    }
+
+    public void AddCalling()
+    {
+        if (_calling.Count > 0)
+        {
+            Console.WriteLine("Do you want to remove a previous calling?");
+            if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
+            {
+                RemoveCalling();
+            }
+        }
+               
+        string calling = Utils.ValidStringInput("Please enter the new calling you have received: ");
+        if (!_calling.Contains(calling.ToLower()))
+        {
+            _calling.Add(calling);
+        }
+        else
+        {
+            Console.WriteLine($"The calling \"{calling}\" is already in your list of callings.");
+        }
+    }
+
+    public void RemoveCalling()
+    {
+        Console.WriteLine("Please select the calling you want to remove: ");
+        string callingToRemove = Utils.DecisionString(_calling);
+        _calling.Remove(callingToRemove);
+    }
+
+    private bool invertBoolStatus(string yesNoQuestion, bool status)
+    {
+        Console.WriteLine(yesNoQuestion);
+        if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
+        {
+            return !status;
+        }
+        return status;
+    }
+
     private void ProfileMenu()
     {
         const string
@@ -190,21 +260,7 @@ class Profile
             switch (selectedOption)
             {
                 case REGISTER:
-                    List<string> ordinances = new List<string>();
-
-                    string highOrdinance = "initiatory and endowment";
-                    if (!_ordinances.ContainsKey(highOrdinance))
-                    {
-                        ordinances.Add(highOrdinance);
-                    }
-
-                    if (_married)
-                    {
-                        string spouse = Utils.ValidStringInput("What is the name of your spouse?");
-                        ordinances.Add($"sealing with {spouse}");
-                    }
-
-                    Utils.GetOrdinance(ordinances);
+                    AddOrdinance();
                     break;
 
                 case SACRAMENT:
@@ -227,6 +283,7 @@ class Profile
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                     string priesthood = GetPriesthood().ToLower();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
+
                     if (priesthood == "priest")
                     {
                         SetMelchizedekPriesthood("elder");
@@ -246,15 +303,37 @@ class Profile
                     break;
 
                 case MARRIAGE:
-                    Console.WriteLine("Work in progress.");
+                    _married = invertBoolStatus("Do you want to change the your marital status?", _married);
                     break;
 
                 case CALLING:
-                    Console.WriteLine("Work in progress.");
+                    // Simplified logic for adding/removing callings
+                    List<string> operations = new List<string> { "Add Calling" };
+                    string prompt = "Would you like to add";
+                    if (_calling.Count > 0)
+                    {
+                        operations.Add("Remove Calling");
+                        prompt += " or remove";
+                    }
+                    prompt += " a calling?";
+                    operations.Add("Back");
+
+                    Console.WriteLine(prompt);
+                    string decision = Utils.DecisionString(operations);
+
+                    if (decision == "Add Calling")
+                    {
+                        AddCalling();
+                    }
+                    else if (decision == "Remove Calling")
+                    {
+                        RemoveCalling();
+                    }
+                    // "Back" just breaks out of the case
                     break;
 
                 case WORKING:
-                    Console.WriteLine("Work in progress.");
+                    _working = invertBoolStatus("Are you working at the moment?", _working);
                     break;
 
                 case RECOMMENDATION:
