@@ -10,8 +10,7 @@ GameMenu:
 -> Record Quest Completion
 -> Add a Custom Quest
 -> Save Progress
--> Load Progress
--> Profile
+-> Access Player Info
 -> Quit
 
 ---------------------------------
@@ -56,13 +55,17 @@ Profile Menu:
 Quests
 
 tutorial
+    * adicionar nome
+    * adicionar aniversario
+    * adicionar sexo;
     * adicionar horario da Sacramental
-    * criar conta sud
-    * aprender a dar o dizimo online com secretário
     * adicionar data de batismo e confirmação
-    * criar conta familysearch
+
 
 simples
+    * criar conta familysearch
+    * criar conta sud
+    * aprender a dar o dizimo online com secretário
     * Conseguir um chamado ou designação
     * Incluir suas proprias informações no familysearch
     * Incluir informações dos pais no familysearch
@@ -86,7 +89,7 @@ checklist
 eternal quests (repete num dado periodo de tempo)
     -> diarias
         * estudar as escrituras (n) min por dia
-        * Orar ao acordar e dormir;
+        * Orar ao acordar e dormir
         * Orar antes das refeições
 
     -> semanal
