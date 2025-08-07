@@ -53,7 +53,7 @@ public static class Utils
         Console.WriteLine("]");
     }
 
-        //Counts the number of digits of a number
+    //Counts the number of digits of a number
     public static int CountDigit(int number)
     {
         if (number < 0) number = Math.Abs(number);
@@ -128,5 +128,17 @@ public static class Utils
         }
 
         return ordinancesDict;
+    }
+
+    public static string ValidStringInput(string question)
+    {
+        string input;
+        do
+        {
+            Console.WriteLine(question);
+            input = Console.ReadLine() ?? "";
+        } while (input != "");
+
+        return input;
     }
 }
