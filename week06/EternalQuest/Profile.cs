@@ -220,7 +220,7 @@ class Profile
                 RemoveCalling();
             }
         }
-               
+
         string calling = Utils.ValidStringInput("Please enter the new calling you have received: ");
         if (!_calling.Contains(calling.ToLower()))
         {
@@ -249,6 +249,27 @@ class Profile
         return status;
     }
 
+    private string SetAccount(string variable, string varName)
+    {
+        string prompt;
+        bool change = false;
+
+        if (_ldsAccount == "")
+        {
+            prompt = $"Do you want to add a {varName} account? ";
+        }
+        else
+        {
+            prompt = "Do you want to correct your {varName} account? ";
+        }
+        change = InvertBoolStatus(prompt, change);
+        if (change)
+        {
+            variable = Utils.ValidStringInput("Please enter your account: ");
+        }
+        return variable;
+    }
+
     private void ProfileMenu()
     {
         const string
@@ -256,6 +277,8 @@ class Profile
             SACRAMENT = "Change Sacramental Time",
             PRIESTHOOD = "Change Priesthood Office",
             MARRIAGE = "Change Marital Status",
+            ACCOUNT = "Change LDS Account",
+            FAMILY = "Change FamilySearch Link",
             CALLING = "Add or Remove a Calling",
             WORKING = "Change Work Status",
             RECOMMENDATION = "Renovate Temple Recommendation",
@@ -266,7 +289,7 @@ class Profile
         //Some of the basic options the menu can have
         List<string> options = new List<string>()
         {
-            SACRAMENT, CALLING, RECOMMENDATION
+            SACRAMENT, CALLING, RECOMMENDATION, ACCOUNT, FAMILY
         };
 
         //Some conditional options the menu can have,
@@ -274,23 +297,25 @@ class Profile
         {
             options.Add(PATRIARCHAL);
         }
-        
-        if (_age >= 18)
-            {
-                options.Add(MARRIAGE);
-                options.Add(WORKING);
 
-                //Since man can seal more than once and women don't we need to separate those situations 
-                if (_male)
-                {
-                    options.Add(PRIESTHOOD);
-                    options.Add(REGISTER); //the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
-                }
-                else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
-                {
-                    options.Add(REGISTER);
-                }
+        if (_age >= 18)
+        {
+            options.Add(MARRIAGE);
+            options.Add(WORKING);
+            options.Add(ACCOUNT);
+            options.Add(FAMILY);
+
+            //Since man can seal more than once and women don't we need to separate those situations 
+            if (_male)
+            {
+                options.Add(PRIESTHOOD);
+                options.Add(REGISTER); //the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
             }
+            else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
+            {
+                options.Add(REGISTER);
+            }
+        }
 
         //The one that must go at the end of the list
         options.Add(COMPLETED);
@@ -403,6 +428,14 @@ class Profile
                     }
                     break;
 
+                case ACCOUNT:
+                    _ldsAccount = SetAccount(_ldsAccount, "LDS");
+                    break;
+
+                case FAMILY:
+                    _familysearchLink = SetAccount(_familysearchLink, "FamilySearch");
+                    break;
+
                 case COMPLETED:
                     Console.WriteLine("Work in progress.");
                     break;
@@ -411,5 +444,15 @@ class Profile
                     break;
             }
         } while (selectedOption != QUIT);
+    }
+
+    public void DisplayLevelProgress()
+    {
+
+    }
+
+    public void DisplayPlayerInfo()
+    {
+        
     }
 }
