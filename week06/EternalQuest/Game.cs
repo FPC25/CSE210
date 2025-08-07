@@ -98,6 +98,11 @@ class Game
 
         return new DateTime(year, month, day);
     }
+
+    public void Run()
+    {
+        InitialMenu();
+    }
     
     public void InitialMenu()
     {
