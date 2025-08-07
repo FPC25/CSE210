@@ -70,6 +70,21 @@ public static class Utils
         return number;
     }
 
+    public static DateTime ReadDate(string yearCall, string monthCall, string dayCall)
+    {
+        int year = Utils.ReadInt(yearCall);
+        if (year < 100)
+        {
+            int currentYear = DateTime.Now.Year % 100;
+            int century = (year > currentYear ? 1900 : 2000);
+            year += century;
+        }
+        int month = Utils.ReadInt(monthCall);
+        int day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
+
+        return new DateTime(year, month, day);
+    }
+
     //Counts the number of digits of a number
     public static int CountDigit(int number)
     {
