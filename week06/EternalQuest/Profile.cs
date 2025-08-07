@@ -7,7 +7,7 @@ class Profile
 {
     private int _level, _currentXP, _age;
     private bool _male, _married, _patriarcalBlessing, _working, _activeRecommendation;
-    private DateTime _sacramentalTime, _recommendationDueDate;
+    private DateTime _birthday, _sacramentalTime, _recommendationDueDate;
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
     private string _name, __familysearchLink, _ldsAccount;
@@ -15,10 +15,11 @@ class Profile
     private List<string> _calling;
 
 
-    public Profile(string name, int age, bool male, Dictionary<string, DateTime> ordinances)
+    public Profile(string name, DateTime birthday, bool male, Dictionary<string, DateTime> ordinances)
     {
         _name = name;
-        _age = age;
+        _birthday = birthday;
+        _age = GetAge();
         _male = male;
         _level = 1;
         _currentXP = 0;
@@ -28,9 +29,20 @@ class Profile
 
     }
 
+    public int GetAge()
+    {
+        DateTime today = DateTime.Today;
+        int age = today.Year - _birthday.Year;
+        if (today.Month < _birthday.Month || (today.Month == _birthday.Month && today.Day < _birthday.Day))
+        {
+            age--;
+        }
+        return age;
+    }
+
     public void SetDominicalEducation()
     {
-        if (_age > 13  && _age < 18)
+        if (_age > 13 && _age < 18)
         {
             _dominicalEducation = "Seminar";
         }
