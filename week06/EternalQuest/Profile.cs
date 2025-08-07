@@ -1,6 +1,7 @@
 #nullable enable
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
 // using Quests; // Removed because the namespace 'Quests' could not be found
 
@@ -446,6 +447,33 @@ class Profile
         } while (selectedOption != QUIT);
     }
 
+    public void DisplaySettableVar(object? variable, string varName)
+    {
+        string message = $"{varName}: ";
+        if (variable == null ||
+           (variable is string str && string.IsNullOrEmpty(str)))
+        {
+            message += "Not set yet";
+        }
+        else if (variable is bool b && b == false)
+        {
+            message += "No";
+        }
+        else if (variable is string strValue)
+        {
+            message += strValue;
+        }
+        else if (variable is TimeSpan time)
+        {
+            message += time.ToString(@"hh\:mm");
+        }
+        else
+        {
+            message += "Yes";
+        }
+        Console.WriteLine(message);
+    }
+
     public void DisplayLevelProgress()
     {
         int nextLevelXP = CalculateNextLevelXP();
@@ -457,11 +485,29 @@ class Profile
 
         // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
         Console.WriteLine($"{_level}  {bar}  {_level + 1}");
-        Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level");
+        Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
     }
 
     public void DisplayPlayerInfo()
     {
+        string divisor = new String('-', 25);
+        Console.WriteLine("Player Info: \n");
+        string message = "Gender: ";
+        if (_male) message += "Masc.";
+        else message += "Fem.";
+        Console.Write($"Name: {_name}  |  Age: {_age}  |  {message}");
+        Console.WriteLine("Level: \n");
+        Console.WriteLine();
+        if (_dominicalEducation != null) Console.WriteLine($"Dominical Education Level: {_dominicalEducation}");
+        if (_male) Console.WriteLine($"Priesthood Office: {_priesthood}");
+        DisplaySettableVar(_sacramentalTime, "Sacramental Time");
+        DisplaySettableVar(_married, "Married");
+        DisplaySettableVar(_working, "Working");
+        DisplaySettableVar(_patriarchalBlessing, "Patriarchal Blessing Received");
+        DisplaySettableVar(_ldsAccount, "LDS Account");
+        DisplaySettableVar(_familysearchLink, "FamilySearch Account");
 
+        Console.WriteLine(divisor);
+        ProfileMenu();
     }
 }
