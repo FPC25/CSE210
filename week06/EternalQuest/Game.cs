@@ -42,46 +42,9 @@ class Game
 
         male = input.Equals("Man", StringComparison.OrdinalIgnoreCase) || input.Equals("Boy", StringComparison.OrdinalIgnoreCase);
         
-        Dictionary<string, DateTime> ordinances = GetOrdinance(ordinancesList);
+        Dictionary<string, DateTime> ordinances = Utils.GetOrdinance(ordinancesList);
 
         return new Profile(name, birthday, age, male, ordinances);
-    }
-
-    private Dictionary<string, DateTime> GetOrdinance(List<string> ordinances)
-    {
-        Dictionary<string, DateTime> ordinancesDict = new Dictionary<string, DateTime>();
-        string confirmationDateEqualsBaptism;
-
-        string yearCall, monthCall, dayCall;
-        foreach (string ordinance in ordinances)
-        {
-            yearCall = $"Please enter the year the {ordinance} occurred (e.g., 1995 or 95): ";
-            monthCall = $"Please enter the month the {ordinance} occurred? (Enter the number, e.g., 1 for January): ";
-            dayCall = $"Please enter the day the {ordinance} occurred?";
-            if (ordinance.ToLower() == "confirmation" && ordinances.Contains("baptism"))
-            {
-                Console.WriteLine("Is your confirmation date the same as your baptism date? (yes/no)");
-                confirmationDateEqualsBaptism = Utils.DecisionString(new List<string>() { "Yes", "No" });
-
-                if (confirmationDateEqualsBaptism == "Yes")
-                {
-                    // Use baptism date for confirmation
-                    if (ordinancesDict.ContainsKey("baptism"))
-                    {
-                        ordinancesDict["confirmation"] = ordinancesDict["baptism"];
-                    }
-                    else
-                    {
-                        Console.WriteLine("Baptism date not found. Please enter confirmation date manually.");
-                        ordinancesDict["confirmation"] = Utils.ReadDate(yearCall, monthCall, dayCall);
-                    }
-                    continue;
-                }
-            }
-            ordinancesDict[ordinance] = Utils.ReadDate(yearCall, monthCall, dayCall);
-        }
-
-        return ordinancesDict;
     }
 
     public void Run()
