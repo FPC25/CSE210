@@ -15,11 +15,11 @@ class Profile
     private List<string> _calling;
 
 
-    public Profile(string name, DateTime birthday, bool male, Dictionary<string, DateTime> ordinances)
+    public Profile(string name, DateTime birthday, int age, bool male, Dictionary<string, DateTime> ordinances)
     {
         _name = name;
         _birthday = birthday;
-        _age = GetAge();
+        _age = age;
         _male = male;
         _level = 1;
         _currentXP = 0;
