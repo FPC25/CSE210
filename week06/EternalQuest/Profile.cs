@@ -1,12 +1,13 @@
 #nullable enable
 
 using System;
-using Quests;
+// using Quests; // Removed because the namespace 'Quests' could not be found
 
 class Profile
 {
     private int _level, _currentXP, _age;
-    private bool _male, _married, _patriarcalBlessing, _working, _activeRecommendation;
+    private bool _male, _married, _patriarcalBlessing, _working;
+    private bool? _activeRecommendation;
     private DateTime _birthday, _sacramentalTime, _recommendationDueDate;
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
@@ -26,6 +27,7 @@ class Profile
         _calling = new List<string>();
         _ordinances = ordinances;
         SetDominicalEducation();
+        SetAaronicPriesthood();
 
     }
 
@@ -37,6 +39,7 @@ class Profile
         {
             age--;
         }
+
         return age;
     }
 
@@ -76,7 +79,7 @@ class Profile
             else if (_age >= 16)
             {
                 _priesthood = "Priest";
-            } 
+            }
         }
         else
         {
@@ -90,12 +93,15 @@ class Profile
         DateTime today = new DateTime();
         today = DateTime.Now;
 
-
         if (_male && _age >= 18 && today >= _ordinances["confirmation"].AddYears(1))
         {
             if (level.ToLower() == "elder")
             {
                 _priesthood = "Elder";
+            }
+            else
+            {
+                _priesthood = "High Priest";
             }
 
         }
@@ -104,5 +110,92 @@ class Profile
     public string? GetPriesthood()
     {
         return _priesthood;
+    }
+
+    private void ProfileMenu()
+    {
+        const string
+            REGISTER = "Register Ordinance",
+            SACRAMENT = "Change Sacramental Time",
+            PRIESTHOOD = "Change Priesthood Office",
+            MARRIAGE = "Change Marital Status",
+            CALLING = "Add or Remove a Calling",
+            WORKING = "Change Work Status",
+            RECOMMENDATION = "Renovate Temple Recommendation",
+            COMPLETED = "See Completed Quests",
+            QUIT = "Quit";
+
+        //Some of the basic options the menu can have, register a new ordinance, 
+        List<string> options = new List<string>()
+        {
+            SACRAMENT, CALLING
+        };
+
+        if (_activeRecommendation != null)
+        {
+            options.Add(RECOMMENDATION);
+        }
+
+        if (_age > 18)
+        {
+            options.Add(REGISTER);
+            options.Add(MARRIAGE);
+            options.Add(WORKING);
+            if (_male)
+            {
+                options.Add(PRIESTHOOD);
+            }
+        }
+        
+        options.Add(COMPLETED);
+        options.Add(QUIT);
+
+        string selectedOption;
+        do
+        {
+            Console.WriteLine("Player Menu:");
+            selectedOption = Utils.DecisionString(options);
+            switch (selectedOption)
+            {
+                case REGISTER:
+                    Console.WriteLine("Still in development");
+                    break;
+
+                case SACRAMENT:
+                    Console.WriteLine("Still in development");
+                    break;
+
+                case PRIESTHOOD:
+                    // We can ignore this warning since to access this option the game have already checked if you are a man over 18 years old so the value can't be null or lower than priest;
+                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                    string priesthood = GetPriesthood().ToLower();
+                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    if (priesthood == "priest")
+                    {
+                        SetMelchizedekPriesthood("elder");
+                    }
+                    else if (priesthood == "elder")
+                    {
+                        SetMelchizedekPriesthood("high priest");
+                    }
+                    else if (priesthood == "high priest")
+                    {
+                        Console.WriteLine($"You already hold the {priesthood} office. Consider if you should continue to play this game game.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Something went wrong! You should not be here!");
+                    }
+
+                    break;
+
+                case COMPLETED:
+                    Console.WriteLine("Still in development");
+                    break;
+
+                case QUIT:
+                    break;
+            }
+        } while (selectedOption != QUIT);
     }
 }
