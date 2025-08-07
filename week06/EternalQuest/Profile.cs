@@ -41,6 +41,44 @@ class Profile
         SetAaronicPriesthood();
     }
 
+    public string GetName()
+    {
+        return _name;
+    }
+
+    public int GetXP()
+    {
+        return _currentXP;
+    }
+
+    public void AddXP(int xp)
+    {
+        _currentXP += xp;
+        CheckLevelUp();
+    }
+
+    public int GetLevel()
+    {
+        return _level;
+    }
+
+    public void CheckLevelUp()
+    {
+        int nextLevelXP = CalculateNextLevelXP();
+        if (_currentXP >= nextLevelXP)
+        {
+            _level += 1;
+            _currentXP -= nextLevelXP;
+        }
+    }
+
+    public int CalculateNextLevelXP()
+    {
+        // the original formula used 2 * next_level - 1, but next_level = level + 1, so doing the distributive it results in this 2 * level + 1
+        double power = 0.5 * Math.Log(2 * _level + 1);
+        return (int)(2650 * Math.Pow(1.5, power));
+    }
+
     public int GetAge()
     {
         DateTime today = DateTime.Today;
