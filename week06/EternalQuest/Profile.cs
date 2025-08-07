@@ -1,17 +1,19 @@
 #nullable enable
 
 using System;
+using Microsoft.VisualBasic;
 // using Quests; // Removed because the namespace 'Quests' could not be found
 
 class Profile
 {
     private int _level, _currentXP, _age;
-    private bool _male, _married, _patriarcalBlessing, _working;
-    private bool? _activeRecommendation;
-    private DateTime _birthday, _sacramentalTime, _recommendationDueDate;
+    private bool _male, _married, _patriarcalBlessing, _working, _activeRecommendation;
+    private TimeSpan? _sacramentalTime;
+    private DateTime _birthday;
+    private DateTime? _recommendationDueDate;
     private Dictionary<string, DateTime> _ordinances;
     private Dictionary<string, List<Quest>> _quests;
-    private string _name, __familysearchLink, _ldsAccount;
+    private string _name,_familysearchLink, _ldsAccount;
     private string? _dominicalEducation, _priesthood;
     private List<string> _calling;
 
@@ -26,9 +28,17 @@ class Profile
         _currentXP = 0;
         _calling = new List<string>();
         _ordinances = ordinances;
+        _familysearchLink = "";
+        _ldsAccount = "";
+        _married = false;
+        _patriarcalBlessing = false;
+        _working = false;
+        _activeRecommendation = false;
+        _sacramentalTime = null;
+        _recommendationDueDate = null;
+        _quests = new Dictionary<string, List<Quest>>();
         SetDominicalEducation();
         SetAaronicPriesthood();
-
     }
 
     public int GetAge()
@@ -112,6 +122,25 @@ class Profile
         return _priesthood;
     }
 
+    public void SetSacramentalTime()
+    {
+        string input;
+        TimeSpan newTime;
+        do
+        {
+            input = Utils.ValidStringInput("Enter new sacramental time (format: HH:mm):");
+            if (!TimeSpan.TryParse(input, out newTime))
+            {
+                Console.WriteLine("Invalid time format. Try again");
+            }
+        } while (!TimeSpan.TryParse(input, out newTime));
+        _sacramentalTime = newTime;
+    }
+
+    public TimeSpan? GetSacramentalTime()
+    {
+        return _sacramentalTime;
+    }
     private void ProfileMenu()
     {
         const string
@@ -125,28 +154,31 @@ class Profile
             COMPLETED = "See Completed Quests",
             QUIT = "Quit";
 
-        //Some of the basic options the menu can have, register a new ordinance, 
+        //Some of the basic options the menu can have
         List<string> options = new List<string>()
         {
-            SACRAMENT, CALLING
+            SACRAMENT, CALLING, RECOMMENDATION
         };
 
-        if (_activeRecommendation != null)
+        //Some conditional options the menu can have, the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
+        if (_age >= 18)
         {
-            options.Add(RECOMMENDATION);
-        }
-
-        if (_age > 18)
-        {
-            options.Add(REGISTER);
             options.Add(MARRIAGE);
             options.Add(WORKING);
+
+            //Since man can seal more than once and women don't we need to separate those situations 
             if (_male)
             {
                 options.Add(PRIESTHOOD);
+                options.Add(REGISTER);
+            }
+            else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
+            {
+                options.Add(REGISTER);
             }
         }
-        
+
+        //The one that must go at the end of the list
         options.Add(COMPLETED);
         options.Add(QUIT);
 
@@ -158,18 +190,43 @@ class Profile
             switch (selectedOption)
             {
                 case REGISTER:
-                    Console.WriteLine("Still in development");
+                    List<string> ordinances = new List<string>();
+
+                    string highOrdinance = "initiatory and endowment";
+                    if (!_ordinances.ContainsKey(highOrdinance))
+                    {
+                        ordinances.Add(highOrdinance);
+                    }
+
+                    if (_married)
+                    {
+                        string spouse = Utils.ValidStringInput("What is the name of your spouse?");
+                        ordinances.Add($"sealing with {spouse}");
+                    }
+
+                    Utils.GetOrdinance(ordinances);
                     break;
 
                 case SACRAMENT:
-                    Console.WriteLine("Still in development");
+                    TimeSpan? sacramentalTime = GetSacramentalTime();
+                    string formattedTime = sacramentalTime?.ToString(@"hh\:mm") ?? "Not set";
+                    if (formattedTime == "Not set")
+                    {
+                        Console.WriteLine("You have not set a sacramental time yet.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Current sacramental time: {formattedTime}");
+                    }
+
+                    SetSacramentalTime();
+
                     break;
 
                 case PRIESTHOOD:
-                    // We can ignore this warning since to access this option the game have already checked if you are a man over 18 years old so the value can't be null or lower than priest;
-                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     string priesthood = GetPriesthood().ToLower();
-                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     if (priesthood == "priest")
                     {
                         SetMelchizedekPriesthood("elder");
@@ -186,11 +243,26 @@ class Profile
                     {
                         Console.WriteLine("Something went wrong! You should not be here!");
                     }
+                    break;
 
+                case MARRIAGE:
+                    Console.WriteLine("Work in progress.");
+                    break;
+
+                case CALLING:
+                    Console.WriteLine("Work in progress.");
+                    break;
+
+                case WORKING:
+                    Console.WriteLine("Work in progress.");
+                    break;
+
+                case RECOMMENDATION:
+                    Console.WriteLine("Work in progress.");
                     break;
 
                 case COMPLETED:
-                    Console.WriteLine("Still in development");
+                    Console.WriteLine("Work in progress.");
                     break;
 
                 case QUIT:
