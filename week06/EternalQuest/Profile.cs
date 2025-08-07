@@ -448,11 +448,20 @@ class Profile
 
     public void DisplayLevelProgress()
     {
+        int nextLevelXP = CalculateNextLevelXP();
+        double progress = (double)_currentXP / nextLevelXP;
+        int barLength = 20;
+        int filledLength = (int)(progress * barLength);
 
+        string bar = new string('=', filledLength) + new string(' ', barLength - filledLength);
+
+        // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
+        Console.WriteLine($"{_level}  {bar}  {_level + 1}");
+        Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level");
     }
 
     public void DisplayPlayerInfo()
     {
-        
+
     }
 }
