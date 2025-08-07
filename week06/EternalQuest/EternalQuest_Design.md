@@ -28,7 +28,7 @@
 
 #### Constructor
 
-- Profile(string Name, int age, string sex)
+- Profile(string name, DateTime birthday, int age, bool male, Dictionary<string, DateTime> ordinances)
 
 #### Behaviors
 
@@ -110,7 +110,6 @@
 - GetWeeklyQuests: `List<Quest>`;
 - GetMonthlyQuests: `List<Quest>`;
 - DisplayActiveQuests: void
-- DisplayFailedQuests: void
 - DisplayCompletedQuests: void
 - DisplayDailyQuest: void
 - DisplayWeeklyQuest: void
