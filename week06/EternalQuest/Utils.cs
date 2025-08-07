@@ -53,6 +53,14 @@ public static class Utils
         Console.WriteLine("]");
     }
 
+        //Counts the number of digits of a number
+    public static int CountDigit(int number)
+    {
+        if (number < 0) number = Math.Abs(number);
+
+        return number.ToString().Length;
+    }
+
     public static int ReadInt(string questionToUser)
     {
         //setting variables
@@ -66,7 +74,7 @@ public static class Utils
             input = Console.ReadLine();
 
         } while (!int.TryParse(input, out number));
-        
+
         return number;
     }
 
@@ -85,11 +93,40 @@ public static class Utils
         return new DateTime(year, month, day);
     }
 
-    //Counts the number of digits of a number
-    public static int CountDigit(int number)
+    public static Dictionary<string, DateTime> GetOrdinance(List<string> ordinances)
     {
-        if (number < 0) number = Math.Abs(number);
+        Dictionary<string, DateTime> ordinancesDict = new Dictionary<string, DateTime>();
+        string confirmationDateEqualsBaptism;
 
-        return number.ToString().Length;
+        string yearCall, monthCall, dayCall;
+        foreach (string ordinance in ordinances)
+        {
+            yearCall = $"Please enter the year the {ordinance} occurred (e.g., 1995 or 95): ";
+            monthCall = $"Please enter the month the {ordinance} occurred? (Enter the number, e.g., 1 for January): ";
+            dayCall = $"Please enter the day the {ordinance} occurred?";
+            if (ordinance.ToLower() == "confirmation" && ordinances.Contains("baptism"))
+            {
+                Console.WriteLine("Is your confirmation date the same as your baptism date? (yes/no)");
+                confirmationDateEqualsBaptism = DecisionString(new List<string>() { "Yes", "No" });
+
+                if (confirmationDateEqualsBaptism == "Yes")
+                {
+                    // Use baptism date for confirmation
+                    if (ordinancesDict.ContainsKey("baptism"))
+                    {
+                        ordinancesDict["confirmation"] = ordinancesDict["baptism"];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Baptism date not found. Please enter confirmation date manually.");
+                        ordinancesDict["confirmation"] = ReadDate(yearCall, monthCall, dayCall);
+                    }
+                    continue;
+                }
+            }
+            ordinancesDict[ordinance] = ReadDate(yearCall, monthCall, dayCall);
+        }
+
+        return ordinancesDict;
     }
 }
