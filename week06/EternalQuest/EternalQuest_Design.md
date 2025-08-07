@@ -49,7 +49,7 @@
 - SetAccount: void
 - GetPatriarcalBlessing: bool
 - SetPatriarcalBlessing: void
-- GetSacramentalTime: DateTime
+- GetSacramentalTime: TimeSpan
 - SetSacramentalTime: void
 - GetWorking: bool
 - SetWorking: void
