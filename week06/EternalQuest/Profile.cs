@@ -62,7 +62,6 @@ class Profile
     /// </summary>
     private List<string> _callings;
 
-
     /// <summary>
     /// Constructs a new Profile with basic information and ordinances.
     /// </summary>
@@ -87,6 +86,31 @@ class Profile
         _quests = new Dictionary<string, List<Quest>>();
         SetDominicalEducation();
         SetAaronicPriesthood();
+    }
+
+    public bool GetMaritalState()
+    {
+        return _married;
+    }
+
+    public bool GetPatriarchalBlessingStatus()
+    {
+        return _patriarchalBlessing;
+    }
+
+    public DateTime? GetRecommendation()
+    {
+        return _recommendationDueDate;
+    }
+
+    public string GetLdsAccount()
+    {
+        return _ldsAccount;
+    }
+
+    public string GetFamilysearchLink()
+    {
+        return _familysearchLink;
     }
 
     /// <summary>
