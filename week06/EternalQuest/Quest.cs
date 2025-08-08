@@ -7,6 +7,7 @@ using System;
 /// </summary>
 abstract class Quest
 {
+    protected const double K = 0.5;
     /// <summary>
     /// The amount of XP awarded for completing this quest.
     /// </summary>
@@ -38,6 +39,31 @@ abstract class Quest
         _isCompleted = false;
     }
 
+    public string GetName()
+    {
+        return _shortName;
+    }
+
+    public string GetDescription()
+    {
+        return _description;
+    }
+
+    public string GetQuestType()
+    {
+        return _type;
+    }
+
+    public int GetNextLevelXP()
+    {
+        return _playerXPToNextLevel;
+    }
+
+    public bool GetIsCompletedStatus()
+    {
+        return _isCompleted;
+    }
+
     /// <summary>
     /// Sets the amount of XP awarded for completing this quest.
     /// </summary>
@@ -55,6 +81,26 @@ abstract class Quest
     {
         return _xpPoints;
     }
+
+    /// <summary>
+    /// Returns a formatted string with quest details and completion status.
+    /// Can be overridden by derived classes for custom formatting.
+    /// </summary>
+    /// <returns>A formatted string showing quest status and details.</returns>
+    public virtual string GetDetailsString()
+    {
+        string complete, message;
+        if (_isCompleted)
+        {
+            complete = "X";
+        }
+        else
+        {
+            complete = " ";
+        }
+        message = $"[{complete}] {_shortName} - {_description}";
+        return message;
+    }   
 
     /// <summary>
     /// Records an event or progress for this quest.
@@ -81,25 +127,5 @@ abstract class Quest
     /// Must be implemented by derived classes.
     /// </summary>
     /// <returns>The XP value for the quest.</returns>
-    public abstract int CalculateXpPerQuestType();
-
-    /// <summary>
-    /// Returns a formatted string with quest details and completion status.
-    /// Can be overridden by derived classes for custom formatting.
-    /// </summary>
-    /// <returns>A formatted string showing quest status and details.</returns>
-    public virtual string GetDetailsString()
-    {
-        string complete, message;
-        if (_isCompleted)
-        {
-            complete = "X";
-        }
-        else
-        {
-            complete = " ";
-        }
-        message = $"[{complete}] {_shortName} - {_description}";
-        return message;
-    }   
+    public abstract int CalculateXpPerQuestType(int level);
 }
