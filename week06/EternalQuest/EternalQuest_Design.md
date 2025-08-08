@@ -122,7 +122,7 @@
 - _shortName: string
 - _description: string
 - _xpPoints: int
-- _status: string -> it it was completed or failed to completed
+- _type: string
 
 #### Constructor
 
@@ -134,6 +134,7 @@
 - IsComplete(): bool Abstract
 - GetDetailsString(): string
 - GetStringRepresentation(): string Abstract
+- CalculateXpPerQuestType(): int Abstract
 
 ## Child Classes
 
