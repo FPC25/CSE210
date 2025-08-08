@@ -5,20 +5,67 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
 // using Quests; // Removed because the namespace 'Quests' could not be found
 
+/// <summary>
+/// The Profile class represents a player's personal and spiritual information in Eternal Quest.
+/// It manages attributes such as name, age, ordinances, callings, education, priesthood, and progress.
+/// Provides methods for updating profile data, managing quests, and displaying player information.
+/// </summary>
 class Profile
 {
+    /// <summary>
+    /// The player's current level.
+    /// </summary>
     private int _level, _currentXP, _age;
+
+    /// <summary>
+    /// Flags for gender, marital status, patriarchal blessing, work status, and temple recommendation.
+    /// </summary>
     private bool _male, _married, _patriarchalBlessing, _working, _activeRecommendation;
+
+    /// <summary>
+    /// The time of the sacramental meeting (nullable).
+    /// </summary>
     private TimeSpan? _sacramentalTime;
+
+    /// <summary>
+    /// The player's birthday.
+    /// </summary>
     private DateTime _birthday;
+
+    /// <summary>
+    /// The expiration date of the temple recommendation (nullable).
+    /// </summary>
     private DateTime? _recommendationDueDate;
+
+    /// <summary>
+    /// Dictionary mapping ordinance names to their dates.
+    /// </summary>
     private Dictionary<string, DateTime> _ordinances;
+
+    /// <summary>
+    /// Dictionary mapping quest categories to lists of quests.
+    /// </summary>
     private Dictionary<string, List<Quest>> _quests;
+
+    /// <summary>
+    /// Player's name, FamilySearch link, and LDS account.
+    /// </summary>
     private string _name, _familysearchLink, _ldsAccount;
+
+    /// <summary>
+    /// Dominical education level and priesthood office (nullable).
+    /// </summary>
     private string? _dominicalEducation, _priesthood;
+
+    /// <summary>
+    /// List of callings (church responsibilities).
+    /// </summary>
     private List<string> _callings;
 
 
+    /// <summary>
+    /// Constructs a new Profile with basic information and ordinances.
+    /// </summary>
     public Profile(string name, DateTime birthday, int age, bool male, Dictionary<string, DateTime> ordinances)
     {
         _name = name;
@@ -42,27 +89,42 @@ class Profile
         SetAaronicPriesthood();
     }
 
+    /// <summary>
+    /// Gets the player's name.
+    /// </summary>
     public string GetName()
     {
         return _name;
     }
 
+    /// <summary>
+    /// Gets the player's current XP.
+    /// </summary>
     public int GetXP()
     {
         return _currentXP;
     }
 
+    /// <summary>
+    /// Adds XP and checks for level up.
+    /// </summary>
     public void AddXP(int xp)
     {
         _currentXP += xp;
         CheckLevelUp();
     }
 
+    /// <summary>
+    /// Gets the player's current level.
+    /// </summary>
     public int GetLevel()
     {
         return _level;
     }
 
+    /// <summary>
+    /// Checks if the player should level up and updates level/Xp accordingly.
+    /// </summary>
     public void CheckLevelUp()
     {
         int nextLevelXP = CalculateNextLevelXP();
@@ -73,6 +135,9 @@ class Profile
         }
     }
 
+    /// <summary>
+    /// Calculates the XP required for the next level.
+    /// </summary>
     public int CalculateNextLevelXP()
     {
         // the original formula used 2 * next_level - 1, but next_level = level + 1, so doing the distributive it results in this 2 * level + 1
@@ -80,6 +145,9 @@ class Profile
         return (int)(2650 * Math.Pow(1.5, power));
     }
 
+    /// <summary>
+    /// Gets the player's age in years.
+    /// </summary>
     public int GetAge()
     {
         DateTime today = DateTime.Today;
@@ -92,6 +160,9 @@ class Profile
         return age;
     }
 
+    /// <summary>
+    /// Sets the dominical education level based on age.
+    /// </summary>
     public void SetDominicalEducation()
     {
         if (_age > 13 && _age < 18)
@@ -108,11 +179,17 @@ class Profile
         }
     }
 
+    /// <summary>
+    /// Gets the dominical education level.
+    /// </summary>
     public string? GetDominicalEducation()
     {
         return _dominicalEducation;
     }
 
+    /// <summary>
+    /// Sets the Aaronic priesthood office based on age and gender.
+    /// </summary>
     public void SetAaronicPriesthood()
     {
         if (_male)
@@ -136,6 +213,9 @@ class Profile
         }
     }
 
+    /// <summary>
+    /// Sets the Melchizedek priesthood office if eligible.
+    /// </summary>
     public void SetMelchizedekPriesthood(string level)
     {
         //I know there is great levels of priesthood, but greater than this I doubt they would still 'play' this game
@@ -156,11 +236,17 @@ class Profile
         }
     }
 
+    /// <summary>
+    /// Gets the priesthood office.
+    /// </summary>
     public string? GetPriesthood()
     {
         return _priesthood;
     }
 
+    /// <summary>
+    /// Prompts the user to set the sacramental meeting time.
+    /// </summary>
     public void SetSacramentalTime()
     {
         string input;
@@ -176,16 +262,25 @@ class Profile
         _sacramentalTime = newTime;
     }
 
+    /// <summary>
+    /// Gets the sacramental meeting time.
+    /// </summary>
     public TimeSpan? GetSacramentalTime()
     {
         return _sacramentalTime;
     }
 
+    /// <summary>
+    /// Gets the dictionary of ordinances.
+    /// </summary>
     public Dictionary<string, DateTime> GetOrdinances()
     {
         return _ordinances;
     }
 
+    /// <summary>
+    /// Adds new ordinances to the profile.
+    /// </summary>
     public void AddOrdinance()
     {
         List<string> ordinances = new List<string>();
@@ -206,11 +301,17 @@ class Profile
         if (ordinances.Count != 0) Utils.GetOrdinance(ordinances);
     }
 
+    /// <summary>
+    /// Gets the list of callings.
+    /// </summary>
     public List<string> GetCalling()
     {
         return _callings;
     }
 
+    /// <summary>
+    /// Adds a new calling to the profile.
+    /// </summary>
     public void AddCalling()
     {
         if (_callings.Count > 0)
@@ -233,6 +334,9 @@ class Profile
         }
     }
 
+    /// <summary>
+    /// Removes a calling from the profile.
+    /// </summary>
     public void RemoveCalling()
     {
         Console.WriteLine("Please select the calling you want to remove: ");
@@ -240,6 +344,9 @@ class Profile
         _callings.Remove(callingToRemove);
     }
 
+    /// <summary>
+    /// Inverts a boolean status based on user input.
+    /// </summary>
     public bool InvertBoolStatus(string yesNoQuestion, bool status)
     {
         Console.WriteLine(yesNoQuestion);
@@ -250,6 +357,9 @@ class Profile
         return status;
     }
 
+    /// <summary>
+    /// Prompts the user to set or correct an account (LDS or FamilySearch).
+    /// </summary>
     private string SetAccount(string variable, string varName)
     {
         string prompt;
@@ -271,6 +381,9 @@ class Profile
         return variable;
     }
 
+    /// <summary>
+    /// Displays the profile menu and handles user choices for updating profile data.
+    /// </summary>
     private void ProfileMenu()
     {
         const string
@@ -447,6 +560,9 @@ class Profile
         } while (selectedOption != QUIT);
     }
 
+    /// <summary>
+    /// Displays a variable's value in a formatted way.
+    /// </summary>
     private void DisplaySettableVar(object? variable, string varName)
     {
         string message = $"{varName}: ";
@@ -474,6 +590,9 @@ class Profile
         Console.WriteLine(message);
     }
 
+    /// <summary>
+    /// Displays the player's level progress as a bar.
+    /// </summary>
     private void DisplayLevelProgress()
     {
         int nextLevelXP = CalculateNextLevelXP();
@@ -488,6 +607,9 @@ class Profile
         Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
     }
 
+    /// <summary>
+    /// Displays all ordinances and their dates.
+    /// </summary>
     private void DisplayOrdinances()
     {
         string padding = new String(' ', 3);
@@ -499,6 +621,9 @@ class Profile
 
     }
 
+    /// <summary>
+    /// Displays all callings.
+    /// </summary>
     private void DisplayCallings()
     {
         string padding = new String(' ', 3);
@@ -510,6 +635,9 @@ class Profile
 
     }
 
+    /// <summary>
+    /// Displays all player information in a formatted way.
+    /// </summary>
     public void DisplayPlayerInfo()
     {
         string divisor = new String('-', 25);
