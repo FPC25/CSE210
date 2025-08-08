@@ -16,7 +16,7 @@ class Profile
     private Dictionary<string, List<Quest>> _quests;
     private string _name, _familysearchLink, _ldsAccount;
     private string? _dominicalEducation, _priesthood;
-    private List<string> _calling;
+    private List<string> _callings;
 
 
     public Profile(string name, DateTime birthday, int age, bool male, Dictionary<string, DateTime> ordinances)
@@ -27,7 +27,7 @@ class Profile
         _male = male;
         _level = 1;
         _currentXP = 0;
-        _calling = new List<string>();
+        _callings = new List<string>();
         _ordinances = ordinances;
         _familysearchLink = "";
         _ldsAccount = "";
@@ -208,12 +208,12 @@ class Profile
 
     public List<string> GetCalling()
     {
-        return _calling;
+        return _callings;
     }
 
     public void AddCalling()
     {
-        if (_calling.Count > 0)
+        if (_callings.Count > 0)
         {
             Console.WriteLine("Do you want to remove a previous calling?");
             if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
@@ -223,9 +223,9 @@ class Profile
         }
 
         string calling = Utils.ValidStringInput("Please enter the new calling you have received: ");
-        if (!_calling.Contains(calling.ToLower()))
+        if (!_callings.Contains(calling.ToLower()))
         {
-            _calling.Add(calling);
+            _callings.Add(calling);
         }
         else
         {
@@ -236,8 +236,8 @@ class Profile
     public void RemoveCalling()
     {
         Console.WriteLine("Please select the calling you want to remove: ");
-        string callingToRemove = Utils.DecisionString(_calling);
-        _calling.Remove(callingToRemove);
+        string callingToRemove = Utils.DecisionString(_callings);
+        _callings.Remove(callingToRemove);
     }
 
     public bool InvertBoolStatus(string yesNoQuestion, bool status)
@@ -380,7 +380,7 @@ class Profile
                     // Simplified logic for adding/removing callings
                     List<string> operations = new List<string> { "Add Calling" };
                     string prompt = "Would you like to add";
-                    if (_calling.Count > 0)
+                    if (_callings.Count > 0)
                     {
                         operations.Add("Remove Calling");
                         prompt += " or remove";
@@ -447,7 +447,7 @@ class Profile
         } while (selectedOption != QUIT);
     }
 
-    public void DisplaySettableVar(object? variable, string varName)
+    private void DisplaySettableVar(object? variable, string varName)
     {
         string message = $"{varName}: ";
         if (variable == null ||
@@ -474,7 +474,7 @@ class Profile
         Console.WriteLine(message);
     }
 
-    public void DisplayLevelProgress()
+    private void DisplayLevelProgress()
     {
         int nextLevelXP = CalculateNextLevelXP();
         double progress = (double)_currentXP / nextLevelXP;
@@ -488,6 +488,28 @@ class Profile
         Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
     }
 
+    private void DisplayOrdinances()
+    {
+        string padding = new String(' ', 3);
+        Console.WriteLine("Ordinances: ");
+        foreach (string ordinance in _ordinances.Keys)
+        {
+            Console.WriteLine($"{padding}* {ordinance}: {_ordinances[ordinance]}");
+        }
+
+    }
+
+    private void DisplayCallings()
+    {
+        string padding = new String(' ', 3);
+        Console.WriteLine("Callings: ");
+        foreach (string calling in _callings)
+        {
+            Console.WriteLine($"{padding}* {calling}");
+        }
+
+    }
+
     public void DisplayPlayerInfo()
     {
         string divisor = new String('-', 25);
@@ -497,6 +519,7 @@ class Profile
         else message += "Fem.";
         Console.Write($"Name: {_name}  |  Age: {_age}  |  {message}");
         Console.WriteLine("Level: \n");
+        DisplayLevelProgress();
         Console.WriteLine();
         if (_dominicalEducation != null) Console.WriteLine($"Dominical Education Level: {_dominicalEducation}");
         if (_male) Console.WriteLine($"Priesthood Office: {_priesthood}");
@@ -506,6 +529,8 @@ class Profile
         DisplaySettableVar(_patriarchalBlessing, "Patriarchal Blessing Received");
         DisplaySettableVar(_ldsAccount, "LDS Account");
         DisplaySettableVar(_familysearchLink, "FamilySearch Account");
+        DisplayCallings();
+        DisplayOrdinances();
 
         Console.WriteLine(divisor);
         ProfileMenu();
