@@ -183,28 +183,10 @@ else
 }
 
 - IsComplete(): bool
-return _amountCompleted == _target;
+return _amountCompleted == target;
 
 - GetDetailsString(): string
 - GetStringRepresentation(): string
-
-### TimedQuest
-
-#### Responsibilities
-
-- _initialDate: DateTime
-- const XPMAX: double
-
-#### Constructor
-
-- TimedQuest(string shortName, string description, int xpPoints, DateTime initialDate)
-
-#### Behaviors
-
-- RecordEvent(): void
-- IsComplete(): bool
-- GetDetailsString(): string
-- ActivateQuest(): bool
 
 ### EternalQuest
 
