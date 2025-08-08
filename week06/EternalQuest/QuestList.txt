@@ -130,7 +130,7 @@ eternal quests (repete num dado periodo de tempo)
     -> mensal
         * pagar o dizimo e dar ofertas
         * Ir ao templo fazer ordenanças n vezes ao mes
-        * Realizar trabalho de ministração pelo menos 4 vezes por mes
+        * Realizar trabalho de ministração pelo menos n vezes por mes
         * Fazer jejum pelo menos 1 vez ao mes
 
 Custom
