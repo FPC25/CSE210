@@ -16,25 +16,25 @@ abstract class Quest
     /// <summary>
     /// The short name, description, and type of the quest.
     /// </summary>
-    private string _shortName, _description, _type;
+    private string _shortName, _description;
 
     /// <summary>
     /// Indicates whether the quest is completed.
     /// </summary>
-    private bool _isCompleted;
+    private bool _isCompleted, _active;
 
     /// <summary>
     /// Constructs a new Quest with the specified details.
     /// </summary>
     /// <param name="name">The short name of the quest.</param>
     /// <param name="description">A description of the quest.</param>
-    /// <param name="type">The type/category of the quest.</param>
+    /// <param name="active">If the quest is active or not.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
-    public Quest(string name, string description, string type, int XPNextLevel)
+    public Quest(string name, string description, bool active, int XPNextLevel)
     {
         _shortName = name;
         _description = description;
-        _type = type;
+        _active = active;
         _playerXPToNextLevel = XPNextLevel;
         _isCompleted = false;
     }
@@ -49,9 +49,14 @@ abstract class Quest
         return _description;
     }
 
-    public string GetQuestType()
+    public bool GetActiveStatus()
     {
-        return _type;
+        return _active;
+    }
+
+    public void SetActiveStatus(bool active)
+    {
+        _active = active;
     }
 
     public int GetNextLevelXP()
@@ -62,6 +67,12 @@ abstract class Quest
     public bool GetIsCompletedStatus()
     {
         return _isCompleted;
+    }
+
+    protected void CompleteQuest()
+    {
+        _active = false;
+        _isCompleted = true;
     }
 
     /// <summary>
@@ -106,21 +117,21 @@ abstract class Quest
     /// Records an event or progress for this quest.
     /// Must be implemented by derived classes.
     /// </summary>
-    public abstract void RecordEvent();
+    public abstract void RecordEvent(Profile player, bool conditional);
 
     /// <summary>
     /// Determines whether the quest is complete.
     /// Must be implemented by derived classes.
     /// </summary>
     /// <returns>True if the quest is complete; otherwise, false.</returns>
-    public abstract bool IsComplete();
+    public abstract void IsComplete(Profile player);
 
     /// <summary>
-    /// Returns a string representation of the quest for display or saving.
+    /// Returns a Dictionary<string, string> representation of the quest for display or saving.
     /// Must be implemented by derived classes.
     /// </summary>
-    /// <returns>A string representing the quest.</returns>
-    public abstract string GetStringRepresentation();
+    /// <returns>A Dictionary<string, string> representing the quest.</returns>
+    public abstract Dictionary<string, string> GetStringRepresentation();
 
     /// <summary>
     /// Calculates the XP awarded for this quest type.
