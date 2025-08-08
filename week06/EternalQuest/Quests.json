@@ -1,0 +1,49 @@
+{ 
+    "quests":
+        { "simple": [
+            {
+                "name": "Sacramental Time",
+                "description": "In your player profile, add the sacramental time.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            },
+            {
+                "name": "LDS account",
+                "description": "Get your member number with your ward clerk and create a LDS account, remember to keep your password safe! Afterwards, save the username on the player profile.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            },
+            {
+                "name": "FamilySearch account",
+                "description": "Access the familysearch account and create an account, preferable with your LDS account and then save the link/username on the player profile.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            },
+            {
+                "name": "Temple Recommendation",
+                "description": "Have a meeting with a member of the bishopric to request to get, to renovate or simple enter your temple recommendation due date on you player profile.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            },
+            {
+                "name": "Patriarchal Blessing",
+                "description": "Have a meeting with a member of the bishopric to request a meeting with the Patriarch of your stake in order to receive your patriarchal blessing. After you receive yours go to the player profile and set as received.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            },
+            {
+                "name": "Receive a Calling or Designation",
+                "description": "Have a meeting with a member of the bishopric to inform that your are willing to serve in the Lord's work here. After your receive a calling and/or a designation go to the player profile and enter it there.",
+                "auto_check": true,
+                "active": true,
+                "completed": false
+            }
+        ]
+
+        }
+}
