@@ -59,11 +59,11 @@ tutorial
     * adicionar aniversario
     * adicionar idade
     * adicionar sexo;
-    * adicionar horario da Sacramental
     * adicionar data de batismo e confirmação
 
 
 simples
+    * adicionar horario da Sacramental
     * criar conta familysearch
     * criar conta sud
     * aprender a dar o dizimo online com secretário
@@ -73,7 +73,7 @@ simples
     * Incluir informações dos avós no familysearch
     * Incluir informações dos bisavós no familysearch
     * Dar ao menos uma referencia para os missionários
-    * Obter recomendação de tempo limitado para o templo
+    * Obter recomendação para o templo
     * Aceitar fazer um discurso quando convidado
     * Se não tirou a benção patriarcal:
         -> tirar a benção patriarcal
