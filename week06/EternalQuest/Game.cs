@@ -1,13 +1,28 @@
 using System;
 
+/// <summary>
+/// The Game class manages the main flow and logic of the Eternal Quest application.
+/// It handles user interaction, menu navigation, and player profile creation.
+/// </summary>
 class Game
 {
+    /// <summary>
+    /// Stores the current player's profile.
+    /// </summary>
     private Profile _player;
 
+    /// <summary>
+    /// Initializes a new instance of the Game class.
+    /// </summary>
     public Game()
     {
     }
 
+    /// <summary>
+    /// Guides the user through the tutorial and character creation process,
+    /// collecting basic information and ordinances to instantiate a Profile.
+    /// </summary>
+    /// <returns>A new Profile object with user data.</returns>
     private Profile Tutorial()
     {
         string input, name, genderPrompt;
@@ -49,11 +64,17 @@ class Game
         return new Profile(name, birthday, age, male, ordinances);
     }
 
+    /// <summary>
+    /// Starts the main game loop, displaying the initial menu and handling user choices.
+    /// </summary>
     public void Run()
     {
         InitialMenu();
     }
     
+    /// <summary>
+    /// Displays the initial menu (New Game, Load Game, Quit) and processes user selection.
+    /// </summary>
     public void InitialMenu()
     {
         const string
@@ -90,6 +111,10 @@ class Game
 
     }
 
+    /// <summary>
+    /// Displays the main game menu (Active Quests, Record Completion, Custom Quest, Save, Profile, Quit)
+    /// and processes user selection.
+    /// </summary>
     public void GameMenu()
     {
         const string
