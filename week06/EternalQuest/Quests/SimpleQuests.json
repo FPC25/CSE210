@@ -37,17 +37,10 @@
             "completed": false
         },
         {
-            "name": "Receive a Calling or Designation",
+            "name": "Receive a Calling",
             "description": "Have a meeting with a member of the bishopric to inform that your are willing to serve in the Lord's work here. After your receive a calling and/or a designation go to the player profile and enter it there.",
             "auto_check": true,
             "active": true,
-            "completed": false
-        },
-        {
-            "name": "Renovate Temple Recommendation",
-            "description": "Have a meeting with a member of the bishopric to request a meeting to renovate your temple recommendation. Then enter the new date in your profile.",
-            "auto_check": true,
-            "active": false,
             "completed": false
         },
         {
@@ -61,6 +54,13 @@
             "name": "Sealing to Eternity",
             "description": "Congratulations for your marriage! This is a important step in your life, but for the eternity you need to seal yourself to your spouse. So after you are sealed to your spouse, please enter the date on your player profile.",
             "auto_check": true,
+            "active": false,
+            "completed": false
+        },
+        {
+            "name": "Renovate Temple Recommendation",
+            "description": "Have a meeting with a member of the bishopric to request a meeting to renovate your temple recommendation. Then enter the new date in your profile.",
+            "auto_check": false,
             "active": false,
             "completed": false
         },
