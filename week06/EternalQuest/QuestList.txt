@@ -121,6 +121,7 @@ eternal quests (repete num dado periodo de tempo)
     -> semanal
         * Tomar o sacramento
         * Fazer indexação n horas semanais
+        * Be at early to the Sacramental Reunion;=
         * se tem chamado
            -> Trabalhar no chamado n horas semanais
         * Buscar informações familiares e colocar no family search
