@@ -2,6 +2,8 @@ using System;
 
 class Game
 {
+    private Profile _player;
+
     public Game()
     {
     }
@@ -70,10 +72,10 @@ class Game
         {
             Console.WriteLine("Welcome to Eternal Quest:");
             selectedOption = Utils.DecisionString(options);
-            switch (selectedOption)
+            switch(selectedOption)
             {
                 case NEW:
-                    Profile player = Tutorial();
+                    _player = Tutorial();
                     GameMenu();
                     break;
 
@@ -128,7 +130,7 @@ class Game
                     break;
 
                 case PROFILE:
-                    Console.WriteLine("Still in development");
+                    _player.DisplayPlayerInfo();
                     break;
 
                 case QUIT:
