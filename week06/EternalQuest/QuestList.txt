@@ -63,22 +63,47 @@ tutorial
 
 
 simples
+    auto_check
+    {
     * adicionar horario da Sacramental
     * criar conta familysearch
     * criar conta sud
-    * aprender a dar o dizimo online com secretário
     * Conseguir um chamado ou designação
+    * Obter recomendação para o templo
+    * Se não tirou a benção patriarcal:
+        -> tirar a benção patriarcal
+    * Se tem recomendação para o templo e proximo da validade:
+        -> iniciar a quest de marcar entrevista para renovar recomendação
+    * se batizado, mas com ~1 anos de membro
+        -> fazer a sua propria investidura
+    * se casado, com investidura,
+        -> fazer o próprio selamento
+    }
+    user_enter{
+    * aprender a dar o dizimo online com secretário
     * Incluir suas proprias informações no familysearch
     * Incluir informações dos pais no familysearch
     * Incluir informações dos avós no familysearch
     * Incluir informações dos bisavós no familysearch
     * Dar ao menos uma referencia para os missionários
-    * Obter recomendação para o templo
     * Aceitar fazer um discurso quando convidado
-    * Se não tirou a benção patriarcal:
-        -> tirar a benção patriarcal
     * Preparar uma reunião familiar.
+    * Por idade 
+        -> Seminário: 14-17
+            -> Frequentar o seminário
+            -> Força dos jovens
+            -> Decorar o tema (Rapazes/Moças)
+            -> Participar atividades (OR/OM/ORM)
+                -> se menino
+                    pedir entrevistas para avançar no sacerdócio
 
+        -> Instituto: 18-35
+            -> Frequentar o Instituto
+            -> not _married
+                -> Participar atividades JAS
+                -> Marcar entrevista com bispado para acompanhamento
+    }
+    
 checklist
     * Levar (n) nomes para o templo para {ordenança} no templo
     * Ir ao templo n vezes ao mes fazer ordenanças 
@@ -105,25 +130,6 @@ eternal quests (repete num dado periodo de tempo)
         * Ir ao templo fazer ordenanças n vezes ao mes
         * Realizar trabalho de ministração pelo menos 4 vezes por mes
         * Fazer jejum pelo menos 1 vez ao mes
-
-timeQuest
-    * Se tem recomendação para o templo e proximo da validade:
-        -> iniciar a quest de marcar entrevista para renovar recomendação
-    se batizado, mas com ~1 anos de membro
-        -> obter recomendação completa para investidura
-    * Por idade 
-        -> Seminário: 14-17
-            -> Frequentar o seminário
-            -> Força dos jovens
-            -> Decorar o tema (Rapazes/Moças)
-            -> Participar atividades (OR/OM/ORM)
-                -> se menino
-                    pedir entrevistas para avançar no sacerdócio
-
-        -> Instituto: 18-35
-            -> Frequentar o Instituto
-            -> níveis do Instituto
-            -> Participar atividades JAS
 
 Custom
     * Usuário entra com uma quest, tipo, dificuldade, (se quiser um prazo)
