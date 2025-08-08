@@ -114,8 +114,9 @@ checklist
 
 eternal quests (repete num dado periodo de tempo)
     -> diarias
-        * estudar as escrituras (n) min por dia
-        * Orar ao acordar e dormir
+        * estudar as escrituras 15 min por dia
+        * Orar ao acordar 
+        * Orar ao dormir
         * Orar antes das refeições
 
     -> semanal
