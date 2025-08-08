@@ -24,6 +24,12 @@
             "description": "Participate in the monthly fast by abstaining from food and drink for two consecutive meals, praying for specific needs, and donating a generous fast offering. Fasting brings spiritual strength and blessings.",
             "active": true,
             "completed": false
+        },
+        {
+            "name": "Bear Testimony",
+            "description": "Share your testimony of Jesus Christ and His gospel during the monthly Testimony Sacrament meeting, especially if prompted by the Holy Spirit. By bearing testimony, you strengthen your own faith, uplift others, and help build unity and spiritual strength within the congregation.",
+            "active": true,
+            "completed": false
         }
     ]
 }
