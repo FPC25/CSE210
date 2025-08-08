@@ -1,17 +1,27 @@
 using System;
 
+/// <summary>
+/// The Utils class provides static utility methods for user input, string formatting,
+/// menu interaction, and data conversion for the Eternal Quest application.
+/// </summary>
 public static class Utils
 {
-    //A function to Capitaliza a string
+    /// <summary>
+    /// Converts the first character of a string to uppercase.
+    /// </summary>
+    /// <param name="s">The string to capitalize.</param>
+    /// <returns>The string with the first character in uppercase.</returns>
     public static string ToTitleCase(string s)
     {
         if (string.IsNullOrEmpty(s)) return s;
         return char.ToUpper(s[0]) + s.Substring(1);
     }
 
-    // Functions to create a menu from each the user can interact given a list of options
-
-    //returns the option index
+    /// <summary>
+    /// Displays a numbered menu and prompts the user to select an option by number.
+    /// </summary>
+    /// <param name="options">List of options to display.</param>
+    /// <returns>The zero-based index of the selected option.</returns>
     public static int Decision(List<string> options)
     {
         // Display numbered choices
@@ -33,14 +43,21 @@ public static class Utils
         return choice - 1;
     }
 
-    //returns the text of the option
+    /// <summary>
+    /// Displays a menu and returns the text of the selected option.
+    /// </summary>
+    /// <param name="options">List of options to display.</param>
+    /// <returns>The text of the selected option.</returns>
     public static string DecisionString(List<string> options)
     {
         int index = Decision(options);
         return options[index];
     }
 
-    // A function to print all the elements in a list in a python style
+    /// <summary>
+    /// Prints all elements of a string list in Python-style formatting.
+    /// </summary>
+    /// <param name="list">The list of strings to print.</param>
     public static void PrintList(List<string> list)
     {
         Console.Write("[");
@@ -53,7 +70,11 @@ public static class Utils
         Console.WriteLine("]");
     }
 
-    //Counts the number of digits of a number
+    /// <summary>
+    /// Counts the number of digits in an integer.
+    /// </summary>
+    /// <param name="number">The integer to count digits for.</param>
+    /// <returns>The number of digits.</returns>
     public static int CountDigit(int number)
     {
         if (number < 0) number = Math.Abs(number);
@@ -61,6 +82,11 @@ public static class Utils
         return number.ToString().Length;
     }
 
+    /// <summary>
+    /// Prompts the user for an integer input and validates it.
+    /// </summary>
+    /// <param name="questionToUser">The prompt to display to the user.</param>
+    /// <returns>The integer entered by the user.</returns>
     public static int ReadInt(string questionToUser)
     {
         //setting variables
@@ -78,6 +104,13 @@ public static class Utils
         return number;
     }
 
+    /// <summary>
+    /// Prompts the user for year, month, and day, and returns a DateTime object.
+    /// </summary>
+    /// <param name="yearCall">Prompt for year.</param>
+    /// <param name="monthCall">Prompt for month.</param>
+    /// <param name="dayCall">Prompt for day.</param>
+    /// <returns>A DateTime object representing the entered date.</returns>
     public static DateTime ReadDate(string yearCall, string monthCall, string dayCall)
     {
         int year = Utils.ReadInt(yearCall);
@@ -93,6 +126,11 @@ public static class Utils
         return new DateTime(year, month, day);
     }
 
+    /// <summary>
+    /// Prompts the user to enter dates for a list of ordinances, handling confirmation/baptism logic.
+    /// </summary>
+    /// <param name="ordinances">List of ordinance names.</param>
+    /// <returns>A dictionary mapping ordinance names to their dates.</returns>
     public static Dictionary<string, DateTime> GetOrdinance(List<string> ordinances)
     {
         Dictionary<string, DateTime> ordinancesDict = new Dictionary<string, DateTime>();
@@ -130,6 +168,11 @@ public static class Utils
         return ordinancesDict;
     }
 
+    /// <summary>
+    /// Prompts the user for a non-empty string input.
+    /// </summary>
+    /// <param name="question">The prompt to display to the user.</param>
+    /// <returns>A non-empty string entered by the user.</returns>
     public static string ValidStringInput(string question)
     {
         string input;
