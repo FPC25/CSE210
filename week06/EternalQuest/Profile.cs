@@ -720,4 +720,13 @@ class Profile
         }
         _quests[category].Add(quest);
     }
+
+    /// <summary>
+    /// Gets all quest categories and their associated quests.
+    /// </summary>
+    /// <returns>A dictionary of quest categories and their lists of quests.</returns>
+    public Dictionary<string, List<Quest>> GetAllQuests()
+    {
+        return _quests;
+    }
 }
