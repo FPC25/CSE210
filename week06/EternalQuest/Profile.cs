@@ -704,4 +704,20 @@ class Profile
         Console.WriteLine(divisor);
         ProfileMenu();
     }
+
+    /// <summary>
+    /// Adds a quest to the player's active quests under the specified category.
+    /// If the category does not exist, it is created.
+    /// </summary>
+    /// <param name="category">The quest category (e.g., "simple", "checklist", "eternal").</param>
+    /// <param name="quest">The quest object to add.</param>
+    public void AddActiveQuest(string category, Quest quest)
+    {
+        quest.SetActiveStatus(true);
+        if (!_quests.ContainsKey(category))
+        {
+            _quests[category] = new List<Quest>();
+        }
+        _quests[category].Add(quest);
+    }
 }
