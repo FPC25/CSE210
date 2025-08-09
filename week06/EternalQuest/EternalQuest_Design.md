@@ -100,18 +100,14 @@
 
 #### Behaviors
 
-- DisplayActiveQuests: void
-- ActivateTimeQuest: bool -> activate quest that depends on the time
-- CalculateChecklistDifficulty: int
-- CalculateXpPerQuest: int
-- GetNotTimedQuests: `List<Quest>`;
+- GetDailyQuests: `List<Quest>`;
 - GetWeeklyQuests: `List<Quest>`;
 - GetMonthlyQuests: `List<Quest>`;
-- DisplayActiveQuests: void
-- DisplayCompletedQuests: void
 - DisplayDailyQuest: void
 - DisplayWeeklyQuest: void
 - DisplayMonthlyQuest: void
+- DisplayActiveQuests: void
+- DisplayCompletedQuests: void
 
 ## Parent Class
 
