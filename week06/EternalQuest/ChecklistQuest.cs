@@ -17,7 +17,7 @@ class ChecklistQuest : Quest
     /// <summary>
     /// The current number of completed steps and the total required steps.
     /// </summary>
-    private int _steps, _total, _xpPoints, _playerXPToNextLevel;
+    private int _steps, _total, _playerXPToNextLevel;
 
     /// <summary>
     /// The short name and description of the quest.
