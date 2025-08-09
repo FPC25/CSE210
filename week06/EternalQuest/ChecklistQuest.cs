@@ -74,7 +74,7 @@ class ChecklistQuest : Quest
     /// </summary>
     /// <param name="player">The player's profile, used for updating XP.</param>
     /// <param name="conditional">Whether a step was completed.</param>
-    public override void RecordEvent(Profile player, bool conditional = false)
+    public override void RecordEvent(Profile player, bool conditional)
     {
         if (conditional)
         {
