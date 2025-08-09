@@ -37,7 +37,7 @@ class ChecklistQuest : Quest
     /// <param name="active">If the quest is active or not.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
     /// <param name="total">The total number of steps required to complete the quest.</param>
-    public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int total) : base(name, description, active, XPNextLevel)
+    public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int total, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
         _steps = 0;
         _total = total;
@@ -52,7 +52,7 @@ class ChecklistQuest : Quest
     /// <param name="XPNextLevel">The XP required for the next level.</param>
     /// <param name="steps">The current number of completed steps.</param>
     /// <param name="total">The total number of steps required to complete the quest.</param>
-    public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int steps, int total) : base(name, description, active, XPNextLevel)
+    public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int steps, int total, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
         _steps = steps;
         _total = total;

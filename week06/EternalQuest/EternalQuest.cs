@@ -44,7 +44,7 @@ class EternalQuest : Quest
     /// <param name="active">If the quest is active or not.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
     /// <param name="initialDate">The initial date of the quest.</param>
-    public EternalQuest(string name, string description, string frequency, bool active, int XPNextLevel, DateTime initialDate) : base(name, description, active, XPNextLevel)
+    public EternalQuest(string name, string description, string frequency, bool active, int XPNextLevel, DateTime initialDate, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
         _frequency = frequency;
         _initialDate = initialDate;

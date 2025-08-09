@@ -27,6 +27,8 @@ abstract class Quest
     /// </summary>
     private bool _isCompleted, _active;
 
+    private List<string> _requiredQuests;
+
     /// <summary>
     /// Constructs a new Quest with the specified details.
     /// </summary>
@@ -34,7 +36,7 @@ abstract class Quest
     /// <param name="description">A description of the quest.</param>
     /// <param name="active">If the quest is active or not.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
-    public Quest(string name, string description, bool active, int XPNextLevel)
+    public Quest(string name, string description, bool active, int XPNextLevel, List<string> requirements)
     {
         _shortName = name;
         _description = description;
@@ -101,6 +103,11 @@ abstract class Quest
     /// Gets the amount of XP awarded for completing this quest.
     /// </summary>
     public int GetXpPoints() => _xpPoints;
+
+    public List<string> GetDependencies()
+    {
+
+    }
 
     /// <summary>
     /// Returns a formatted string with quest details and completion status.

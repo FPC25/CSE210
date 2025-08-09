@@ -25,7 +25,7 @@ class SimpleQuest : Quest
     /// <param name="active">Whether the quest is currently active.</param>
     /// <param name="autoCheck">Whether the quest should be auto-checked.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
-    public SimpleQuest(string name, string description, bool active, bool autoCheck, int XPNextLevel) : base(name, description, active, XPNextLevel)
+    public SimpleQuest(string name, string description, bool active, bool autoCheck, int XPNextLevel, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
         _autoCheck = autoCheck;
     }
