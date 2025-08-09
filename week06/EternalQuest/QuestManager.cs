@@ -108,7 +108,7 @@ class QuestManager
     /// </summary>
     public void DisplayActiveQuests()
     {
-        foreach (var category in _player.GetActiveQuests())
+        foreach (var category in _player.GetAllQuests())
         {
             Console.WriteLine($"Category: {category.Key}");
             foreach (var quest in category.Value)
@@ -124,7 +124,7 @@ class QuestManager
     /// </summary>
     public void DisplayCompletedQuests()
     {
-        foreach (var category in _player.GetActiveQuests())
+        foreach (var category in _player.GetAllQuests())
         {
             Console.WriteLine($"Category: {category.Key}");
             foreach (var quest in category.Value)
