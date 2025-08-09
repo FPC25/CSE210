@@ -8,12 +8,13 @@ using Microsoft.VisualBasic;
 /// <summary>
 /// The Profile class represents a player's personal and spiritual information in Eternal Quest.
 /// It manages attributes such as name, age, ordinances, callings, education, priesthood, and progress.
-/// Provides methods for updating profile data, managing quests, and displaying player information.
+/// The class provides methods for updating profile data, managing quests, handling XP and level progression,
+/// and displaying player information. It also supports logic for auto-completing quests based on profile status.
 /// </summary>
 class Profile
 {
     /// <summary>
-    /// The player's current level.
+    /// The player's current level, XP, and age.
     /// </summary>
     private int _level, _currentXP, _age;
 
@@ -64,6 +65,7 @@ class Profile
 
     /// <summary>
     /// Constructs a new Profile with basic information and ordinances.
+    /// Initializes all fields and sets up education and priesthood status.
     /// </summary>
     public Profile(string name, DateTime birthday, int age, bool male, Dictionary<string, DateTime> ordinances)
     {
@@ -88,26 +90,41 @@ class Profile
         SetAaronicPriesthood();
     }
 
+    /// <summary>
+    /// Gets the player's marital status.
+    /// </summary>
     public bool GetMaritalState()
     {
         return _married;
     }
 
+    /// <summary>
+    /// Gets the patriarchal blessing status.
+    /// </summary>
     public bool GetPatriarchalBlessingStatus()
     {
         return _patriarchalBlessing;
     }
 
+    /// <summary>
+    /// Gets the expiration date of the temple recommendation.
+    /// </summary>
     public DateTime? GetRecommendation()
     {
         return _recommendationDueDate;
     }
 
+    /// <summary>
+    /// Gets the LDS account username.
+    /// </summary>
     public string GetLdsAccount()
     {
         return _ldsAccount;
     }
 
+    /// <summary>
+    /// Gets the FamilySearch account link.
+    /// </summary>
     public string GetFamilysearchLink()
     {
         return _familysearchLink;
