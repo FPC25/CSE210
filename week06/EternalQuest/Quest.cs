@@ -125,7 +125,7 @@ abstract class Quest
     /// Must be implemented by derived classes.
     /// </summary>
     /// <returns>A Dictionary<string, string> representing the quest.</returns>
-    public abstract Dictionary<string, string> GetStringRepresentation();
+    public abstract Dictionary<string, string> GetDictRepresentation();
 
     /// <summary>
     /// Calculates the XP awarded for this quest type.
