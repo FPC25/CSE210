@@ -104,10 +104,10 @@ abstract class Quest
     /// </summary>
     public int GetXpPoints() => _xpPoints;
 
-    public List<string> GetDependencies()
-    {
-
-    }
+    /// <summary>
+    /// Gets list of quests to be completed before a given quest can be activated.
+    /// </summary>
+    public List<string> GetDependencies() => _requiredQuests;
 
     /// <summary>
     /// Returns a formatted string with quest details and completion status.
