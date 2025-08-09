@@ -1,26 +1,27 @@
 using System;
 
 /// <summary>
-/// The ChecklistQuest class represents a quest that requires completing multiple steps or tasks.
-/// It inherits from the abstract Quest class and tracks progress through a step counter.
-/// ChecklistQuest awards XP for each completed step and a bonus when all steps are finished.
-/// The class provides methods for recording progress, checking completion, displaying quest details,
+/// The EternalQuest class represents a recurring quest that can be daily, weekly, or monthly.
+/// It inherits from the abstract Quest class and uses a frequency tag to determine how often the quest repeats.
+/// EternalQuest tracks its initial date, completion status, and activity status.
+/// It awards XP based on its frequency and the player's level.
+/// The class provides methods for recording completion, checking status, displaying quest details,
 /// and serializing quest status for saving or display.
 /// </summary>
 class EternalQuest : Quest
 {
     /// <summary>
-    /// XP multiplier for each step and for the bonus when the quest is completed.
+    /// XP multipliers for daily, weekly, and monthly eternal quests.
     /// </summary>
     private const double XPMAXDAILY = 0.03f, XPMAXWEEKLY = 0.06f, XPMAXMONTHLY = 0.09f;
 
     /// <summary>
-    /// The current number of completed steps and the total required steps.
+    /// The current number of completed steps and the total required steps (if applicable).
     /// </summary>
     private int _steps, _total, _playerXPToNextLevel;
 
     /// <summary>
-    /// The short name and description of the quest.
+    /// The short name, description, and frequency of the quest.
     /// </summary>
     private string _shortName, _description, _frequency;
 
@@ -30,24 +31,30 @@ class EternalQuest : Quest
     private bool _isCompleted, _active;
 
     /// <summary>
-    /// Constructs a new ChecklistQuest with the specified details and total steps.
+    /// The initial date when the quest was created or started.
+    /// </summary>
+    private DateTime _initialDate;
+
+    /// <summary>
+    /// Constructs a new EternalQuest with the specified details and frequency.
     /// </summary>
     /// <param name="name">The short name of the quest.</param>
     /// <param name="description">A description of the quest.</param>
+    /// <param name="frequency">The frequency of the quest (daily, weekly, monthly).</param>
     /// <param name="active">If the quest is active or not.</param>
     /// <param name="XPNextLevel">The XP required for the next level.</param>
-    /// <param name="total">The total number of steps required to complete the quest.</param>
-    public EternalQuest(string name, string description, string frequency, bool active, int XPNextLevel) : base(name, description, active, XPNextLevel)
+    /// <param name="initialDate">The initial date of the quest.</param>
+    public EternalQuest(string name, string description, string frequency, bool active, int XPNextLevel, DateTime initialDate) : base(name, description, active, XPNextLevel)
     {
         _frequency = frequency;
+        _initialDate = initialDate;
     }
 
     /// <summary>
-    /// Records progress for this quest by incrementing the step counter.
-    /// Awards XP for each step and a bonus when the quest is completed.
+    /// Records completion for this quest and awards XP if the condition is met.
     /// </summary>
     /// <param name="player">The player's profile, used for updating XP.</param>
-    /// <param name="conditional">Whether a step was completed.</param>
+    /// <param name="conditional">Whether the quest was completed.</param>
     public override void RecordEvent(Profile player, bool conditional)
     {
         if (conditional)
@@ -58,8 +65,7 @@ class EternalQuest : Quest
     }
 
     /// <summary>
-    /// Checks if the quest is complete by comparing steps to total.
-    /// Prompts the user to record progress if not complete.
+    /// Prompts the user to record completion of the quest.
     /// </summary>
     /// <param name="player">The player's profile.</param>
     public override void IsComplete(Profile player)
@@ -75,9 +81,10 @@ class EternalQuest : Quest
     {
         Dictionary<string, string> QuestStatus = new Dictionary<string, string>();
         QuestStatus["type"] = "eternal";
+        QuestStatus["frequency"] = _frequency;
+        QuestStatus["initialDate"] = _initialDate.ToString();
         QuestStatus["name"] = GetName();
         QuestStatus["description"] = GetDescription();
-        QuestStatus["frequency"] = _frequency;
         QuestStatus["active"] = GetActiveStatus().ToString();
         QuestStatus["completed"] = GetIsCompletedStatus().ToString();
 
@@ -85,8 +92,7 @@ class EternalQuest : Quest
     }
 
     /// <summary>
-    /// Calculates the XP awarded for this quest type based on the player's level and progress.
-    /// Awards a bonus when the quest is fully completed.
+    /// Calculates the XP awarded for this quest type based on the player's level and quest frequency.
     /// </summary>
     /// <param name="level">The player's current level.</param>
     /// <returns>The XP value for the quest.</returns>
