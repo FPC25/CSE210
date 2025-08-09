@@ -76,7 +76,7 @@ abstract class Quest
     /// <summary>
     /// Marks the quest as completed and sets it as inactive.
     /// </summary>
-    protected void CompleteQuest()
+    protected void CompleteQuest(bool isEternal = false)
     {
         _active = false;
         _isCompleted = true;
