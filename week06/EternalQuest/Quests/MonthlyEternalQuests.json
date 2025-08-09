@@ -5,12 +5,14 @@
             "name": "Tithe and Offerings",
             "description": "At least once a month, faithfully pay your tithing and give generous fast and other offerings. This act of obedience invites blessings, helps build the kingdom, and supports those in need.",
             "frequency": "monthly",
+            "requirement": ["LDS account"],
             "active": false,
             "completed": false
         },
         {
             "name": "Temple and Vicarious Work",
             "description": "Go to the temple and participate in sacred ordinances multiple times each month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
+            "requirement": ["Temple Recommendation", "Renovate Temple Recommendation", "Enter the Temple", "Sealing to Eternity"],
             "frequency": "monthly",
             "active": false,
             "completed": false

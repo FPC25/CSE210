@@ -5,6 +5,7 @@
             "name": "Study the Scriptures",
             "description": "Dedicate at least 15 minutes each day to studying the scriptures. This daily habit will help you strengthen your testimony, receive personal revelation, and draw closer to God.",
             "frequency": "daily",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -12,6 +13,7 @@
             "name": "Morning Prayer",
             "description": "Begin each day with a sincere prayer, expressing gratitude and seeking guidance for the challenges and opportunities ahead. This practice invites the Spirit and sets a positive tone for your day.",
             "frequency": "daily",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -19,6 +21,7 @@
             "name": "Evening Prayer",
             "description": "End each day with prayer, reflecting on your experiences, expressing thanks, and asking for forgiveness and protection. This habit helps you maintain a close relationship with Heavenly Father.",
             "frequency": "daily",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -26,6 +29,7 @@
             "name": "Pray Before Meals",
             "description": "Offer a prayer of gratitude before each meal, recognizing the Lord's hand in providing for your needs and inviting His blessings upon your food and those who prepared it.",
             "frequency": "daily",
+            "requirement": [],
             "active": true,
             "completed": false
         }

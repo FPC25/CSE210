@@ -5,6 +5,7 @@
             "name": "Partake of the Sacrament",
             "description": "Attend sacrament meeting and worthily partake of the sacrament each week. This ordinance renews your covenants with the Lord and strengthens your commitment to follow Jesus Christ.",
             "frequency": "weekly",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -12,6 +13,7 @@
             "name": "Index Family Records",
             "description": "Dedicate time each week to indexing family history records. Your efforts help make important genealogical information available to others and further the work of salvation.",
             "frequency": "weekly",
+            "requirement": ["FamilySearch account"],
             "active": true,
             "completed": false
         },
@@ -19,6 +21,7 @@
             "name": "Arrive Early",
             "description": "Make an effort to arrive early to sacrament meeting each week. This allows you to prepare spiritually, show respect for the ordinance, and support your fellow members.",
             "frequency": "weekly",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -26,6 +29,7 @@
             "name": "Serve in Your Calling",
             "description": "Dedicate time each week to fulfill your responsibilities. Serving others in your calling helps build the kingdom of God and blesses both you and those you serve.",
             "frequency": "weekly",
+            "requirement": ["Receive a Calling"],
             "active": true,
             "completed": false
         },
@@ -33,6 +37,7 @@
             "name": "Family Tree",
             "description": "Spend time each week searching for new family information and adding it to FamilySearch. This ongoing effort strengthens your family connections and helps further temple and family history work.",
             "frequency": "weekly",
+            "requirement": ["Add info to FamilySearch (4)"],
             "active": true,
             "completed": false
         },
@@ -40,6 +45,7 @@
             "name": "Family meeting",
             "description": "Organize and hold a family meeting with your family, friends and whoever you want to learn and talk about our Savior and to strength the bonds with those you call to the meeting. Then mark this mission as completed.",
             "frequency": "weekly",
+            "requirement": [],
             "active": false,
             "completed": false
         },
@@ -47,6 +53,7 @@
             "name": "Attend Seminary",
             "description": "Participate regularly in seminary classes in your ward. Engage in gospel study, strengthen your testimony, build friendships, and develop habits of daily scripture study and prayer. Use this opportunity to deepen your understanding of Jesus Christ, prepare for future service, and set personal spiritual goals.",
             "frequency": "weekly",
+            "requirement": [],
             "active": false,
             "completed": false
         },
@@ -54,6 +61,7 @@
             "name": "Attend Institute",
             "description": "Actively participate in Institute classes regularly during ages 18 to 35. Engage in gospel study, deepen your understanding of Jesus Christ, and build meaningful relationships with peers. Use this opportunity to set personal spiritual goals, prepare for future service, and strengthen your testimony. Let Institute inspire you to live gospel principles, develop Christlike attributes, and become a leader who uplifts and serves others in your community.",
             "frequency": "weekly",
+            "requirement": [],
             "active": false,
             "completed": false
         }

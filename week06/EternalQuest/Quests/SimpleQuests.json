@@ -4,6 +4,7 @@
         {
             "name": "Sacramental Time",
             "description": "In your player profile, add the sacramental time.",
+            "requirement": [],
             "auto_check": true,
             "active": true,
             "completed": false
@@ -11,6 +12,7 @@
         {
             "name": "LDS account",
             "description": "Get your member number with your ward clerk and create a LDS account, remember to keep your password safe! Afterwards, save the username on the player profile.",
+            "requirement": [],
             "auto_check": true,
             "active": true,
             "completed": false
@@ -18,6 +20,7 @@
         {
             "name": "FamilySearch account",
             "description": "Access the familysearch account and create an account, preferable with your LDS account and then save the link/username on the player profile.",
+            "requirement": ["LDS account"],
             "auto_check": true,
             "active": false,
             "completed": false
@@ -25,6 +28,7 @@
         {
             "name": "Temple Recommendation",
             "description": "Have a meeting with a member of the bishopric to request to get your temple recommendation. Then enter the due date on you player profile.",
+            "requirement": [],
             "auto_check": true,
             "active": true,
             "completed": false
@@ -32,6 +36,7 @@
         {
             "name": "Patriarchal Blessing",
             "description": "Have a meeting with a member of the bishopric to request a meeting with the Patriarch of your stake in order to receive your patriarchal blessing. After you receive yours go to the player profile and set as received.",
+            "requirement": [],
             "auto_check": true,
             "active": true,
             "completed": false
@@ -39,6 +44,7 @@
         {
             "name": "Receive a Calling",
             "description": "Have a meeting with a member of the bishopric to inform that your are willing to serve in the Lord's work here. After your receive a calling and/or a designation go to the player profile and enter it there.",
+            "requirement": [],
             "auto_check": true,
             "active": true,
             "completed": false
@@ -46,6 +52,7 @@
         {
             "name": "Enter the Temple",
             "description": "Now you can enter the Temple to do your own ordinances, so request to your bishop a new recommendation in order to do your own initiatory and endowment in the Temple. After you do these ordinances enter the value in your player profile.",
+            "requirement": ["Temple Recommendation"],
             "auto_check": true,
             "active": false,
             "completed": false
@@ -53,6 +60,7 @@
         {
             "name": "Sealing to Eternity",
             "description": "Congratulations for your marriage! This is a important step in your life, but for the eternity you need to seal yourself to your spouse. So after you are sealed to your spouse, please enter the date on your player profile.",
+            "requirement": ["Enter the Temple"],
             "auto_check": true,
             "active": false,
             "completed": false
@@ -60,6 +68,7 @@
         {
             "name": "Renovate Temple Recommendation",
             "description": "Have a meeting with a member of the bishopric to request a meeting to renovate your temple recommendation. Then enter the new date in your profile.",
+            "requirement": ["Temple Recommendation"],
             "auto_check": false,
             "active": false,
             "completed": false
@@ -67,6 +76,7 @@
         {
             "name": "Online Tithe",
             "description": "After you receive you receive your first payment you should take 10% of it and return to the Lord and a generous fast offer to help those in need. A much simpler and secure way to do this is to do it online, so please contact your ward clerk to learn how to this and then mark this quest as completed.",
+            "requirement": ["LDS account"],
             "auto_check": false,
             "active": false,
             "completed": false
@@ -74,6 +84,7 @@
         {
             "name": "Add info to FamilySearch (1)",
             "description": "After you create your FamilySearch account you need to include your own personal information in FamilySearch. to start the work. Register this quest as done after you finishing here.",
+            "requirement": ["FamilySearch account"],
             "auto_check": false,
             "active": false,
             "completed": false
@@ -81,6 +92,7 @@
         {
             "name": "Add info to FamilySearch (2)",
             "description": "After including your own information, now we must go a bit higher in your family tree. Include your parents' information in FamilySearch. Register this quest as done after you finishing here.",
+            "requirement": ["Add info to FamilySearch (1)"],
             "auto_check": false,
             "active": false,
             "completed": false
@@ -88,6 +100,7 @@
         {
             "name": "Add info to FamilySearch (3)",
             "description": "We are almost there, please include your grandparents' information in FamilySearch. Register this quest as done after you finishing here.",
+            "requirement": ["Add info to FamilySearch (2)"],
             "auto_check": false,
             "active": false,
             "completed": false
@@ -95,6 +108,7 @@
         {
             "name": "Add info to FamilySearch (4)",
             "description": "Include your great-grandparents' information in FamilySearch. Then, register this quest as done after you finishing here. After you finishes this, you will be at what we are in what we set as the minimum as church members and your family tree grows much higher than this, so keep working.",
+            "requirement": ["Add info to FamilySearch (3)"],
             "auto_check": false,
             "active": false,
             "completed": false

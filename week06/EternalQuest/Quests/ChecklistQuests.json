@@ -5,6 +5,7 @@
             "name": "Minister as the Lord",
             "first_part_description": "Reach out and minister to those assigned to you at least",
             "second_part_description": "times each month. Consistent ministering helps build unity, provides support, and follows the Savior's example of love.",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -12,6 +13,7 @@
             "name": "Study Conference Talks",
             "first_part_description": "Read",
             "second_part_description": "talks from the most recent General Conference each month. Studying the words of living prophets and apostles will inspire, guide, and strengthen your faith.",
+            "requirement": [],
             "active": true,
             "completed": false
         },
@@ -19,6 +21,7 @@
             "name": "Attend the Temple",
             "first_part_description": "Attend the temple",
             "second_part_description": "times this month to participate in ordinances. Regular temple attendance brings peace, spiritual strength, and opportunities to serve.",
+            "requirement": ["Temple Recommendation", "Renovate Temple Recommendation", "Enter the Temple", "Sealing to Eternity"],
             "active": false,
             "completed": false
         },
@@ -26,6 +29,7 @@
             "name": "Study Patriarchal Blessing",
             "first_part_description": "Study your patriarchal blessing at least",
             "second_part_description": " this month. Regular reflection on your blessing will help you understand your divine potential and receive personal guidance.",
+            "requirement": ["Patriarchal Blessing"],
             "active": true,
             "completed": false
         }
