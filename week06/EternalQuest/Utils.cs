@@ -3,6 +3,7 @@ using System;
 /// <summary>
 /// The Utils class provides static utility methods for user input, string formatting,
 /// menu interaction, and data conversion for the Eternal Quest application.
+/// These methods help standardize user prompts, input validation, and data formatting throughout the project.
 /// </summary>
 public static class Utils
 {
