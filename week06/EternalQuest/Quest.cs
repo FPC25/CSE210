@@ -83,6 +83,15 @@ abstract class Quest
     }
 
     /// <summary>
+    /// Marks the quest as not completed (aka failed) and sets it as inactive.
+    /// </summary>
+    protected void FailQuest()
+    {
+        _active = false;
+        _isCompleted = false;
+    }
+
+    /// <summary>
     /// Sets the amount of XP awarded for completing this quest.
     /// </summary>
     /// <param name="xp">The XP value to assign.</param>
