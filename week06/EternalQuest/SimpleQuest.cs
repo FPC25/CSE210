@@ -112,6 +112,8 @@ class SimpleQuest : Quest
     /// <returns>The XP value for the quest.</returns>
     public override int CalculateXpPerQuestType(int level)
     {
-        return (int)(GetNextLevelXP() * (XPMAX / (1 + K * (level - 1))));
+        int nextLevelXp = GetNextLevelXP();
+        double levelFactor = 1 + (K * (level - 1));
+        return (int)(nextLevelXp * (XPMAX / levelFactor));
     }
 }
