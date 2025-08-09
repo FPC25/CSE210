@@ -110,7 +110,7 @@ abstract class Quest
     public virtual string GetDetailsString()
     {
         string complete = _isCompleted ? "X" : " ";
-        return $"[{complete}] {_shortName}: {_description}";
+        return $"[{complete}] {_shortName}:\n{_description}";
     }
 
     /// <summary>
