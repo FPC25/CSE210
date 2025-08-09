@@ -10,7 +10,7 @@ abstract class Quest
     /// <summary>
     /// Constant used for XP calculation.
     /// </summary>
-    protected const double K = 0.5;
+    protected const double K = 0.05f;
 
     /// <summary>
     /// The amount of XP awarded for completing this quest.
@@ -101,7 +101,7 @@ abstract class Quest
     public virtual string GetDetailsString()
     {
         string complete = _isCompleted ? "X" : " ";
-        return $"[{complete}] {_shortName} - {_description}";
+        return $"[{complete}] {_shortName}: {_description}";
     }
 
     /// <summary>
