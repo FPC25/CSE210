@@ -65,7 +65,7 @@ class ChecklistQuest : Quest
     public override string GetDetailsString()
     {
         string complete = _isCompleted ? "X" : " ";
-        return $"[{complete}] {_shortName} - ({_steps}/{_total}): {_description}";
+        return $"[{complete}] {_shortName} - ({_steps}/{_total}):\n{_description}";
     }
 
     /// <summary>
