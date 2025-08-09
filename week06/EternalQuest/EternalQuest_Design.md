@@ -100,6 +100,7 @@
 
 #### Behaviors
 
+- LoadQuestsFromJson: `List<Quest>`;
 - GetDailyQuests: `List<Quest>`;
 - GetWeeklyQuests: `List<Quest>`;
 - GetMonthlyQuests: `List<Quest>`;
