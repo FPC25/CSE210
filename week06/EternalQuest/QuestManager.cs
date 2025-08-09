@@ -34,32 +34,44 @@ class QuestManager
         foreach (var q in questArray)
         {
             string description;
-            string name = q.GetProperty("name").GetString() ?? "";
-            bool active = q.TryGetProperty("active", out var activeProp) ? activeProp.GetBoolean() : true;
+            string name = q.GetProperty("name").GetString();
+            bool active = q.GetProperty("active").GetBoolean();
             int xpNextLevel = _player.CalculateNextLevelXP();
+            List<string> requirements = new List<string>();
+            if (q.TryGetProperty("requirement", out var reqProp) && reqProp.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in reqProp.EnumerateArray())
+                {
+                    if (item.ValueKind == JsonValueKind.String)
+                        requirements.Add(item.GetString());
+                }
+            }
 
             switch (questType)
             {
                 case "simple":
-                    description = q.GetProperty("description").GetString() ?? "";
-                    bool autoCheck = q.TryGetProperty("auto_check", out var autoCheckProp) ? activeProp.GetBoolean() : false;
+                    description = q.GetProperty("description").GetString();
+                    bool autoCheck = q.GetProperty("auto_check").GetBoolean();
                     quests.Add(new SimpleQuest(name, description, active, autoCheck, xpNextLevel));
                     break;
+
                 case "checklist":
-                    string initial = q.GetProperty("first_part_description").GetString() ?? "";
-                    string final = q.GetProperty("second_part_description").GetString() ?? "";
-                    int total = q.TryGetProperty("total", out var totalProp) ? totalProp.GetInt32() : 1;    
+                    string initial = q.GetProperty("first_part_description").GetString();
+                    string final = q.GetProperty("second_part_description").GetString();
+                    int total = q.TryGetProperty("total", out var totalProp) ? totalProp.GetInt32() : 1;
                     int steps = q.TryGetProperty("steps", out var stepsProp) ? stepsProp.GetInt32() : 0;
                     description = $"{initial} {total} {final}";
                     quests.Add(new ChecklistQuest(name, description, active, xpNextLevel, steps, total));
                     break;
+
                 case "eternal":
-                    description = q.GetProperty("description").GetString() ?? "";
-                    string frequency = q.TryGetProperty("frequency", out var freqProp) ? freqProp.GetString() ?? "daily" : "daily";
+                    description = q.GetProperty("description").GetString();
+                    string frequency = q.GetProperty("frequency").GetString();
                     quests.Add(new EternalQuest(name, description, frequency, active, xpNextLevel, DateTime.Now));
                     break;
             }
         }
+
         return quests;
     }
 
@@ -133,5 +145,10 @@ class QuestManager
                     Console.WriteLine(quest.GetDetailsString());
             }
         }
+    }
+
+    public void ActivateQuest()
+    {
+        
     }
 }
