@@ -3,7 +3,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
-// using Quests; // Removed because the namespace 'Quests' could not be found
 
 /// <summary>
 /// The Profile class represents a player's personal and spiritual information in Eternal Quest.
@@ -13,20 +12,11 @@ using Microsoft.VisualBasic;
 /// </summary>
 class Profile
 {
+    // --- Basic Info ---
     /// <summary>
-    /// The player's current level, XP, and age.
+    /// The player's name.
     /// </summary>
-    private int _level, _currentXP, _age;
-
-    /// <summary>
-    /// Flags for gender, marital status, patriarchal blessing, work status, and temple recommendation.
-    /// </summary>
-    private bool _male, _married, _patriarchalBlessing, _working, _activeRecommendation;
-
-    /// <summary>
-    /// The time of the sacramental meeting (nullable).
-    /// </summary>
-    private TimeSpan? _sacramentalTime;
+    private string _name;
 
     /// <summary>
     /// The player's birthday.
@@ -34,34 +24,95 @@ class Profile
     private DateTime _birthday;
 
     /// <summary>
+    /// The player's age.
+    /// </summary>
+    private int _age;
+
+    /// <summary>
+    /// The player's gender (true for male, false for female).
+    /// </summary>
+    private bool _male;
+
+    // --- Progression ---
+    /// <summary>
+    /// The player's current level.
+    /// </summary>
+    private int _level;
+
+    /// <summary>
+    /// The player's current XP.
+    /// </summary>
+    private int _currentXP;
+
+    // --- Personal Status ---
+    /// <summary>
+    /// Indicates whether the player is married.
+    /// </summary>
+    private bool _married;
+
+    /// <summary>
+    /// Indicates whether the player is currently working.
+    /// </summary>
+    private bool _working;
+
+    // --- Church Status ---
+    /// <summary>
+    /// Indicates whether the player has received a patriarchal blessing.
+    /// </summary>
+    private bool _patriarchalBlessing;
+
+    /// <summary>
+    /// Indicates whether the player has an active temple recommendation.
+    /// </summary>
+    private bool _activeRecommendation;
+
+    /// <summary>
     /// The expiration date of the temple recommendation (nullable).
     /// </summary>
     private DateTime? _recommendationDueDate;
 
+    /// <summary>
+    /// The time of the sacramental meeting (nullable).
+    /// </summary>
+    private TimeSpan? _sacramentalTime;
+
+    /// <summary>
+    /// The player's dominical education level (e.g., Seminar, Institute).
+    /// </summary>
+    private string? _dominicalEducation;
+
+    /// <summary>
+    /// The player's priesthood office (e.g., Deacon, Teacher, Priest, Elder, High Priest).
+    /// </summary>
+    private string? _priesthood;
+
+    // --- Accounts ---
+    /// <summary>
+    /// The player's FamilySearch account link.
+    /// </summary>
+    private string _familysearchLink;
+
+    /// <summary>
+    /// The player's LDS account username.
+    /// </summary>
+    private string _ldsAccount;
+
+    // --- Ordinances & Callings ---
     /// <summary>
     /// Dictionary mapping ordinance names to their dates.
     /// </summary>
     private Dictionary<string, DateTime> _ordinances;
 
     /// <summary>
-    /// Dictionary mapping quest categories to lists of quests.
-    /// </summary>
-    private Dictionary<string, List<Quest>> _quests;
-
-    /// <summary>
-    /// Player's name, FamilySearch link, and LDS account.
-    /// </summary>
-    private string _name, _familysearchLink, _ldsAccount;
-
-    /// <summary>
-    /// Dominical education level and priesthood office (nullable).
-    /// </summary>
-    private string? _dominicalEducation, _priesthood;
-
-    /// <summary>
     /// List of callings (church responsibilities).
     /// </summary>
     private List<string> _callings;
+
+    // --- Quests ---
+    /// <summary>
+    /// Dictionary mapping quest categories to lists of quests.
+    /// </summary>
+    private Dictionary<string, List<Quest>> _quests;
 
     /// <summary>
     /// Constructs a new Profile with basic information and ordinances.
@@ -90,66 +141,46 @@ class Profile
         SetAaronicPriesthood();
     }
 
+    // --- Getters for Profile Info ---
     /// <summary>
     /// Gets the player's marital status.
     /// </summary>
-    public bool GetMaritalState()
-    {
-        return _married;
-    }
+    public bool GetMaritalState() => _married;
 
     /// <summary>
     /// Gets the patriarchal blessing status.
     /// </summary>
-    public bool GetPatriarchalBlessingStatus()
-    {
-        return _patriarchalBlessing;
-    }
+    public bool GetPatriarchalBlessingStatus() => _patriarchalBlessing;
 
-    public bool GetWorkStatus()
-    {
-        return _working;
-    }
+    /// <summary>
+    /// Gets the work status.
+    /// </summary>
+    public bool GetWorkStatus() => _working;
 
     /// <summary>
     /// Gets the expiration date of the temple recommendation.
     /// </summary>
-    public DateTime? GetRecommendation()
-    {
-        return _recommendationDueDate;
-    }
+    public DateTime? GetRecommendation() => _recommendationDueDate;
 
     /// <summary>
     /// Gets the LDS account username.
     /// </summary>
-    public string GetLdsAccount()
-    {
-        return _ldsAccount;
-    }
+    public string GetLdsAccount() => _ldsAccount;
 
     /// <summary>
     /// Gets the FamilySearch account link.
     /// </summary>
-    public string GetFamilysearchLink()
-    {
-        return _familysearchLink;
-    }
+    public string GetFamilysearchLink() => _familysearchLink;
 
     /// <summary>
     /// Gets the player's name.
     /// </summary>
-    public string GetName()
-    {
-        return _name;
-    }
+    public string GetName() => _name;
 
     /// <summary>
     /// Gets the player's current XP.
     /// </summary>
-    public int GetXP()
-    {
-        return _currentXP;
-    }
+    public int GetXP() => _currentXP;
 
     /// <summary>
     /// Adds XP and checks for level up.
@@ -163,10 +194,7 @@ class Profile
     /// <summary>
     /// Gets the player's current level.
     /// </summary>
-    public int GetLevel()
-    {
-        return _level;
-    }
+    public int GetLevel() => _level;
 
     /// <summary>
     /// Checks if the player should level up and updates level/Xp accordingly.
@@ -186,7 +214,6 @@ class Profile
     /// </summary>
     public int CalculateNextLevelXP()
     {
-        // the original formula used 2 * next_level - 1, but next_level = level + 1, so doing the distributive it results in this 2 * level + 1
         double power = 0.5 * Math.Log(2 * _level + 1);
         return (int)(2650 * Math.Pow(1.5, power));
     }
@@ -202,7 +229,6 @@ class Profile
         {
             age--;
         }
-
         return age;
     }
 
@@ -228,10 +254,7 @@ class Profile
     /// <summary>
     /// Gets the dominical education level.
     /// </summary>
-    public string? GetDominicalEducation()
-    {
-        return _dominicalEducation;
-    }
+    public string? GetDominicalEducation() => _dominicalEducation;
 
     /// <summary>
     /// Sets the Aaronic priesthood office based on age and gender.
@@ -264,10 +287,7 @@ class Profile
     /// </summary>
     public void SetMelchizedekPriesthood(string level)
     {
-        //I know there is great levels of priesthood, but greater than this I doubt they would still 'play' this game
-        DateTime today = new DateTime();
-        today = DateTime.Now;
-
+        DateTime today = DateTime.Now;
         if (_male && _age >= 18 && today >= _ordinances["confirmation"].AddYears(1))
         {
             if (level.ToLower() == "elder")
@@ -278,17 +298,13 @@ class Profile
             {
                 _priesthood = "High Priest";
             }
-
         }
     }
 
     /// <summary>
     /// Gets the priesthood office.
     /// </summary>
-    public string? GetPriesthood()
-    {
-        return _priesthood;
-    }
+    public string? GetPriesthood() => _priesthood;
 
     /// <summary>
     /// Prompts the user to set the sacramental meeting time.
@@ -311,18 +327,12 @@ class Profile
     /// <summary>
     /// Gets the sacramental meeting time.
     /// </summary>
-    public TimeSpan? GetSacramentalTime()
-    {
-        return _sacramentalTime;
-    }
+    public TimeSpan? GetSacramentalTime() => _sacramentalTime;
 
     /// <summary>
     /// Gets the dictionary of ordinances.
     /// </summary>
-    public Dictionary<string, DateTime> GetOrdinances()
-    {
-        return _ordinances;
-    }
+    public Dictionary<string, DateTime> GetOrdinances() => _ordinances;
 
     /// <summary>
     /// Adds new ordinances to the profile.
@@ -350,10 +360,7 @@ class Profile
     /// <summary>
     /// Gets the list of callings.
     /// </summary>
-    public List<string> GetCalling()
-    {
-        return _callings;
-    }
+    public List<string> GetCalling() => _callings;
 
     /// <summary>
     /// Adds a new calling to the profile.
@@ -443,7 +450,6 @@ class Profile
             WORKING = "Change Work Status",
             RECOMMENDATION = "Renovate Temple Recommendation",
             PATRIARCHAL = "Change Patriarchal Blessing",
-            COMPLETED = "See Completed Quests",
             QUIT = "Quit";
 
         //Some of the basic options the menu can have
@@ -478,7 +484,6 @@ class Profile
         }
 
         //The one that must go at the end of the list
-        options.Add(COMPLETED);
         options.Add(QUIT);
 
         string selectedOption;
@@ -596,10 +601,6 @@ class Profile
                     _familysearchLink = SetAccount(_familysearchLink, "FamilySearch");
                     break;
 
-                case COMPLETED:
-                    Console.WriteLine("Work in progress.");
-                    break;
-
                 case QUIT:
                     break;
             }
@@ -621,7 +622,7 @@ class Profile
         {
             message += "No";
         }
-        else if (variable is string strValue)
+        else if (variable is string strValue && !string.IsNullOrEmpty(strValue))
         {
             message += strValue;
         }
@@ -695,12 +696,12 @@ class Profile
         string message = "Gender: ";
         if (_male) message += "Masc.";
         else message += "Fem.";
-        Console.Write($"Name: {_name}  |  Age: {_age}  |  {message}");
+        Console.Write($"Name: {_name}  |  Age: {GetAge()}  |  {message}");
         Console.WriteLine("Level: \n");
         DisplayLevelProgress();
         Console.WriteLine();
-        if (_dominicalEducation != null) Console.WriteLine($"Dominical Education Level: {_dominicalEducation}");
-        if (_male) Console.WriteLine($"Priesthood Office: {_priesthood}");
+        if (_dominicalEducation != null) DisplaySettableVar(_dominicalEducation, "Dominical Education Level");
+        if (_male) DisplaySettableVar(_priesthood, "Priesthood Office");
         DisplaySettableVar(_sacramentalTime, "Sacramental Time");
         DisplaySettableVar(_recommendationDueDate, "Recommendation due Date");
         DisplaySettableVar(_married, "Married");
@@ -735,8 +736,31 @@ class Profile
     /// Gets all quest categories and their associated quests.
     /// </summary>
     /// <returns>A dictionary of quest categories and their lists of quests.</returns>
-    public Dictionary<string, List<Quest>> GetAllQuests()
+    public Dictionary<string, List<Quest>> GetAllQuests() => _quests;
+
+    /// <summary>
+    /// Returns a dictionary representation of the profile for saving or display.
+    /// </summary>
+    public Dictionary<string, object?> DataToSaveDict()
     {
-        return _quests;
+        return new Dictionary<string, object?>
+            {
+                { "Name", _name },
+                { "Age", GetAge() },
+                { "Gender", _male },
+                { "Level", _level },
+                { "XP", _currentXP },
+                { "DominicalEducation", _dominicalEducation },
+                { "Priesthood", _priesthood },
+                { "SacramentalTime", _sacramentalTime },
+                { "RecommendationDueDate", _recommendationDueDate },
+                { "Married", _married },
+                { "Working", _working },
+                { "PatriarchalBlessing", _patriarchalBlessing },
+                { "LDSAccount", _ldsAccount },
+                { "FamilySearchAccount", _familysearchLink },
+                { "Callings", _callings },
+                { "Ordinances", _ordinances }
+            };
     }
 }
