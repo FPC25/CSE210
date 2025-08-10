@@ -36,6 +36,7 @@
         {
             "name": "Contact with the Bishopric",
             "description": "Schedule and attend your monthly interview with the bishopric for personal guidance, regardless of your current situation. Use this opportunity to discuss your spiritual progress, set meaningful goals, seek counsel for challenges, and receive encouragement to grow in faith and service. Let this experience inspire you to strengthen your relationship with Jesus Christ, prepare for future responsibilities, and make a positive impact in your family, church, and community.",
+            "frequency": "monthly",
             "requirement": [],
             "active": true,
             "completed": false
@@ -43,16 +44,16 @@
         {
             "name": "Initial Vicarious Ordinances",
             "description": "Since you are now an Elder, but still didn't do your initiatory and endowment, go to the temple baptistery and help with the vicarious baptism and/or confirmation this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
-            "requirement": ["Temple Recommendation"],
             "frequency": "monthly",
+            "requirement": ["Temple Recommendation"],
             "active": false,
             "completed": false
         },
         {
             "name": "Temple and Vicarious Work",
             "description": "Go to the temple and participate in any of the sacred ordinances (baptism, confirmation, initiatory, endowment or sealing) this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
-            "requirement": ["Temple Recommendation", "Enter the Temple"],
             "frequency": "monthly",
+            "requirement": ["Temple Recommendation", "Enter the Temple"],
             "active": false,
             "completed": false
         }
