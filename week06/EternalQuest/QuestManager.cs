@@ -175,6 +175,8 @@ class QuestManager
                     Console.WriteLine(quest.GetDetailsString());
             }
         }
+        Console.WriteLine("\nPress Enter to return to the menu.");
+        Console.ReadLine();
     }
 
     /// <summary>
@@ -254,6 +256,8 @@ class QuestManager
         {
             Console.WriteLine(quest.GetDetailsString());
         }
+        Console.WriteLine("\nPress Enter to return to the menu.");
+        Console.ReadLine();
     }
 
     /// <summary>
@@ -407,7 +411,7 @@ class QuestManager
                                 break;
 
                             case "YSAs Activities":
-                                condition = age > 17 && age < 36 && !_player.GetMaritalState();
+                                condition = age > 17 && age < 36 && _player.GetMaritalState() == false;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
