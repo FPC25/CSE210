@@ -252,12 +252,12 @@ class QuestManager
                                 break;
 
                             case "Enter the Temple":
-                                condition = today > confirmationDate.AddYears(1) && today < recommendationDueDate;
+                                condition = today > confirmationDate.AddYears(1) && today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Sealing to Eternity":
-                                condition = today > confirmationDate.AddYears(1) && today < recommendationDueDate;
+                                condition = _player.GetMaritalState() && today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
@@ -292,8 +292,13 @@ class QuestManager
                         switch (quest.GetName())
                         {
                             case "Attend the Temple":
+                                condition = today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
+
                             case "Study Patriarchal Blessing":
+                                condition = _player.GetPatriarchalBlessingStatus();
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
                     }
