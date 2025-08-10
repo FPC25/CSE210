@@ -356,7 +356,7 @@ class Profile
             Console.WriteLine("Do you want to add the sealing date?");
             if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
             {
-                string spouse = Utils.ValidStringInput("What is the name of your spouse?");
+                string spouse = Utils.NameToTitleCase(Utils.ValidStringInput("What is the name of your spouse?"));
                 ordinances.Add($"sealing with {spouse}");
             }
         }
@@ -556,7 +556,8 @@ class Profile
                     }
                     else
                     {
-                        Console.WriteLine("You reached the highest Priesthood Office available in this game!");
+                        Console.WriteLine("You reached the highest Priesthood Office available in this game! Press Enter to Continue!");
+                        Console.ReadLine();
                         break;
                     }
 
