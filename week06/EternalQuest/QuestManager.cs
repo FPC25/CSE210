@@ -109,7 +109,7 @@ class QuestManager
     {
         // Fórmula: 3 + (level * 0.6) com cap de 15
         int calculatedSteps = 3 + (int)(playerLevel * 0.6);
-        
+
         // Garante que não passe de 15
         return Math.Min(calculatedSteps, MAXREP);
     }
@@ -479,5 +479,47 @@ class QuestManager
                 }
             }
         }
+    }
+
+    public void CreateCustomQuest()
+    {
+        Console.WriteLine($"Hello {_player.GetName()}! I see that you want to create a new quest for you. That's awesome! The First step is to select the type of the quest, do you want to create a simple, a checklist or a eternal quest?");
+        string category = Utils.DecisionString(new List<string>() { SIMPLE, CHECKLIST, ETERNAL });
+        (string name, string description) questInfo;
+        int nextLevelXP = _player.CalculateNextLevelXP();
+        Quest quest = null;
+        switch (category)
+        {
+            case SIMPLE:
+                questInfo = EnterBasicInfo();
+                quest = new SimpleQuest(questInfo.name, questInfo.description, true, false, nextLevelXP, new List<string>());
+                break;
+
+            case CHECKLIST:
+                questInfo = EnterBasicInfo();
+                int total = Utils.ReadInt("Enter the amount of repetition for this quest: ");
+                quest = new ChecklistQuest(questInfo.name, questInfo.description, true, nextLevelXP, 0, total, new List<string>());
+                break;
+
+            case ETERNAL:
+                questInfo = EnterBasicInfo();
+                Console.WriteLine("What is the frequency of this quest: daily, weekly or monthly? ");
+                string frequency = Utils.DecisionString(new List<string>() { "daily", "weekly", "monthly" });
+                quest = new EternalQuest(questInfo.name, questInfo.description, frequency, true, nextLevelXP, DateTime.Now, new List<string>());
+                break;
+        }
+        _player.AddCustomQuest(quest, category);
+    }
+
+    /// <summary>
+    /// Prompts the user to enter basic quest information.
+    /// </summary>
+    /// <returns>A tuple containing the quest name and description.</returns>
+    public (string name, string description) EnterBasicInfo()
+    {
+        string name = Utils.ValidStringInput("Enter the quest short name: ");
+        string description = Utils.ValidStringInput("Enter the quest description: ");
+        
+        return (name, description);
     }
 }
