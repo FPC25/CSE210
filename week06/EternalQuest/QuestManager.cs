@@ -203,8 +203,10 @@ class QuestManager
         {
             quest.IsComplete(_player);
         }
-
-        Console.WriteLine($"Quest '{questName}' not found");
+        else
+        {
+            Console.WriteLine($"Quest '{questName}' not found");
+        }
     }
 
     /// <summary>
