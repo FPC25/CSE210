@@ -624,6 +624,10 @@ class Profile
         {
             message += time.ToString(@"hh\:mm");
         }
+        else if (variable is DateTime date)
+        {
+            message += date.ToString();
+        }
         else
         {
             message += "Yes";
@@ -693,6 +697,7 @@ class Profile
         if (_dominicalEducation != null) Console.WriteLine($"Dominical Education Level: {_dominicalEducation}");
         if (_male) Console.WriteLine($"Priesthood Office: {_priesthood}");
         DisplaySettableVar(_sacramentalTime, "Sacramental Time");
+        DisplaySettableVar(_recommendationDueDate, "Recommendation due Date");
         DisplaySettableVar(_married, "Married");
         DisplaySettableVar(_working, "Working");
         DisplaySettableVar(_patriarchalBlessing, "Patriarchal Blessing Received");
