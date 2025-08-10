@@ -39,7 +39,7 @@ class Game
         Console.WriteLine("\nWelcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!\n");
 
         Console.WriteLine("What is your name?");
-        name = Console.ReadLine();
+        name = Utils.NameToTitleCase(Console.ReadLine());
 
         birthday = Utils.ReadDate($"\nHello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
 
@@ -148,6 +148,7 @@ class Game
 
         do
         {
+            Console.Clear();
             Console.WriteLine("Select one option:");
             selectedOption = Utils.DecisionString(options);
             switch (selectedOption)
