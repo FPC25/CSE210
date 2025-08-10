@@ -44,6 +44,12 @@ class QuestManager
     /// <returns>List of Quest objects loaded from the file.</returns>
     public List<Quest> LoadQuestsFromJson(string filepath, string questType)
     {
+        if (!File.Exists(filepath))
+        {
+            Console.WriteLine($"Quest file not found: {filepath}");
+            return new List<Quest>();
+        }
+
         var quests = new List<Quest>();
         string json = File.ReadAllText(filepath);
         using var doc = JsonDocument.Parse(json);
