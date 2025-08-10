@@ -461,6 +461,7 @@ class QuestManager
                                 break;
 
                             case "Temple and Vicarious Work":
+                                // this condition is enough since one of the requirements is to enter their endowment date so it already satisfy the need to have this ordinance.
                                 condition = today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
