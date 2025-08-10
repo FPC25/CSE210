@@ -456,7 +456,7 @@ class QuestManager
                                 break;
 
                             case "Vicarious Baptism":
-                                condition = (_player.GetPriesthood().ToLower() != "elder" || _player.GetPriesthood().ToLower() != "high priest") && today <= recommendationDueDate;
+                                condition = _player.GetPriesthood().ToLower() != "elder" && _player.GetPriesthood().ToLower() != "high priest" && today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
