@@ -121,9 +121,17 @@ public static class Utils
             int century = (year > currentYear ? 1900 : 2000);
             year += century;
         }
-        int month = Utils.ReadInt(monthCall);
-        int day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
-
+        int day;
+        int month;
+        do
+        {
+            month = Utils.ReadInt(monthCall);
+        } while (month < 1 || month > 12);
+        do
+        {
+            day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
+        } while (day < 1 || day > DateTime.DaysInMonth(year, month));
+        
         return new DateTime(year, month, day);
     }
 
@@ -140,9 +148,9 @@ public static class Utils
         string yearCall, monthCall, dayCall;
         foreach (string ordinance in ordinances)
         {
-            yearCall = $"Please enter the year the {ordinance} occurred (e.g., 1995 or 95): ";
-            monthCall = $"Please enter the month the {ordinance} occurred? (Enter the number, e.g., 1 for January): ";
-            dayCall = $"Please enter the day the {ordinance} occurred?";
+            yearCall = $"\nPlease enter the year the {ordinance} occurred (e.g., 1995 or 95): ";
+            monthCall = $"\nPlease enter the month the {ordinance} occurred? (Enter the number, e.g., 1 for January): ";
+            dayCall = $"\nPlease enter the day the {ordinance} occurred?";
             if (ordinance.ToLower() == "confirmation" && ordinances.Contains("baptism"))
             {
                 Console.WriteLine("Is your confirmation date the same as your baptism date? (yes/no)");
