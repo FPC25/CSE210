@@ -322,7 +322,6 @@ class Profile
             {
                 Console.WriteLine("Invalid time format. Try again");
             }
-            Console.WriteLine(newTime);
         } while (!TimeSpan.TryParse(input, out newTime));
         _sacramentalTime = newTime;
     }
@@ -427,7 +426,7 @@ class Profile
         }
         else
         {
-            prompt = "Do you want to correct your {varName} account? ";
+            prompt = $"Do you want to correct your {varName} account? ";
         }
         change = InvertBoolStatus(prompt, change);
         if (change)
@@ -440,7 +439,7 @@ class Profile
     /// <summary>
     /// Displays the profile menu and handles user choices for updating profile data.
     /// </summary>
-    private void ProfileMenu()
+    public void ProfileMenu()
     {
         const string
             REGISTER = "Register Ordinance",
@@ -458,7 +457,7 @@ class Profile
         //Some of the basic options the menu can have
         List<string> options = new List<string>()
         {
-            SACRAMENT, CALLING, RECOMMENDATION, ACCOUNT, FAMILY
+            SACRAMENT, CALLING, RECOMMENDATION
         };
 
         //Some conditional options the menu can have,
@@ -467,24 +466,28 @@ class Profile
             options.Add(PATRIARCHAL);
         }
 
-        if (_age >= 18)
+        if (_age > 12)
         {
-            options.Add(MARRIAGE);
-            options.Add(WORKING);
             options.Add(ACCOUNT);
-            options.Add(FAMILY);
-
-            //Since man can seal more than once and women don't we need to separate those situations 
-            if (_male)
-            {
-                options.Add(PRIESTHOOD);
-                options.Add(REGISTER); //the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
-            }
-            else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
-            {
-                options.Add(REGISTER);
-            }
         }
+
+        if (_age >= 18)
+            {
+                options.Add(MARRIAGE);
+                options.Add(WORKING);
+                options.Add(FAMILY);
+
+                //Since man can seal more than once and women don't we need to separate those situations 
+                if (_male)
+                {
+                    options.Add(PRIESTHOOD);
+                    options.Add(REGISTER); //the register is there because the the ordinances the member can have before 18 years old are already set, so only after this age they can do more
+                }
+                else if (!_ordinances.Keys.Any(key => key.Contains("sealing")))
+                {
+                    options.Add(REGISTER);
+                }
+            }
 
         //The one that must go at the end of the list
         options.Add(QUIT);
@@ -492,15 +495,18 @@ class Profile
         string selectedOption;
         do
         {
+            Console.Clear();
             Console.WriteLine("Player Menu:");
             selectedOption = Utils.DecisionString(options);
             switch (selectedOption)
             {
                 case REGISTER:
+                    Console.Clear();
                     AddOrdinance();
                     break;
 
                 case SACRAMENT:
+                    Console.Clear();
                     TimeSpan? sacramentalTime = GetSacramentalTime();
                     string formattedTime = sacramentalTime?.ToString(@"hh\:mm") ?? "Not set";
                     if (formattedTime == "Not set")
@@ -517,34 +523,51 @@ class Profile
                     break;
 
                 case PRIESTHOOD:
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                    string priesthood = GetPriesthood().ToLower();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    Console.Clear();
+                    string? priesthood = GetPriesthood();
+                    if (priesthood == null)
+                    {
+                        Console.WriteLine("Priesthood office is not set.");
+                        break;
+                    }
+                    priesthood = priesthood.ToLower();
+
+                    bool changePriesthood = false;
+                    string newPriesthood = "";
 
                     if (priesthood == "priest")
                     {
-                        SetMelchizedekPriesthood("elder");
+                        newPriesthood = "elder";
                     }
                     else if (priesthood == "elder")
                     {
-                        SetMelchizedekPriesthood("high priest");
+                        newPriesthood = "high priest";
                     }
                     else if (priesthood == "high priest")
                     {
-                        Console.WriteLine($"You already hold the {priesthood} office. Consider if you should continue to play this game game.");
+                        Console.WriteLine($"You already hold the {priesthood} office. Consider if you should continue to play this game.");
+                        break;
                     }
                     else
                     {
                         Console.WriteLine("Something went wrong! You should not be here!");
+                        break;
+                    }
+
+                    changePriesthood = InvertBoolStatus($"Do you want to change your priesthood office from {priesthood} to {newPriesthood}?", changePriesthood);
+                    if (changePriesthood)
+                    {
+                        SetMelchizedekPriesthood(newPriesthood);
                     }
                     break;
 
                 case MARRIAGE:
+                    Console.Clear();
                     _married = InvertBoolStatus("Do you want to change the your marital status?", _married);
                     break;
 
                 case CALLING:
-                    // Simplified logic for adding/removing callings
+                    Console.Clear();
                     List<string> operations = new List<string> { "Add Calling" };
                     string prompt = "Would you like to add";
                     if (_callings.Count > 0)
@@ -570,14 +593,17 @@ class Profile
                     break;
 
                 case WORKING:
+                    Console.Clear();
                     _working = InvertBoolStatus("Are you working at the moment?", _working);
                     break;
 
                 case PATRIARCHAL:
+                    Console.Clear();
                     _patriarchalBlessing = InvertBoolStatus("Did you received your patriarchal blessing?", _patriarchalBlessing);
                     break;
 
                 case RECOMMENDATION:
+                    Console.Clear();
                     string recommendationPrompt;
                     bool newRecommendation = false;
                     if (!_activeRecommendation && _recommendationDueDate == null)
@@ -597,14 +623,17 @@ class Profile
                     break;
 
                 case ACCOUNT:
+                    Console.Clear();
                     _ldsAccount = SetAccount(_ldsAccount, "LDS");
                     break;
 
                 case FAMILY:
+                    Console.Clear();
                     _familysearchLink = SetAccount(_familysearchLink, "FamilySearch");
                     break;
 
                 case QUIT:
+                    Console.Clear();
                     break;
             }
         } while (selectedOption != QUIT);
@@ -635,7 +664,7 @@ class Profile
         }
         else if (variable is DateTime date)
         {
-            message += date.ToString(@"MM/dd/YYYY");
+            message += date.ToString(@"MM/dd/yyyy");
         }
         else
         {
@@ -652,14 +681,32 @@ class Profile
         int nextLevelXP = CalculateNextLevelXP();
         double progress = (double)_currentXP / nextLevelXP;
         int barLength = 20;
-        int filledLength = (int)(progress * barLength);
 
-        string bar = new string('=', filledLength) + new string(' ', barLength - filledLength - 1);
-        bar += ">";
+        string bar = BuildProgressBar(progress, barLength);
 
         // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
-        Console.WriteLine($"{_level}[  {bar}  ]{_level + 1}");
+        Console.WriteLine($"{_level}  [{bar}]  {_level + 1}");
         Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
+    }
+
+    /// <summary>
+    /// Builds a dynamic progress bar with customizable appearance and indicators.
+    /// </summary>
+    /// <param name="progress">Current progress value.</param>
+    /// <param name="barLength">Length of the progress bar (default: 20).</param>
+    /// <returns>A formatted progress bar string.</returns>
+    private string BuildProgressBar(double progress, int barLength)
+    {
+        int filledLength = (int)(progress * barLength);
+        
+        // Build the filled portion
+        string filled = new string('=', filledLength);
+        
+        // Build the empty portion
+        int emptyLength = barLength - filledLength;
+        // Add arrow indicator at the progress point
+        string empty = ">" + new string(' ', emptyLength - 1);
+        return filled + empty;
     }
 
     /// <summary>
@@ -671,7 +718,7 @@ class Profile
         Console.WriteLine("Ordinances: ");
         foreach (string ordinance in _ordinances.Keys)
         {
-            Console.WriteLine($"{padding}* {ordinance}: {_ordinances[ordinance]}");
+            Console.WriteLine($"{padding}* {ordinance}: {_ordinances[ordinance].ToString(@"MM/dd/yyyy")}");
         }
 
     }
@@ -695,6 +742,7 @@ class Profile
     /// </summary>
     public void DisplayPlayerInfo()
     {
+        Console.Clear();
         string divisor = new String('-', 25);
         Console.WriteLine("Player Info: \n");
         string gender = "Gender: ";
@@ -716,8 +764,8 @@ class Profile
         DisplayCallings();
         DisplayOrdinances();
 
-        Console.WriteLine(divisor);
-        ProfileMenu();
+        Console.WriteLine("Press enter to return to the menu!");
+        Console.ReadLine();
     }
 
     /// <summary>
