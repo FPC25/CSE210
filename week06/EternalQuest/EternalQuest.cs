@@ -18,19 +18,9 @@ class EternalQuest : Quest
     private const string ETERNAL = "eternal";
 
     /// <summary>
-    /// The current number of completed steps and the total required steps (if applicable).
+    /// The frequency of the quest.
     /// </summary>
-    private int _steps, _total, _playerXPToNextLevel;
-
-    /// <summary>
-    /// The short name, description, and frequency of the quest.
-    /// </summary>
-    private string _shortName, _description, _frequency;
-
-    /// <summary>
-    /// Indicates whether the quest is completed and active.
-    /// </summary>
-    private bool _isCompleted, _active;
+    private string _frequency;
 
     /// <summary>
     /// The initial date when the quest was created or started.
@@ -40,12 +30,7 @@ class EternalQuest : Quest
     /// <summary>
     /// Constructs a new EternalQuest with the specified details and frequency.
     /// </summary>
-    /// <param name="name">The short name of the quest.</param>
-    /// <param name="description">A description of the quest.</param>
     /// <param name="frequency">The frequency of the quest (daily, weekly, monthly).</param>
-    /// <param name="active">If the quest is active or not.</param>
-    /// <param name="XPNextLevel">The XP required for the next level.</param>
-    /// <param name="initialDate">The initial date of the quest.</param>
     public EternalQuest(string name, string description, string frequency, bool active, int XPNextLevel, DateTime initialDate, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
         _frequency = frequency;

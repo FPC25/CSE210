@@ -18,25 +18,11 @@ class ChecklistQuest : Quest
     /// <summary>
     /// The current number of completed steps and the total required steps.
     /// </summary>
-    private int _steps, _total, _playerXPToNextLevel;
-
-    /// <summary>
-    /// The short name and description of the quest.
-    /// </summary>
-    private string _shortName, _description;
-
-    /// <summary>
-    /// Indicates whether the quest is completed and active.
-    /// </summary>
-    private bool _isCompleted, _active;
+    private int _steps, _total;
 
     /// <summary>
     /// Constructs a new ChecklistQuest with the specified details and total steps.
     /// </summary>
-    /// <param name="name">The short name of the quest.</param>
-    /// <param name="description">A description of the quest.</param>
-    /// <param name="active">If the quest is active or not.</param>
-    /// <param name="XPNextLevel">The XP required for the next level.</param>
     /// <param name="total">The total number of steps required to complete the quest.</param>
     public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int total, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
     {
@@ -47,10 +33,6 @@ class ChecklistQuest : Quest
     /// <summary>
     /// Constructs a new ChecklistQuest with the specified details, current steps, and total steps.
     /// </summary>
-    /// <param name="name">The short name of the quest.</param>
-    /// <param name="description">A description of the quest.</param>
-    /// <param name="active">If the quest is active or not.</param>
-    /// <param name="XPNextLevel">The XP required for the next level.</param>
     /// <param name="steps">The current number of completed steps.</param>
     /// <param name="total">The total number of steps required to complete the quest.</param>
     public ChecklistQuest(string name, string description, bool active, int XPNextLevel, int steps, int total, List<string> requirements) : base(name, description, active, XPNextLevel, requirements)
@@ -65,8 +47,8 @@ class ChecklistQuest : Quest
     /// <returns>A formatted string showing quest status and details.</returns>
     public override string GetDetailsString()
     {
-        string complete = _isCompleted ? "X" : " ";
-        return $"[{complete}] {_shortName} - ({_steps}/{_total}):\n{_description}";
+        string complete = GetIsCompletedStatus() ? "X" : " ";
+        return $"[{complete}] {GetName()} - ({_steps}/{_total}):\n{GetDescription()}";
     }
 
     /// <summary>
