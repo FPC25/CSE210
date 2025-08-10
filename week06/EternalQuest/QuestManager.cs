@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
+/// <summary>
+/// The QuestManager class manages all quest-related operations for a player's profile in Eternal Quest.
+/// It loads quests from JSON files, populates the profile's quest dictionary, activates quests based on requirements,
+/// and provides methods to display active and completed quests. It also verifies quest requirements and handles
+/// quest activation logic based on both dependencies and profile-specific conditions.
+/// </summary>
 class QuestManager
 {
+    // --- File Paths for Quest Data ---
     private const string
         SIMPLEPATH = "./Quests/SimpleQuests.json",
         CHECKLISTPATH = "./Quests/ChecklistQuests.json",
@@ -12,8 +19,13 @@ class QuestManager
         WEEKLYPATH = "./Quests/WeeklyEternalQuests.json",
         MONTHLYPATH = "./Quests/MonthlyEternalQuests.json";
 
+    // --- Reference to Player Profile ---
     private Profile _player;
 
+    /// <summary>
+    /// Constructs a new QuestManager for the given player profile.
+    /// </summary>
+    /// <param name="player">The Profile object representing the current player.</param>
     public QuestManager(Profile player)
     {
         _player = player;
@@ -24,6 +36,7 @@ class QuestManager
     /// </summary>
     /// <param name="filepath">Path to the JSON file.</param>
     /// <param name="questType">Type of quest to instantiate ("simple", "checklist", "eternal").</param>
+    /// <returns>List of Quest objects loaded from the file.</returns>
     public List<Quest> LoadQuestsFromJson(string filepath, string questType)
     {
         var quests = new List<Quest>();
@@ -61,7 +74,7 @@ class QuestManager
                     int total = q.TryGetProperty("total", out var totalProp) ? totalProp.GetInt32() : 1;
                     int steps = q.TryGetProperty("steps", out var stepsProp) ? stepsProp.GetInt32() : 0;
                     description = $"{initial} {total} {final}";
-                    quests.Add(new ChecklistQuest(name, description, active, xpNextLevel, steps, total,  requirements));
+                    quests.Add(new ChecklistQuest(name, description, active, xpNextLevel, steps, total, requirements));
                     break;
 
                 case "eternal":
@@ -78,45 +91,51 @@ class QuestManager
     /// <summary>
     /// Gets all daily eternal quests.
     /// </summary>
-    public List<Quest> GetDailyQuests()
-    {
-        return LoadQuestsFromJson(DAILYPATH, "eternal");
-    }
+    /// <returns>List of daily eternal Quest objects.</returns>
+    public List<Quest> GetDailyQuests() => LoadQuestsFromJson(DAILYPATH, "eternal");
 
     /// <summary>
     /// Gets all weekly eternal quests.
     /// </summary>
-    public List<Quest> GetWeeklyQuests()
-    {
-        return LoadQuestsFromJson(WEEKLYPATH, "eternal");
-    }
+    /// <returns>List of weekly eternal Quest objects.</returns>
+    public List<Quest> GetWeeklyQuests() => LoadQuestsFromJson(WEEKLYPATH, "eternal");
 
     /// <summary>
     /// Gets all monthly eternal quests.
     /// </summary>
-    public List<Quest> GetMonthlyQuests()
-    {
-        return LoadQuestsFromJson(MONTHLYPATH, "eternal");
-    }
+    /// <returns>List of monthly eternal Quest objects.</returns>
+    public List<Quest> GetMonthlyQuests() => LoadQuestsFromJson(MONTHLYPATH, "eternal");
 
     /// <summary>
     /// Gets all simple quests.
     /// </summary>
-    public List<Quest> GetSimpleQuests()
-    {
-        return LoadQuestsFromJson(SIMPLEPATH, "simple");
-    }
+    /// <returns>List of simple Quest objects.</returns>
+    public List<Quest> GetSimpleQuests() => LoadQuestsFromJson(SIMPLEPATH, "simple");
 
     /// <summary>
     /// Gets all checklist quests.
     /// </summary>
-    public List<Quest> GetChecklistQuests()
+    /// <returns>List of checklist Quest objects.</returns>
+    public List<Quest> GetChecklistQuests() => LoadQuestsFromJson(CHECKLISTPATH, "checklist");
+
+    /// <summary>
+    /// Populates the player's quest dictionary with all loaded quests by category.
+    /// </summary>
+    public void PopulatePlayerQuests()
     {
-        return LoadQuestsFromJson(CHECKLISTPATH, "checklist");
+        List<Quest> eternalQuests = new List<Quest>();
+        eternalQuests.AddRange(GetDailyQuests());
+        eternalQuests.AddRange(GetWeeklyQuests());
+        eternalQuests.AddRange(GetMonthlyQuests());
+
+        Dictionary<string, List<Quest>> quests = _player.GetAllQuests();
+        quests["simple"] = GetSimpleQuests();
+        quests["checklist"] = GetChecklistQuests();
+        quests["eternal"] = eternalQuests;
     }
 
     /// <summary>
-    /// Displays all active quests for the player.
+    /// Displays all active quests for the player, grouped by category.
     /// </summary>
     public void DisplayActiveQuests()
     {
@@ -148,6 +167,10 @@ class QuestManager
         }
     }
 
+    /// <summary>
+    /// Gets a list of all completed quests for the player.
+    /// </summary>
+    /// <returns>List of completed Quest objects.</returns>
     public List<Quest> GetCompletedQuests()
     {
         List<Quest> completedQuests = new List<Quest>();
@@ -161,6 +184,12 @@ class QuestManager
         return completedQuests;
     }
 
+    /// <summary>
+    /// Verifies if all requirements for a quest are fulfilled based on completed quests.
+    /// </summary>
+    /// <param name="requirements">List of required quest names.</param>
+    /// <param name="completedQuests">List of completed Quest objects.</param>
+    /// <returns>True if all requirements are fulfilled, false otherwise.</returns>
     public bool VerifyQuestRequirements(List<string> requirements, List<Quest> completedQuests)
     {
         if (requirements.Count == 0)
@@ -177,6 +206,13 @@ class QuestManager
         return true;
     }
 
+    /// <summary>
+    /// Helper method to check profile-specific and quest requirements before activating a quest.
+    /// </summary>
+    /// <param name="conditional">Profile-specific condition for activation.</param>
+    /// <param name="requirements">List of quest dependencies.</param>
+    /// <param name="completedQuests">List of completed quests.</param>
+    /// <param name="quest">The quest to potentially activate.</param>
     private void ActivateQuestCheck(bool conditional, List<string> requirements, List<Quest> completedQuests, Quest quest)
     {
         bool profileRequirements = false;
@@ -193,7 +229,7 @@ class QuestManager
     }
 
     /// <summary>
-    /// Activates quests whose requirements are all completed.
+    /// Activates quests whose requirements and profile conditions are all fulfilled.
     /// Should be called after loading quests or when a quest is completed.
     /// </summary>
     public void ActivateQuest()
@@ -209,7 +245,7 @@ class QuestManager
                 // Only try to activate inactive and incomplete quests
                 if (!quest.GetActiveStatus() && !completedQuests.Contains(quest))
                 {
-                    // Get requirements (even a empty list)
+                    // Get requirements (even an empty list)
                     List<string> requirements = quest.GetDependencies();
                     bool condition;
                     int age = _player.GetAge();
