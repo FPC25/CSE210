@@ -461,7 +461,7 @@ class QuestManager
                                 break;
 
                             case "Temple and Vicarious Work":
-                                condition = _player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
+                                condition = today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
