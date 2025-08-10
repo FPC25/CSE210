@@ -71,7 +71,7 @@ class SimpleQuest : Quest
                     RecordEvent(player, !string.IsNullOrEmpty(player.GetFamilysearchLink()));
                     break;
                 case "Temple Recommendation":
-                    RecordEvent(player, player.GetRecommendation != null);
+                    RecordEvent(player, player.GetRecommendation() != null);
                     break;
                 case "Patriarchal Blessing":
                     RecordEvent(player, player.GetPatriarchalBlessingStatus());
