@@ -14,7 +14,7 @@
             "description": "Get your member number with your ward clerk and create a LDS account, remember to keep your password safe! Afterwards, save the username on the player profile.",
             "requirement": [],
             "auto_check": true,
-            "active": true,
+            "active": false,
             "completed": false
         },
         {
