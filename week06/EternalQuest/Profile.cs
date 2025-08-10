@@ -106,6 +106,11 @@ class Profile
         return _patriarchalBlessing;
     }
 
+    public bool GetWorkStatus()
+    {
+        return _working;
+    }
+
     /// <summary>
     /// Gets the expiration date of the temple recommendation.
     /// </summary>
