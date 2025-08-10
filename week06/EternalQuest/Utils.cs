@@ -15,8 +15,31 @@ public static class Utils
     public static string ToTitleCase(string s)
     {
         if (string.IsNullOrEmpty(s)) return s;
-        return char.ToUpper(s[0]) + s.Substring(1);
+        return char.ToUpper(s[0]) + s.Substring(1).ToLower();
     }
+
+    /// <summary>
+    /// Converts the first character of each name string to uppercase.
+    /// Handles multiple names separated by spaces.
+    /// </summary>
+    /// <param name="name">The name string to capitalize.</param>
+    /// <returns>The string with the first character of each name in uppercase.</returns>
+    public static string NameToTitleCase(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return name;
+        
+        // Split the name by spaces
+        string[] names = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        // Capitalize each name part
+        for (int i = 0; i < names.Length; i++)
+        {
+            names[i] = ToTitleCase(names[i]);
+        }
+        
+        // Join them back with spaces
+        return string.Join(" ", names);
+    }       
 
     /// <summary>
     /// Displays a numbered menu and prompts the user to select an option by number.
@@ -118,7 +141,8 @@ public static class Utils
         if (year < 100)
         {
             int currentYear = DateTime.Now.Year % 100;
-            int century = (year > currentYear ? 1900 : 2000);
+            int century = year > currentYear ? 1900 : 2000;
+            //Console.WriteLine($"{year} {currentYear} {century}");
             year += century;
         }
         int day;
