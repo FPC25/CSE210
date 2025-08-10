@@ -30,6 +30,8 @@ class SimpleQuest : Quest
         _autoCheck = autoCheck;
     }
 
+    public bool GetAutoCheck() => _autoCheck;
+
     /// <summary>
     /// Records an event or progress for this quest.
     /// If the condition is met, marks the quest as complete and awards XP to the player.
