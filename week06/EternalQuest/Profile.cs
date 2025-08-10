@@ -723,6 +723,12 @@ class Profile
     public Dictionary<string, List<Quest>> GetAllQuests() => _quests;
 
     /// <summary>
+    /// Gets all quest in simple quests category
+    /// </summary>
+    /// <returns>A list of quest of simple quests.</returns>
+    public List<Quest> GetSimpleQuests() => _quests["simple"];
+
+    /// <summary>
     /// Returns a dictionary representation of the profile for saving or display.
     /// </summary>
     public Dictionary<string, object?> DataToSaveDict()
