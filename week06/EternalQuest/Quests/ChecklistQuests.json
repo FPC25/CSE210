@@ -21,7 +21,7 @@
             "name": "Attend the Temple",
             "first_part_description": "Attend the temple",
             "second_part_description": "times this month to participate in ordinances. Regular temple attendance brings peace, spiritual strength, and opportunities to serve.",
-            "requirement": ["Temple Recommendation", "Enter the Temple"],
+            "requirement": ["Temple Recommendation"],
             "active": false,
             "completed": false
         },
