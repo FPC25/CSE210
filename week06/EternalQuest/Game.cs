@@ -166,7 +166,7 @@ class Game
 
                 case CUSTOM:
                     Console.Clear();
-                    Console.WriteLine("Still in development");
+                    _questManager.CreateCustomQuest();
                     Console.ReadLine();
                     break;
 
