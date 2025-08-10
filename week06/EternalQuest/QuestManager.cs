@@ -125,7 +125,7 @@ class QuestManager
     {
         Dictionary<string, List<Quest>> quests = _player.GetAllQuests();
         List<Quest> eternalQuests = new List<Quest>();
-        
+
         eternalQuests.AddRange(GetDailyQuests());
         eternalQuests.AddRange(GetWeeklyQuests());
         eternalQuests.AddRange(GetMonthlyQuests());
@@ -149,6 +149,62 @@ class QuestManager
                     Console.WriteLine(quest.GetDetailsString());
             }
         }
+    }
+
+    /// <summary>
+    /// Finds a specific quest by category and name.
+    /// </summary>
+    /// <param name="category">The quest category (e.g., "simple", "checklist", "eternal").</param>
+    /// <param name="questName">The name of the quest to find.</param>
+    /// <returns>The Quest object if found, null otherwise.</returns>
+    public Quest FindQuestByName(string category, string questName)
+    {
+        Dictionary<string, List<Quest>> allQuestsByCategory = _player.GetAllQuests();
+
+        if (allQuestsByCategory.ContainsKey(category))
+        {
+            return allQuestsByCategory[category].Find(q => q.GetName() == questName);
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Calls IsComplete on a specific quest identified by category and name.
+    /// </summary>
+    /// <param name="category">The quest category.</param>
+    /// <param name="questName">The name of the quest.</param>
+    /// <returns>True if quest was found and checked, false otherwise.</returns>
+    public void CheckSpecificQuest(string category, string questName)
+    {
+        Quest quest = FindQuestByName(category, questName);
+
+        if (quest != null)
+        {
+            quest.IsComplete(_player);
+        }
+
+        Console.WriteLine($"Quest '{questName}' not found");
+    }
+
+    /// <summary>
+    /// Gets a list of all active quest names of a given category for the player.
+    /// </summary>
+    /// <returns>List of active quest names of a certain category.</returns>
+    public List<string> GetActiveQuestNamesPerCategory(string category)
+    {
+        List<string> activeQuestNames = new List<string>();
+        Dictionary<string, List<Quest>> allQuestsByCategory = _player.GetAllQuests();
+
+        foreach (Quest quest in allQuestsByCategory[category])
+        {
+            if (quest.GetActiveStatus() && !quest.GetIsCompletedStatus())
+            {
+                activeQuestNames.Add(quest.GetName());
+            }
+        }
+
+        return activeQuestNames;
     }
 
     /// <summary>
