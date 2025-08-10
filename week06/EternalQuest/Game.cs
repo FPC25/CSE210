@@ -83,9 +83,9 @@ class Game
             QUIT = "Quit";
 
         List<string> options = new List<string>()
-            {
-                NEW, LOAD, QUIT
-            };
+        {
+            NEW, LOAD, QUIT
+        };
 
         string selectedOption;
 
