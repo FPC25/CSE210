@@ -105,6 +105,7 @@ class Game
                     _player = Tutorial();
                     _questManager = new QuestManager(_player);
                     _questManager.PopulatePlayerQuests();
+                    _questManager.ActivateQuest();
                     GameMenu();
                     break;
 
