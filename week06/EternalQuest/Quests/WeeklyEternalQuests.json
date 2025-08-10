@@ -14,7 +14,7 @@
             "description": "Dedicate time each week to indexing family history records. Your efforts help make important genealogical information available to others and further the work of salvation.",
             "frequency": "weekly",
             "requirement": ["FamilySearch account"],
-            "active": true,
+            "active": false,
             "completed": false
         },
         {
@@ -30,7 +30,7 @@
             "description": "Dedicate time each week to fulfill your responsibilities. Serving others in your calling helps build the kingdom of God and blesses both you and those you serve.",
             "frequency": "weekly",
             "requirement": ["Receive a Calling"],
-            "active": true,
+            "active": false,
             "completed": false
         },
         {
@@ -38,7 +38,7 @@
             "description": "Spend time each week searching for new family information and adding it to FamilySearch. This ongoing effort strengthens your family connections and helps further temple and family history work.",
             "frequency": "weekly",
             "requirement": ["Add info to FamilySearch (4)"],
-            "active": true,
+            "active": false,
             "completed": false
         },
         {

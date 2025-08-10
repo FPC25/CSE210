@@ -40,6 +40,13 @@
             "requirement": [],
             "active": true,
             "completed": false
+        },
+        {
+            "name": "Contact with the Bishopric",
+            "description": "Schedule and attend your monthly interview with the bishopric for personal guidance, regardless of your current situation. Use this opportunity to discuss your spiritual progress, set meaningful goals, seek counsel for challenges, and receive encouragement to grow in faith and service. Let this experience inspire you to strengthen your relationship with Jesus Christ, prepare for future responsibilities, and make a positive impact in your family, church, and community.",
+            "requirement": [],
+            "active": true,
+            "completed": false
         }
     ]
 }

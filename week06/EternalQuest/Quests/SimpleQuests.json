@@ -118,7 +118,7 @@
             "description": "We can help the full time missionaries in many ways, but in this quest you should just give them a reference, a name of a friend, colleague, neighbor, someone you met in the bus, you name it, just give a contact of someone that you feel that would be benefited of knowing the missionaries. Then mark this mission as completed.",
             "requirement": [],
             "auto_check": false,
-            "active": false,
+            "active": true,
             "completed": false
         },
         {
@@ -126,7 +126,7 @@
             "description": "From time to time the bishopric will invite you to give a talk, or to bear testimony in the sacramental meeting. Accept it and be sure to be prepare early and practice so you don't get nervous. Then mark this mission as completed.",
             "requirement": [],
             "auto_check": false,
-            "active": false,
+            "active": true,
             "completed": false
         },
         {
@@ -138,7 +138,7 @@
             "completed": false
         },
         {
-            "name": "Memorize Theme ",
+            "name": "Memorize Theme",
             "description": "Memorize the theme for the Young Men or Young Women organization. Reflect on its meaning and how it applies to your life. Use the theme as a guide to set personal goals, strengthen your testimony, and inspire others by living its principles daily.",
             "requirement": [],
             "auto_check": false,
@@ -166,7 +166,7 @@
             "description": "Schedule and attend an interview with the bishopric for personal guidance, regardless of your current situation. Use this opportunity to discuss your spiritual progress, set meaningful goals, seek counsel for challenges, and receive encouragement to grow in faith and service. Let this experience inspire you to strengthen your relationship with Jesus Christ, prepare for future responsibilities, and make a positive impact in your family, church, and community.",
             "requirement": [],
             "auto_check": false,
-            "active": false,
+            "active": true,
             "completed": false
         }
     ]

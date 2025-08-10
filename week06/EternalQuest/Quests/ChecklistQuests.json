@@ -30,7 +30,7 @@
             "first_part_description": "Study your patriarchal blessing at least",
             "second_part_description": " this month. Regular reflection on your blessing will help you understand your divine potential and receive personal guidance.",
             "requirement": ["Patriarchal Blessing"],
-            "active": true,
+            "active": false,
             "completed": false
         }
     ]
