@@ -118,16 +118,17 @@ class Game
     public void GameMenu()
     {
         const string
+            PROFILE = "Access Player Info",
+            CUSTOM = "Add a Custom Quest",
             ACTIVE = "Show Active Quests",
             RECORD = "Record Quest Completion",
-            CUSTOM = "Add a Custom Quest",
+            COMPLETED = "See Completed Quests",
             SAVE = "Save Progress",
-            PROFILE = "Access Player Info",
             QUIT = "Quit";
 
         List<string> options = new List<string>()
         {
-            ACTIVE, RECORD, CUSTOM, SAVE, PROFILE, QUIT
+            PROFILE, CUSTOM, ACTIVE, RECORD, COMPLETED, SAVE, QUIT
         };
 
         string selectedOption;
@@ -138,6 +139,14 @@ class Game
             selectedOption = Utils.DecisionString(options);
             switch (selectedOption)
             {
+                case PROFILE:
+                    _player.DisplayPlayerInfo();
+                    break;
+
+                case CUSTOM:
+                    Console.WriteLine("Still in development");
+                    break;
+
                 case ACTIVE:
                     Console.WriteLine("Still in development");
                     break;
@@ -146,7 +155,7 @@ class Game
                     Console.WriteLine("Still in development");
                     break;
                 
-                case CUSTOM:
+                case COMPLETED:
                     Console.WriteLine("Still in development");
                     break;
 
@@ -154,9 +163,7 @@ class Game
                     Console.WriteLine("Still in development");
                     break;
 
-                case PROFILE:
-                    _player.DisplayPlayerInfo();
-                    break;
+
 
                 case QUIT:
                     break;
