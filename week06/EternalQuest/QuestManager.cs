@@ -307,24 +307,48 @@ class QuestManager
                         switch (quest.GetName())
                         {
                             case "Index Family Records":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Serve in Your Calling":
+                                condition = _player.GetCalling().Count > 0;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Family Tree":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Attend Seminary":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Attend Institute":
+                                condition = age > 17 && age < 36;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Tithe and Offerings":
+                                condition = _player.GetWorkStatus();
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Vicarious Baptism":
+                                condition = (_player.GetPriesthood().ToLower() != "elder" || _player.GetPriesthood().ToLower() != "high priest") && today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Initial Vicarious Ordinances":
+                                condition = _player.GetPriesthood().ToLower() == "elder" && !_player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Temple and Vicarious Work":
+                                condition = today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
                     }
