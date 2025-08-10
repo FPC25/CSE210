@@ -784,6 +784,8 @@ class Profile
     /// <returns>A list of quest of simple quests.</returns>
     public List<Quest> GetSimpleQuests() => _quests[SIMPLE];
 
+    public void AddCustomQuest(Quest quest, string category) => _quests[category].Add(quest);
+
     /// <summary>
     /// Returns a dictionary representation of the profile for saving or display.
     /// </summary>
