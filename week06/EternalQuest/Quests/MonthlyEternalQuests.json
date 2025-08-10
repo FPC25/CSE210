@@ -10,14 +10,6 @@
             "completed": false
         },
         {
-            "name": "Temple and Vicarious Work",
-            "description": "Go to the temple and participate in sacred ordinances multiple times each month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
-            "requirement": ["Temple Recommendation", "Enter the Temple", "Sealing to Eternity"],
-            "frequency": "monthly",
-            "active": false,
-            "completed": false
-        },
-        {
             "name": "Minister to Others",
             "description": "Perform ministering visits or service at least once a month. Reach out with love, support, and encouragement to those assigned to you, following the Savior's example.",
             "frequency": "monthly",
@@ -46,6 +38,30 @@
             "description": "Schedule and attend your monthly interview with the bishopric for personal guidance, regardless of your current situation. Use this opportunity to discuss your spiritual progress, set meaningful goals, seek counsel for challenges, and receive encouragement to grow in faith and service. Let this experience inspire you to strengthen your relationship with Jesus Christ, prepare for future responsibilities, and make a positive impact in your family, church, and community.",
             "requirement": [],
             "active": true,
+            "completed": false
+        },
+        {
+            "name": "Vicarious Baptism",
+            "description": "Go to the temple and participate of a section of vicarious baptism this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
+            "requirement": ["Temple Recommendation"],
+            "frequency": "monthly",
+            "active": false,
+            "completed": false
+        },
+        {
+            "name": "Initial Vicarious Ordinances",
+            "description": "Since you are now an Elder, but still didn't do your initiatory and endowment, go to the temple baptistery and help with the vicarious baptism and/or confirmation this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
+            "requirement": ["Temple Recommendation"],
+            "frequency": "monthly",
+            "active": false,
+            "completed": false
+        },
+        {
+            "name": "Temple and Vicarious Work",
+            "description": "Go to the temple and participate in any of the sacred ordinances (baptism, confirmation, initiatory, endowment or sealing) this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
+            "requirement": ["Temple Recommendation", "Enter the Temple"],
+            "frequency": "monthly",
+            "active": false,
             "completed": false
         }
     ]
