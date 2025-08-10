@@ -46,7 +46,7 @@
             "description": "Organize and hold a family meeting with your family, friends and whoever you want to learn and talk about our Savior and to strength the bonds with those you call to the meeting. Then mark this mission as completed.",
             "frequency": "weekly",
             "requirement": [],
-            "active": false,
+            "active": true,
             "completed": false
         },
         {
