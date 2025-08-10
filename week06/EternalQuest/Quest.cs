@@ -43,6 +43,7 @@ abstract class Quest
         _active = active;
         _playerXPToNextLevel = XPNextLevel;
         _isCompleted = false;
+        _requiredQuests = requirements;
     }
 
     /// <summary>
