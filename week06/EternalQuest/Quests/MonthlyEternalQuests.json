@@ -41,14 +41,6 @@
             "completed": false
         },
         {
-            "name": "Vicarious Baptism",
-            "description": "Go to the temple and participate of a section of vicarious baptism this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
-            "requirement": ["Temple Recommendation"],
-            "frequency": "monthly",
-            "active": false,
-            "completed": false
-        },
-        {
             "name": "Initial Vicarious Ordinances",
             "description": "Since you are now an Elder, but still didn't do your initiatory and endowment, go to the temple baptistery and help with the vicarious baptism and/or confirmation this month. Regular temple attendance strengthens your faith, brings peace, and allows you to serve your ancestors.",
             "requirement": ["Temple Recommendation"],
