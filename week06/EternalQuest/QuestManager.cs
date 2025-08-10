@@ -220,7 +220,7 @@ class QuestManager
         {
             if (quest.GetActiveStatus() && !quest.GetIsCompletedStatus())
             {
-                //if the quest is a simple quest and it is not an autocheckable or is not a simple quest add to the list 
+                //if the quest is a simple quest and it is not an auto checkable or is not a simple quest add to the list 
                 if ((quest is SimpleQuest simpleQuest && !simpleQuest.GetAutoCheck()) || category != SIMPLE)
                 {
                     activeQuestNames.Add(quest.GetName());
