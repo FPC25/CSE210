@@ -1,8 +1,6 @@
 #nullable enable
 
 using System;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualBasic;
 
 /// <summary>
 /// The Profile class represents a player's personal and spiritual information in Eternal Quest.

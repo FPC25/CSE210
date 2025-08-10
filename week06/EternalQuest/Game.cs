@@ -131,14 +131,14 @@ class Game
     public void GameMenu()
     {
         const string
-            PROFILE = "Show Player Info",
-            CHANGE = "Alter Player Info",
-            CUSTOM = "Add a Custom Quest",
-            ACTIVE = "Show Active Quests",
-            RECORD = "Record Quest Completion",
-            COMPLETED = "See Completed Quests",
-            SAVE = "Save Progress",
-            QUIT = "Quit";
+            PROFILE = "View Player Profile",
+            CHANGE = "Edit Player Profile",
+            CUSTOM = "Create Custom Quest",
+            ACTIVE = "View Active Quests",
+            RECORD = "Record Quest Progress",
+            COMPLETED = "View Completed Quests",
+            SAVE = "Save Game",
+            QUIT = "Exit Game";
 
         List<string> options = new List<string>()
         {
