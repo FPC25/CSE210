@@ -13,6 +13,7 @@ class ChecklistQuest : Quest
     /// XP multiplier for each step and for the bonus when the quest is completed.
     /// </summary>
     private const double XPMAXSTEP = 0.075f, XPMAXBONUS = 0.15f;
+    private const string CHECKLIST = "checklist";
 
     /// <summary>
     /// The current number of completed steps and the total required steps.
@@ -108,7 +109,7 @@ class ChecklistQuest : Quest
     public override Dictionary<string, string> GetDictRepresentation()
     {
         Dictionary<string, string> QuestStatus = new Dictionary<string, string>();
-        QuestStatus["type"] = "checklist";
+        QuestStatus["type"] = CHECKLIST;
         QuestStatus["name"] = GetName();
         QuestStatus["description"] = GetDescription();
         QuestStatus["steps"] = _steps.ToString();

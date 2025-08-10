@@ -6,6 +6,11 @@ using System;
 /// </summary>
 class Game
 {
+    private const string
+        SIMPLE = "simple",
+        CHECKLIST = "checklist",
+        ETERNAL = "eternal";
+
     /// <summary>
     /// Stores the current player's profile.
     /// </summary>
@@ -158,7 +163,7 @@ class Game
 
                 case RECORD:
                     Console.WriteLine("Do you want to record an event from which category? ");
-                    string category = Utils.DecisionString(new List<string>() { "Simple", "Checklist", "Eternal" }).ToLower();
+                    string category = Utils.DecisionString(new List<string>() { SIMPLE, CHECKLIST, ETERNAL }).ToLower();
                     Console.WriteLine("Which quest do you want to record a change?");
                     string questName = Utils.DecisionString(_questManager.GetActiveQuestNamesPerCategory(category));
                     _questManager.CheckSpecificQuest(category, questName);

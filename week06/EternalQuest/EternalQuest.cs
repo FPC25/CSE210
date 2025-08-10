@@ -15,6 +15,8 @@ class EternalQuest : Quest
     /// </summary>
     private const double XPMAXDAILY = 0.03f, XPMAXWEEKLY = 0.06f, XPMAXMONTHLY = 0.09f;
 
+    private const string ETERNAL = "eternal";
+
     /// <summary>
     /// The current number of completed steps and the total required steps (if applicable).
     /// </summary>
@@ -80,7 +82,7 @@ class EternalQuest : Quest
     public override Dictionary<string, string> GetDictRepresentation()
     {
         Dictionary<string, string> QuestStatus = new Dictionary<string, string>();
-        QuestStatus["type"] = "eternal";
+        QuestStatus["type"] = ETERNAL;
         QuestStatus["frequency"] = _frequency;
         QuestStatus["initialDate"] = _initialDate.ToString();
         QuestStatus["name"] = GetName();

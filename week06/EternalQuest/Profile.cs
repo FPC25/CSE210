@@ -12,6 +12,8 @@ using Microsoft.VisualBasic;
 /// </summary>
 class Profile
 {
+    private const string SIMPLE = "simple";
+
     // --- Basic Info ---
     /// <summary>
     /// The player's name.
@@ -726,7 +728,7 @@ class Profile
     /// Gets all quest in simple quests category
     /// </summary>
     /// <returns>A list of quest of simple quests.</returns>
-    public List<Quest> GetSimpleQuests() => _quests["simple"];
+    public List<Quest> GetSimpleQuests() => _quests[SIMPLE];
 
     /// <summary>
     /// Returns a dictionary representation of the profile for saving or display.
@@ -750,7 +752,8 @@ class Profile
                 { "LDSAccount", _ldsAccount },
                 { "FamilySearchAccount", _familysearchLink },
                 { "Callings", _callings },
-                { "Ordinances", _ordinances }
+                { "Ordinances", _ordinances },
+                { "Quests", _quests}
             };
     }
 }

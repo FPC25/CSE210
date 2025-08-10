@@ -12,6 +12,8 @@ class SimpleQuest : Quest
     /// </summary>
     private const double XPMAX = 0.1f;
 
+    private const string SIMPLE = "simple";
+
     /// <summary>
     /// Indicates whether this quest should be auto-checked based on profile status.
     /// </summary>
@@ -81,7 +83,7 @@ class SimpleQuest : Quest
                     RecordEvent(player, player.GetOrdinances().Keys.Contains("initiatory and endowment"));
                     break;
                 case "Sealing to Eternity":
-                    RecordEvent(player, (player.GetMaritalState() && player.GetOrdinances().Keys.Any(key => key.Contains("sealing"))));
+                    RecordEvent(player, player.GetMaritalState() && player.GetOrdinances().Keys.Any(key => key.Contains("sealing")));
                     break;
             }
         }
@@ -98,7 +100,7 @@ class SimpleQuest : Quest
     public override Dictionary<string, string> GetDictRepresentation()
     {
         Dictionary<string, string> QuestStatus = new Dictionary<string, string>();
-        QuestStatus["type"] = "simple";
+        QuestStatus["type"] = SIMPLE;
         QuestStatus["name"] = GetName();
         QuestStatus["description"] = GetDescription();
         QuestStatus["active"] = GetActiveStatus().ToString();

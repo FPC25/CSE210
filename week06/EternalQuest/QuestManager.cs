@@ -13,11 +13,16 @@ class QuestManager
 {
     // --- File Paths for Quest Data ---
     private const string
+        SIMPLE = "simple",
+        CHECKLIST = "checklist",
+        ETERNAL = "eternal",
         SIMPLEPATH = "./Quests/SimpleQuests.json",
         CHECKLISTPATH = "./Quests/ChecklistQuests.json",
         DAILYPATH = "./Quests/DailyEternalQuests.json",
         WEEKLYPATH = "./Quests/WeeklyEternalQuests.json",
         MONTHLYPATH = "./Quests/MonthlyEternalQuests.json";
+
+    private const int MAXREP = 12;
 
     // --- Reference to Player Profile ---
     private Profile _player;
@@ -35,7 +40,7 @@ class QuestManager
     /// Loads quests from a JSON file and returns a list of Quest objects.
     /// </summary>
     /// <param name="filepath">Path to the JSON file.</param>
-    /// <param name="questType">Type of quest to instantiate ("simple", "checklist", "eternal").</param>
+    /// <param name="questType">Type of quest to instantiate ("simple", CHECKLIST, "eternal").</param>
     /// <returns>List of Quest objects loaded from the file.</returns>
     public List<Quest> LoadQuestsFromJson(string filepath, string questType)
     {
@@ -62,22 +67,22 @@ class QuestManager
 
             switch (questType)
             {
-                case "simple":
+                case SIMPLE:
                     description = q.GetProperty("description").GetString();
                     bool autoCheck = q.GetProperty("auto_check").GetBoolean();
                     quests.Add(new SimpleQuest(name, description, active, autoCheck, xpNextLevel, requirements));
                     break;
 
-                case "checklist":
+                case CHECKLIST:
                     string initial = q.GetProperty("first_part_description").GetString();
                     string final = q.GetProperty("second_part_description").GetString();
-                    int total = q.TryGetProperty("total", out var totalProp) ? totalProp.GetInt32() : 1;
+                    int total = q.TryGetProperty("total", out var totalProp) ? CalculateTotalSteps(_player.GetLevel()) : 1;
                     int steps = q.TryGetProperty("steps", out var stepsProp) ? stepsProp.GetInt32() : 0;
                     description = $"{initial} {total} {final}";
                     quests.Add(new ChecklistQuest(name, description, active, xpNextLevel, steps, total, requirements));
                     break;
 
-                case "eternal":
+                case ETERNAL:
                     description = q.GetProperty("description").GetString();
                     string frequency = q.GetProperty("frequency").GetString();
                     quests.Add(new EternalQuest(name, description, frequency, active, xpNextLevel, DateTime.Now, requirements));
@@ -89,34 +94,49 @@ class QuestManager
     }
 
     /// <summary>
+    /// Calculates the total number of steps for a checklist quest based on player level.
+    /// The value grows gradually from 3 to a maximum of around 15.
+    /// </summary>
+    /// <param name="playerLevel">The current player level.</param>
+    /// <returns>Number of steps required (3-15 range).</returns>
+    private int CalculateTotalSteps(int playerLevel)
+    {
+        // Fórmula: 3 + (level * 0.6) com cap de 15
+        int calculatedSteps = 3 + (int)(playerLevel * 0.6);
+        
+        // Garante que não passe de 15
+        return Math.Min(calculatedSteps, MAXREP);
+    }
+
+    /// <summary>
     /// Gets all daily eternal quests.
     /// </summary>
     /// <returns>List of daily eternal Quest objects.</returns>
-    public List<Quest> GetDailyQuests() => LoadQuestsFromJson(DAILYPATH, "eternal");
+    public List<Quest> GetDailyQuests() => LoadQuestsFromJson(DAILYPATH, ETERNAL);
 
     /// <summary>
     /// Gets all weekly eternal quests.
     /// </summary>
     /// <returns>List of weekly eternal Quest objects.</returns>
-    public List<Quest> GetWeeklyQuests() => LoadQuestsFromJson(WEEKLYPATH, "eternal");
+    public List<Quest> GetWeeklyQuests() => LoadQuestsFromJson(WEEKLYPATH, ETERNAL);
 
     /// <summary>
     /// Gets all monthly eternal quests.
     /// </summary>
     /// <returns>List of monthly eternal Quest objects.</returns>
-    public List<Quest> GetMonthlyQuests() => LoadQuestsFromJson(MONTHLYPATH, "eternal");
+    public List<Quest> GetMonthlyQuests() => LoadQuestsFromJson(MONTHLYPATH, ETERNAL);
 
     /// <summary>
     /// Gets all simple quests.
     /// </summary>
     /// <returns>List of simple Quest objects.</returns>
-    public List<Quest> GetSimpleQuests() => LoadQuestsFromJson(SIMPLEPATH, "simple");
+    public List<Quest> GetSimpleQuests() => LoadQuestsFromJson(SIMPLEPATH, SIMPLE);
 
     /// <summary>
     /// Gets all checklist quests.
     /// </summary>
     /// <returns>List of checklist Quest objects.</returns>
-    public List<Quest> GetChecklistQuests() => LoadQuestsFromJson(CHECKLISTPATH, "checklist");
+    public List<Quest> GetChecklistQuests() => LoadQuestsFromJson(CHECKLISTPATH, CHECKLIST);
 
     /// <summary>
     /// Populates the player's quest dictionary with all loaded quests by category.
@@ -130,9 +150,9 @@ class QuestManager
         eternalQuests.AddRange(GetWeeklyQuests());
         eternalQuests.AddRange(GetMonthlyQuests());
 
-        quests["simple"] = GetSimpleQuests();
-        quests["checklist"] = GetChecklistQuests();
-        quests["eternal"] = eternalQuests;
+        quests[SIMPLE] = GetSimpleQuests();
+        quests[CHECKLIST] = GetChecklistQuests();
+        quests[ETERNAL] = eternalQuests;
     }
 
     /// <summary>
@@ -201,7 +221,7 @@ class QuestManager
             if (quest.GetActiveStatus() && !quest.GetIsCompletedStatus())
             {
                 //if the quest is a simple quest and it is not an autocheckable or is not a simple quest add to the list 
-                if ((quest is SimpleQuest simpleQuest && !simpleQuest.GetAutoCheck()) || category != "simple")
+                if ((quest is SimpleQuest simpleQuest && !simpleQuest.GetAutoCheck()) || category != SIMPLE)
                 {
                     activeQuestNames.Add(quest.GetName());
                 }
@@ -314,7 +334,7 @@ class QuestManager
                              today = DateTime.Today,
                              recommendationDueDate = _player.GetRecommendation() ?? DateTime.MinValue;
 
-                    if (category.Key == "simple")
+                    if (category.Key == SIMPLE)
                     {
                         switch (quest.GetName())
                         {
@@ -384,7 +404,7 @@ class QuestManager
                                 break;
                         }
                     }
-                    else if (category.Key == "checklist")
+                    else if (category.Key == CHECKLIST)
                     {
                         switch (quest.GetName())
                         {
@@ -399,7 +419,7 @@ class QuestManager
                                 break;
                         }
                     }
-                    else if (category.Key == "eternal")
+                    else if (category.Key == ETERNAL)
                     {
                         switch (quest.GetName())
                         {
