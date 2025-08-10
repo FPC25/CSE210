@@ -635,7 +635,7 @@ class Profile
         }
         else if (variable is DateTime date)
         {
-            message += date.ToString();
+            message += date.ToString(@"MM/dd/YYYY");
         }
         else
         {
