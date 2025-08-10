@@ -36,7 +36,7 @@ class Game
         bool male = false;
         List<string> ordinancesList = new List<string>() { "baptism", "confirmation" }, genderOptions;
 
-        Console.WriteLine("Welcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!\n");
+        Console.WriteLine("\nWelcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!\n");
 
         Console.WriteLine("What is your name?");
         name = Console.ReadLine();
@@ -102,7 +102,9 @@ class Game
             switch (selectedOption)
             {
                 case NEW:
+                    Console.Clear();
                     _player = Tutorial();
+                    Console.Clear();
                     _questManager = new QuestManager(_player);
                     _questManager.PopulatePlayerQuests();
                     _questManager.ActivateQuest();
@@ -110,6 +112,7 @@ class Game
                     break;
 
                 case LOAD:
+                    Console.Clear();
                     Console.WriteLine("Still in development");
                     break;
 
@@ -127,7 +130,8 @@ class Game
     public void GameMenu()
     {
         const string
-            PROFILE = "Access Player Info",
+            PROFILE = "Show Player Info",
+            CHANGE = "Alter Player Info",
             CUSTOM = "Add a Custom Quest",
             ACTIVE = "Show Active Quests",
             RECORD = "Record Quest Completion",
@@ -137,7 +141,7 @@ class Game
 
         List<string> options = new List<string>()
         {
-            PROFILE, CUSTOM, ACTIVE, RECORD, COMPLETED, SAVE, QUIT
+            PROFILE, CHANGE, CUSTOM, ACTIVE, RECORD, COMPLETED, SAVE, QUIT
         };
 
         string selectedOption;
@@ -150,6 +154,10 @@ class Game
             {
                 case PROFILE:
                     _player.DisplayPlayerInfo();
+                    break;
+                    
+                case CHANGE:
+                    _player.ProfileMenu();
                     CheckAutoCompleteQuests(); // Check after profile updates
                     _questManager.ActivateQuest(); // Check for newly available quests
                     break;
