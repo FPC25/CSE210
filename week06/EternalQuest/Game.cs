@@ -36,12 +36,12 @@ class Game
         bool male = false;
         List<string> ordinancesList = new List<string>() { "baptism", "confirmation" }, genderOptions;
 
-        Console.WriteLine("Welcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!");
+        Console.WriteLine("Welcome to Eternal Quest!\n\nThis 'game' is way to turn our responsibilities as members of the Church of Jesus Christ of the Latter Days Saint more fun simulating an RPG game using us as characters. Let's begin creating a 'character sheet' for you!\n");
 
         Console.WriteLine("What is your name?");
         name = Console.ReadLine();
 
-        birthday = Utils.ReadDate($"Hello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
+        birthday = Utils.ReadDate($"\nHello {name}! Please enter your birth year (e.g., 1995 or 95): ", "Which month were you born in? (Enter the number, e.g., 1 for January)", "Which day of the month were you born?");
 
         int age = DateTime.Now.Year - birthday.Year;
         if (DateTime.Now < birthday.AddYears(age))
@@ -51,12 +51,12 @@ class Game
 
         if (age < 18)
         {
-            genderPrompt = "Are you a boy or a girl?";
+            genderPrompt = "\nAre you a boy or a girl?";
             genderOptions = new List<string>() { "Boy", "Girl" };
         }
         else
         {
-            genderPrompt = "Are you a man or a woman?";
+            genderPrompt = "\nAre you a man or a woman?";
             genderOptions = new List<string>() { "Man", "Woman" };
         }
 
