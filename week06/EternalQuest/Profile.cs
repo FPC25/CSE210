@@ -322,6 +322,7 @@ class Profile
             {
                 Console.WriteLine("Invalid time format. Try again");
             }
+            Console.WriteLine(newTime);
         } while (!TimeSpan.TryParse(input, out newTime));
         _sacramentalTime = newTime;
     }
@@ -653,10 +654,11 @@ class Profile
         int barLength = 20;
         int filledLength = (int)(progress * barLength);
 
-        string bar = new string('=', filledLength) + new string(' ', barLength - filledLength);
+        string bar = new string('=', filledLength) + new string(' ', barLength - filledLength - 1);
+        bar += ">";
 
         // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
-        Console.WriteLine($"{_level}  {bar}  {_level + 1}");
+        Console.WriteLine($"{_level}[  {bar}  ]{_level + 1}");
         Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
     }
 
@@ -695,10 +697,10 @@ class Profile
     {
         string divisor = new String('-', 25);
         Console.WriteLine("Player Info: \n");
-        string message = "Gender: ";
-        if (_male) message += "Masc.";
-        else message += "Fem.";
-        Console.Write($"Name: {_name}  |  Age: {GetAge()}  |  {message}");
+        string gender = "Gender: ";
+        if (_male) gender += "Masc.";
+        else gender += "Fem.";
+        Console.Write($"Name: {_name}  |  Age: {GetAge()}  |  {gender}\n");
         Console.WriteLine("Level: \n");
         DisplayLevelProgress();
         Console.WriteLine();
