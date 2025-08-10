@@ -157,7 +157,12 @@ class Game
                     break;
 
                 case RECORD:
-                    Console.WriteLine("Still in development");
+                    Console.WriteLine("Do you want to record an event from which category? ");
+                    string category = Utils.DecisionString(new List<string>() { "Simple", "Checklist", "Eternal" }).ToLower();
+                    Console.WriteLine("Which quest do you want to record a change?");
+                    string questName = Utils.DecisionString(_questManager.GetActiveQuestNamesPerCategory(category));
+                    _questManager.CheckSpecificQuest(category, questName);
+                    _questManager.ActivateQuest();
                     break;
 
                 case COMPLETED:
