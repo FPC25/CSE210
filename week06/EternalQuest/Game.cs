@@ -114,6 +114,7 @@ class Game
                 case LOAD:
                     Console.Clear();
                     Console.WriteLine("Still in development");
+                    Console.ReadLine();
                     break;
 
                 case QUIT:
@@ -164,10 +165,13 @@ class Game
                     break;
 
                 case CUSTOM:
+                    Console.Clear();
                     Console.WriteLine("Still in development");
+                    Console.ReadLine();
                     break;
 
                 case ACTIVE:
+                    Console.Clear();
                     _questManager.DisplayActiveQuests();
                     break;
 
@@ -181,11 +185,13 @@ class Game
                     break;
 
                 case COMPLETED:
+                    Console.Clear();
                     _questManager.DisplayCompletedQuests();
                     break;
 
                 case SAVE:
                     Console.WriteLine("Still in development");
+                    Console.ReadLine();
                     break;
 
                 case QUIT:
