@@ -153,7 +153,7 @@ public static class Utils
             dayCall = $"\nPlease enter the day the {ordinance} occurred?";
             if (ordinance.ToLower() == "confirmation" && ordinances.Contains("baptism"))
             {
-                Console.WriteLine("Is your confirmation date the same as your baptism date? (yes/no)");
+                Console.WriteLine("\nIs your confirmation date the same as your baptism date? (yes/no)");
                 confirmationDateEqualsBaptism = DecisionString(new List<string>() { "Yes", "No" });
 
                 if (confirmationDateEqualsBaptism == "Yes")
@@ -189,7 +189,7 @@ public static class Utils
         {
             Console.WriteLine(question);
             input = Console.ReadLine() ?? "";
-        } while (input != "");
+        } while (input == "");
 
         return input;
     }
