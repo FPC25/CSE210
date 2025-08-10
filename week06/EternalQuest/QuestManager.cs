@@ -40,7 +40,7 @@ class QuestManager
             List<string> requirements = new List<string>();
             if (q.TryGetProperty("requirement", out var reqProp) && reqProp.ValueKind == JsonValueKind.Array)
             {
-                foreach (string item in reqProp.EnumerateArray())
+                foreach (JsonElement item in reqProp.EnumerateArray())
                 {
                     if (item.ValueKind == JsonValueKind.String)
                         requirements.Add(item.GetString());
@@ -120,7 +120,7 @@ class QuestManager
     /// </summary>
     public void DisplayActiveQuests()
     {
-        foreach (string category in _player.GetAllQuests())
+        foreach (KeyValuePair<string, List<Quest>> category in _player.GetAllQuests())
         {
             Console.WriteLine($"Category: {category.Key}");
             foreach (Quest quest in category.Value)
@@ -151,9 +151,9 @@ class QuestManager
     public List<Quest> GetCompletedQuests()
     {
         List<Quest> completedQuests = new List<Quest>();
-        var allQuestsByCategory = _player.GetAllQuests();
+        Dictionary<string, List<Quest>> allQuestsByCategory = _player.GetAllQuests();
 
-        foreach (var category in allQuestsByCategory)
+        foreach (KeyValuePair<string, List<Quest>> category in allQuestsByCategory)
         {
             completedQuests.AddRange(category.Value.FindAll(q => q.GetIsCompletedStatus()));
         }
@@ -161,12 +161,11 @@ class QuestManager
         return completedQuests;
     }
 
-    public bool VerifyQuestRequirements(List<string> requirements)
+    public bool VerifyQuestRequirements(List<string> requirements, List<Quest> completedQuests)
     {
         if (requirements.Count == 0)
             return true;
 
-        List<Quest> completedQuests = GetCompletedQuests();
         foreach (string reqName in requirements)
         {
             Quest reqQuest = completedQuests.Find(q => q.GetName() == reqName);
@@ -178,6 +177,21 @@ class QuestManager
         return true;
     }
 
+    private void ActivateQuestCheck(bool conditional, List<string> requirements, List<Quest> completedQuests, Quest quest)
+    {
+        bool profileRequirements = false;
+
+        if (conditional)
+        {
+            profileRequirements = true;
+        }
+
+        if (profileRequirements && VerifyQuestRequirements(requirements, completedQuests))
+        {
+            quest.SetActiveStatus(true);
+        }
+    }
+
     /// <summary>
     /// Activates quests whose requirements are all completed.
     /// Should be called after loading quests or when a quest is completed.
@@ -185,32 +199,45 @@ class QuestManager
     public void ActivateQuest()
     {
         // Get all quests from the player's profile
-        List<Quest> allQuests = _player.GetAllQuests();
+        Dictionary<string, List<Quest>> allQuests = _player.GetAllQuests();
+        List<Quest> completedQuests = GetCompletedQuests();
 
-        foreach (string category in allQuests)
+        foreach (KeyValuePair<string, List<Quest>> category in allQuests)
         {
             foreach (Quest quest in category.Value)
             {
                 // Only try to activate inactive and incomplete quests
-                if (!quest.GetActiveStatus() && !quest.GetIsCompletedStatus())
+                if (!quest.GetActiveStatus() && !completedQuests.Contains(quest))
                 {
                     // Get requirements (even a empty list)
                     List<string> requirements = quest.GetDependencies();
+                    bool condition;
+                    DateTime confirmationDate = _player.GetOrdinances()["confirmation"],
+                             today = DateTime.Today,
+                             recommendationDueDate = _player.GetRecommendation() ?? DateTime.MinValue;
 
-                    if (category == "simple")
+                    if (category.Key == "simple")
                     {
-                        switch(quest.GetName())
+                        switch (quest.GetName())
                         {
                             case "FamilySearch account":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
-                            
+
                             case "Enter the Temple":
+                                condition = today > confirmationDate.AddYears(1) && today < recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Sealing to Eternity":
+                                condition = today > confirmationDate.AddYears(1) && today < recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Renovate Temple Recommendation":
+                                condition = today > recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Online Tithe":
@@ -233,29 +260,28 @@ class QuestManager
 
                             case "Activities (YM/YW/Combined)":
                                 break;
-                            
+
                             case "YSAs Activities":
                                 break;
                         }
                     }
-                    else if (category == "checklist")
+                    else if (category.Key == "checklist")
                     {
-                        switch(quest.GetName())
+                        switch (quest.GetName())
                         {
                             case "Attend the Temple":
                                 break;
-                            
                             case "Study Patriarchal Blessing":
                                 break;
                         }
                     }
-                    else if (category == "eternal")
+                    else if (category.Key == "eternal")
                     {
-                        switch(quest.GetName())
+                        switch (quest.GetName())
                         {
                             case "Index Family Records":
                                 break;
-                            
+
                             case "Serve in Your Calling":
                                 break;
 
@@ -275,8 +301,6 @@ class QuestManager
                                 break;
                         }
                     }
-
-                    
                 }
             }
         }
