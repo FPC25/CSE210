@@ -163,8 +163,6 @@ class Game
                     string questName = Utils.DecisionString(_questManager.GetActiveQuestNamesPerCategory(category));
                     _questManager.CheckSpecificQuest(category, questName);
                     _questManager.ActivateQuest();
-
-                    //to do: garantir que a pessoa não vai escolher uma quest que seja autocompletavel
                     break;
 
                 case COMPLETED:
