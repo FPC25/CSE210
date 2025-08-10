@@ -344,8 +344,12 @@ class Profile
         List<string> ordinances = new List<string>();
         string highOrdinance = "initiatory and endowment";
         if (!_ordinances.ContainsKey(highOrdinance))
-        {
-            ordinances.Add(highOrdinance);
+        {   
+            Console.WriteLine($"Do you want to add the date you've made your {highOrdinance}?");
+            if (Utils.DecisionString(new List<string>() { "yes", "no" }) == "yes")
+            {
+                ordinances.Add(highOrdinance);
+            }
         }
         if (_married)
         {
@@ -356,7 +360,14 @@ class Profile
                 ordinances.Add($"sealing with {spouse}");
             }
         }
-        if (ordinances.Count != 0) Utils.GetOrdinance(ordinances);
+        if (ordinances.Count != 0)
+        {
+            var newOrdinance = Utils.GetOrdinance(ordinances);
+            foreach (string ordinance in newOrdinance.Keys)
+            {
+                _ordinances[ordinance] = newOrdinance[ordinance];
+            }
+        }
     }
 
     /// <summary>
@@ -543,14 +554,9 @@ class Profile
                     {
                         newPriesthood = "high priest";
                     }
-                    else if (priesthood == "high priest")
-                    {
-                        Console.WriteLine($"You already hold the {priesthood} office. Consider if you should continue to play this game.");
-                        break;
-                    }
                     else
                     {
-                        Console.WriteLine("Something went wrong! You should not be here!");
+                        Console.WriteLine("You reached the highest Priesthood Office available in this game!");
                         break;
                     }
 
@@ -589,7 +595,6 @@ class Profile
                     {
                         RemoveCalling();
                     }
-                    // "Back" just breaks out of the case
                     break;
 
                 case WORKING:
@@ -618,7 +623,7 @@ class Profile
                     if (newRecommendation)
                     {
                         Console.WriteLine("Congratulations! Please informe the new due Date!");
-                        _recommendationDueDate = Utils.ReadDate("In what year your new recommendation will expire? (e.g., 1995 or 95)\n", "In what month your new recommendation will expire? (Enter the number, e.g., 1 for January)\n", "In what month your new recommendation will expire?");
+                        _recommendationDueDate = Utils.ReadDate($"\nIn what year your new recommendation will expire? (e.g., {DateTime.Now.Year + 2})", "\nIn what month your new recommendation will expire? (Enter the number, e.g., 1 for January)", "In what month your new recommendation will expire?");
                     }
                     break;
 
@@ -686,7 +691,7 @@ class Profile
 
         // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
         Console.WriteLine($"{_level}  [{bar}]  {_level + 1}");
-        Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level\n");
+        Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level");
     }
 
     /// <summary>
