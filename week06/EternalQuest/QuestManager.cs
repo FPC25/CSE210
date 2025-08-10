@@ -123,12 +123,13 @@ class QuestManager
     /// </summary>
     public void PopulatePlayerQuests()
     {
+        Dictionary<string, List<Quest>> quests = _player.GetAllQuests();
         List<Quest> eternalQuests = new List<Quest>();
+        
         eternalQuests.AddRange(GetDailyQuests());
         eternalQuests.AddRange(GetWeeklyQuests());
         eternalQuests.AddRange(GetMonthlyQuests());
 
-        Dictionary<string, List<Quest>> quests = _player.GetAllQuests();
         quests["simple"] = GetSimpleQuests();
         quests["checklist"] = GetChecklistQuests();
         quests["eternal"] = eternalQuests;
