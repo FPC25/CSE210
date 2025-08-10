@@ -455,18 +455,13 @@ class QuestManager
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
-                            case "Vicarious Baptism":
-                                condition = _player.GetPriesthood().ToLower() != "elder" && _player.GetPriesthood().ToLower() != "high priest" && today <= recommendationDueDate;
-                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
-                                break;
-
                             case "Initial Vicarious Ordinances":
-                                condition = _player.GetPriesthood().ToLower() == "elder" && !_player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
+                                condition = !_player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Temple and Vicarious Work":
-                                condition = today <= recommendationDueDate;
+                                condition = _player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
