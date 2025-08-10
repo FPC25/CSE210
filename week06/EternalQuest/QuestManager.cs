@@ -212,6 +212,7 @@ class QuestManager
                     // Get requirements (even a empty list)
                     List<string> requirements = quest.GetDependencies();
                     bool condition;
+                    int age = _player.GetAge();
                     DateTime confirmationDate = _player.GetOrdinances()["confirmation"],
                              today = DateTime.Today,
                              recommendationDueDate = _player.GetRecommendation() ?? DateTime.MinValue;
@@ -220,7 +221,32 @@ class QuestManager
                     {
                         switch (quest.GetName())
                         {
+                            case "LDS account":
+                                condition = _player.GetAge() > 12;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
                             case "FamilySearch account":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Add info to FamilySearch (1)":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Add info to FamilySearch (2)":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Add info to FamilySearch (3)":
+                                condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Add info to FamilySearch (4)":
                                 condition = true;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
@@ -241,27 +267,23 @@ class QuestManager
                                 break;
 
                             case "Online Tithe":
-                                break;
-
-                            case "Add info to FamilySearch (1)":
-                                break;
-
-                            case "Add info to FamilySearch (2)":
-                                break;
-
-                            case "Add info to FamilySearch (3)":
-                                break;
-
-                            case "Add info to FamilySearch (4)":
+                                condition = _player.GetWorkStatus();
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Strength of Youth":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "Activities (YM/YW/Combined)":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
                             case "YSAs Activities":
+                                condition = age > 17 && age < 36;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
                         }
                     }
