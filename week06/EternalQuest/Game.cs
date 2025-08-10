@@ -10,6 +10,7 @@ class Game
     /// Stores the current player's profile.
     /// </summary>
     private Profile _player;
+    private QuestManager _questManager;
 
     /// <summary>
     /// Initializes a new instance of the Game class.
@@ -58,7 +59,7 @@ class Game
         input = Utils.DecisionString(genderOptions);
 
         male = input.Equals("Man", StringComparison.OrdinalIgnoreCase) || input.Equals("Boy", StringComparison.OrdinalIgnoreCase);
-        
+
         Dictionary<string, DateTime> ordinances = Utils.GetOrdinance(ordinancesList);
 
         return new Profile(name, birthday, age, male, ordinances);
@@ -71,7 +72,7 @@ class Game
     {
         InitialMenu();
     }
-    
+
     /// <summary>
     /// Displays the initial menu (New Game, Load Game, Quit) and processes user selection.
     /// </summary>
@@ -93,10 +94,12 @@ class Game
         {
             Console.WriteLine("Welcome to Eternal Quest:");
             selectedOption = Utils.DecisionString(options);
-            switch(selectedOption)
+            switch (selectedOption)
             {
                 case NEW:
                     _player = Tutorial();
+                    _questManager = new QuestManager(_player);
+                    _questManager.PopulatePlayerQuests();
                     GameMenu();
                     break;
 
@@ -141,6 +144,8 @@ class Game
             {
                 case PROFILE:
                     _player.DisplayPlayerInfo();
+                    CheckAutoCompleteQuests(); // Check after profile updates
+                    _questManager.ActivateQuest(); // Check for newly available quests
                     break;
 
                 case CUSTOM:
@@ -148,26 +153,38 @@ class Game
                     break;
 
                 case ACTIVE:
-                    Console.WriteLine("Still in development");
+                    _questManager.DisplayActiveQuests();
                     break;
-                
+
                 case RECORD:
                     Console.WriteLine("Still in development");
                     break;
-                
+
                 case COMPLETED:
-                    Console.WriteLine("Still in development");
+                    _questManager.DisplayCompletedQuests();
                     break;
 
                 case SAVE:
                     Console.WriteLine("Still in development");
                     break;
 
-
-
                 case QUIT:
                     break;
             }
         } while (selectedOption != QUIT);
+    }
+    
+    /// <summary>
+    /// Automatically checks and completes all auto-check quests based on current profile status.
+    /// </summary>
+    private void CheckAutoCompleteQuests()
+    {
+        foreach (Quest simpleQuest in _player.GetSimpleQuests())
+        {
+            if (simpleQuest.GetActiveStatus() && !simpleQuest.GetIsCompletedStatus())
+            {
+                simpleQuest.IsComplete(_player);
+            }
+        }
     }
 }
