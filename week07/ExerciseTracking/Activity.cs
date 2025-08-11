@@ -3,7 +3,9 @@ using System;
 abstract class Activity
 {
     private string _name;
+
     private DateTime _date;
+
     private int _lengthInMinutes;
 
     public Activity(DateTime date, int length)
@@ -12,11 +14,7 @@ abstract class Activity
         _lengthInMinutes = length;
     }
 
-    public DateTime GetDate() => _date;
-
     public int GetLengthInMinutes() => _lengthInMinutes;
-
-    public string GetName() => _name;
 
     public void SetName(string name) => _name = name;
 
