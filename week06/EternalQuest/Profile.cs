@@ -727,7 +727,14 @@ class Profile
     public void DisplayPlayerInfo()
     {
         Console.Clear();
-        string divisor = new String('-', 25);
+
+        string mainSeparator = new string('=', 50);
+        string subSeparator = new string('-', 30);
+
+        Console.WriteLine(mainSeparator);
+        Console.WriteLine("                PLAYER PROFILE");
+        Console.WriteLine(mainSeparator);
+
         Console.WriteLine("Player Info: \n");
         string gender = "Gender: ";
         if (_male) gender += "Masc.";
