@@ -686,31 +686,11 @@ class Profile
         double progress = (double)_currentXP / nextLevelXP;
         int barLength = 20;
 
-        string bar = BuildProgressBar(progress, barLength);
+        string bar = Utils.BuildProgressBar(progress, barLength);
 
         // Padding: 2 spaces between level and bar, 2 spaces between bar and next level
         Console.WriteLine($"{_level}  [{bar}]  {_level + 1}");
         Console.WriteLine($"XP: {_currentXP} / {nextLevelXP} to next level");
-    }
-
-    /// <summary>
-    /// Builds a dynamic progress bar with customizable appearance and indicators.
-    /// </summary>
-    /// <param name="progress">Current progress value.</param>
-    /// <param name="barLength">Length of the progress bar (default: 20).</param>
-    /// <returns>A formatted progress bar string.</returns>
-    private string BuildProgressBar(double progress, int barLength)
-    {
-        int filledLength = (int)(progress * barLength);
-        
-        // Build the filled portion
-        string filled = new string('=', filledLength);
-        
-        // Build the empty portion
-        int emptyLength = barLength - filledLength;
-        // Add arrow indicator at the progress point
-        string empty = ">" + new string(' ', emptyLength - 1);
-        return filled + empty;
     }
 
     /// <summary>
