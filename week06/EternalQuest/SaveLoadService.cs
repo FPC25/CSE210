@@ -110,8 +110,18 @@ public static class SaveLoadService
             // Load player data
             Profile player = LoadPlayerFromJson(saveData["playerData"]);
             
-            // Load quest data
-            LoadQuestDataFromJson(player, saveData["questData"]);
+            // Load quest data if it exists
+            if (saveData.ContainsKey("playerData") && 
+                saveData["playerData"].TryGetProperty("Quests", out var questData))
+            {
+                LoadQuestDataFromJson(player, questData);
+            }
+            else
+            {
+                // Se não há quest data salvo, populamos as quests padrão
+                QuestManager tempManager = new QuestManager(player);
+                tempManager.PopulatePlayerQuests();
+            }
             
             // Create quest manager
             QuestManager questManager = new QuestManager(player);
@@ -133,15 +143,15 @@ public static class SaveLoadService
     /// <returns>Reconstructed Profile object.</returns>
     private static Profile LoadPlayerFromJson(JsonElement playerJson)
     {
-        string name = playerJson.GetProperty("name").GetString();
-        int age = playerJson.GetProperty("age").GetInt32();
-        bool male = playerJson.GetProperty("male").GetBoolean();
+        string name = playerJson.GetProperty("Name").GetString(); // Maiúsculo
+        int age = playerJson.GetProperty("Age").GetInt32();
+        bool male = playerJson.GetProperty("Gender").GetBoolean(); // Era "Gender" no JSON
         
         // Calculate birthday from age (approximate)
         DateTime birthday = DateTime.Now.AddYears(-age);
         
         // Load ordinances
-        var ordinancesJson = playerJson.GetProperty("ordinances");
+        var ordinancesJson = playerJson.GetProperty("Ordinances"); // Maiúsculo
         var ordinances = new Dictionary<string, DateTime>();
         foreach (var prop in ordinancesJson.EnumerateObject())
         {
@@ -151,8 +161,7 @@ public static class SaveLoadService
         // Create profile
         Profile player = new Profile(name, birthday, age, male, ordinances);
         
-        // Set other properties using reflection-like approach
-        // Note: You'll need to add public setters or methods to set these values
+        // Set other properties
         SetPlayerProperties(player, playerJson);
         
         return player;
@@ -166,46 +175,58 @@ public static class SaveLoadService
     private static void SetPlayerProperties(Profile player, JsonElement playerJson)
     {
         // Set XP and level
-        int level = playerJson.GetProperty("level").GetInt32();
-        int currentXP = playerJson.GetProperty("currentXP").GetInt32();
+        int level = playerJson.GetProperty("Level").GetInt32();
+        int currentXP = playerJson.GetProperty("XP").GetInt32();
         player.SetLevel(level);
         player.SetXP(currentXP);
         
         // Set other boolean properties
-        if (playerJson.GetProperty("married").GetBoolean())
+        if (playerJson.GetProperty("Married").GetBoolean())
             player.SetMarried(true);
         
-        if (playerJson.GetProperty("working").GetBoolean())
+        if (playerJson.GetProperty("Working").GetBoolean())
             player.SetWorking(true);
             
-        if (playerJson.GetProperty("patriarchalBlessing").GetBoolean())
+        if (playerJson.GetProperty("PatriarchalBlessing").GetBoolean())
             player.SetPatriarchalBlessing(true);
 
-        // Set string properties
-        string sacramentalTimeStr = playerJson.GetProperty("sacramentalTime").GetString();
-        if (!string.IsNullOrEmpty(sacramentalTimeStr))
+        // Set string properties with null checks
+        if (playerJson.TryGetProperty("SacramentalTime", out var sacramentalTimeElement) && 
+            sacramentalTimeElement.ValueKind != JsonValueKind.Null)
         {
-            player.SetSacramentalTime(TimeSpan.Parse(sacramentalTimeStr));
+            string sacramentalTimeStr = sacramentalTimeElement.GetString();
+            if (!string.IsNullOrEmpty(sacramentalTimeStr))
+            {
+                player.SetSacramentalTime(TimeSpan.Parse(sacramentalTimeStr));
+            }
         }
 
-        string recDateStr = playerJson.GetProperty("recommendationDueDate").GetString();
-        if (!string.IsNullOrEmpty(recDateStr))
+        if (playerJson.TryGetProperty("RecommendationDueDate", out var recDateElement) && 
+            recDateElement.ValueKind != JsonValueKind.Null)
         {
-            player.SetRecommendationDueDate(DateTime.Parse(recDateStr));
+            string recDateStr = recDateElement.GetString();
+            if (!string.IsNullOrEmpty(recDateStr))
+            {
+                player.SetRecommendationDueDate(DateTime.Parse(recDateStr));
+            }
         }
 
-        string priesthood = playerJson.GetProperty("priesthood").GetString();
-        if (!string.IsNullOrEmpty(priesthood))
+        if (playerJson.TryGetProperty("Priesthood", out var priesthoodElement) && 
+            priesthoodElement.ValueKind != JsonValueKind.Null)
         {
-            player.SetPriesthood(priesthood);
+            string priesthood = priesthoodElement.GetString();
+            if (!string.IsNullOrEmpty(priesthood))
+            {
+                player.SetPriesthood(priesthood);
+            }
         }
 
         // Set accounts
-        player.SetLdsAccount(playerJson.GetProperty("ldsAccount").GetString());
-        player.SetFamilysearchLink(playerJson.GetProperty("familysearchLink").GetString());
+        player.SetLdsAccount(playerJson.GetProperty("LDSAccount").GetString());
+        player.SetFamilysearchLink(playerJson.GetProperty("FamilySearchAccount").GetString());
 
         // Set callings
-        var callingsJson = playerJson.GetProperty("callings");
+        var callingsJson = playerJson.GetProperty("Callings");
         foreach (var calling in callingsJson.EnumerateArray())
         {
             player.AddCallingDirect(calling.GetString());
