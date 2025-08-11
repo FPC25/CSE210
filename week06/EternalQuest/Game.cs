@@ -205,9 +205,9 @@ class Game
     /// </summary>
     private void CheckAutoCompleteQuests()
     {
-        foreach (Quest simpleQuest in _player.GetSimpleQuests())
+        foreach (SimpleQuest simpleQuest in _player.GetSimpleQuests())
         {
-            if (simpleQuest.GetActiveStatus() && !simpleQuest.GetIsCompletedStatus())
+            if (simpleQuest.GetActiveStatus() && !simpleQuest.GetIsCompletedStatus() && simpleQuest.GetAutoCheck())
             {
                 simpleQuest.IsComplete(_player);
             }
