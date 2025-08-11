@@ -97,6 +97,7 @@ class Game
 
         do
         {
+            Console.Clear();
             Console.WriteLine("Welcome to Eternal Quest:");
             selectedOption = Utils.DecisionString(options);
             switch (selectedOption)
