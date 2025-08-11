@@ -167,7 +167,6 @@ class Game
                 case CUSTOM:
                     Console.Clear();
                     _questManager.CreateCustomQuest();
-                    Console.ReadLine();
                     break;
 
                 case ACTIVE:
