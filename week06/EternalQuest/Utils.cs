@@ -27,19 +27,19 @@ public static class Utils
     public static string NameToTitleCase(string name)
     {
         if (string.IsNullOrEmpty(name)) return name;
-        
+
         // Split the name by spaces
         string[] names = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        
+
         // Capitalize each name part
         for (int i = 0; i < names.Length; i++)
         {
             names[i] = ToTitleCase(names[i]);
         }
-        
+
         // Join them back with spaces
         return string.Join(" ", names);
-    }       
+    }
 
     /// <summary>
     /// Displays a numbered menu and prompts the user to select an option by number.
@@ -155,7 +155,7 @@ public static class Utils
         {
             day = Utils.ReadInt($"{dayCall} (1-{DateTime.DaysInMonth(year, month)}): ");
         } while (day < 1 || day > DateTime.DaysInMonth(year, month));
-        
+
         return new DateTime(year, month, day);
     }
 
@@ -216,5 +216,21 @@ public static class Utils
         } while (input == "");
 
         return input;
+    }
+    
+    /// <summary>
+    /// Builds a dynamic progress bar with customizable appearance and indicators.
+    /// </summary>
+    /// <param name="progress">Current progress value.</param>
+    /// <param name="barLength">Length of the progress bar (default: 20).</param>
+    /// <returns>A formatted progress bar string.</returns>
+    public static string BuildProgressBar(double progress, int barLength)
+    {
+        int filledLength = (int)(progress * barLength);
+
+        string filled = new string('█', filledLength);
+        string empty = new string('░', barLength - filledLength);
+
+        return filled + empty;
     }
 }
