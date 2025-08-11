@@ -768,7 +768,7 @@ class Profile
         DisplayCallings();
         DisplayOrdinances();
 
-        Console.WriteLine("Press enter to return to the menu!");
+        Console.WriteLine("\nPress enter to return to the menu!");
         Console.ReadLine();
     }
 
