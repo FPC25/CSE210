@@ -166,14 +166,17 @@ class QuestManager
     /// </summary>
     public void DisplayActiveQuests()
     {
+        string separator = new string('-', 25);
         foreach (KeyValuePair<string, List<Quest>> category in _player.GetAllQuests())
         {
-            Console.WriteLine($"Category: {category.Key}");
+            Console.WriteLine($"Category: {Utils.ToTitleCase(category.Key)}");
             foreach (Quest quest in category.Value)
             {
                 if (quest.GetActiveStatus())
                     Console.WriteLine(quest.GetDetailsString());
+                Console.WriteLine();
             }
+            Console.WriteLine(separator);
         }
         Console.WriteLine("\nPress Enter to return to the menu.");
         Console.ReadLine();
@@ -255,6 +258,7 @@ class QuestManager
         foreach (Quest quest in completedQuests)
         {
             Console.WriteLine(quest.GetDetailsString());
+            Console.WriteLine();
         }
         Console.WriteLine("\nPress Enter to return to the menu.");
         Console.ReadLine();
@@ -318,6 +322,10 @@ class QuestManager
         if (profileRequirements && VerifyQuestRequirements(requirements, completedQuests))
         {
             quest.SetActiveStatus(true);
+        }
+        else
+        {
+            quest.SetActiveStatus(false);
         }
     }
 
@@ -447,6 +455,81 @@ class QuestManager
 
                             case "Family Tree":
                                 condition = true;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Attend Seminary":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Attend Institute":
+                                condition = age > 17 && age < 36;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Tithe and Offerings":
+                                condition = _player.GetWorkStatus();
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Initial Vicarious Ordinances":
+                                condition = !_player.GetOrdinances().ContainsKey("initiatory and endowment") && today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Temple and Vicarious Work":
+                                condition = today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+                        }
+                    }
+                }
+                else if (quest.GetActiveStatus() && !completedQuests.Contains(quest))
+                {
+                    List<string> requirements = quest.GetDependencies();
+                    bool condition;
+                    int age = _player.GetAge();
+                    DateTime confirmationDate = _player.GetOrdinances()["confirmation"],
+                             today = DateTime.Today,
+                             recommendationDueDate = _player.GetRecommendation() ?? DateTime.MinValue;
+
+                    if (category.Key == SIMPLE)
+                    {
+                        switch (quest.GetName())
+                        {
+                            case "Sealing to Eternity":
+                                condition = _player.GetMaritalState() && today <= recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Renovate Temple Recommendation":
+                                condition = today > recommendationDueDate;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Strength of Youth":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "Activities (YM/YW/Combined)":
+                                condition = age > 13 && age < 18;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+
+                            case "YSAs Activities":
+                                condition = age > 17 && age < 36 && _player.GetMaritalState() == false;
+                                ActivateQuestCheck(condition, requirements, completedQuests, quest);
+                                break;
+                        }
+                    }
+                    else if (category.Key == ETERNAL)
+                    {
+                        switch (quest.GetName())
+                        {
+                            case "Serve in Your Calling":
+                                condition = _player.GetCalling().Count > 0;
                                 ActivateQuestCheck(condition, requirements, completedQuests, quest);
                                 break;
 
