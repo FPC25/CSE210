@@ -3,23 +3,25 @@ using System;
 class Running : Activity
 {
 
-    public Running(DateTime date, int length) : base(date, length)
-    {
+    private double _distance;
 
-    }
+    public Running(DateTime date, int length, double distance) : base(date, length)
+    {
+        _distance = distance;
+    }   
 
     public override double GetDistance()
     {
-        return 0.1f;
+        return _distance;
     }
 
     public override double GetSpeed()
     {
-        return 0.1f;
+        return 60 / GetPace();
     }
 
     public override double GetPace()
     {
-        return 0.1f;
+        return GetLengthInMinutes() / _distance;
     }
 }
