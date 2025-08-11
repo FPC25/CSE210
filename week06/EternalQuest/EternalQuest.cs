@@ -28,6 +28,11 @@ class EternalQuest : Quest
     private DateTime _initialDate;
 
     /// <summary>
+    /// The date when this quest was last completed.
+    /// </summary>
+    private DateTime _lastCompletedDate;
+
+    /// <summary>
     /// Constructs a new EternalQuest with the specified details and frequency.
     /// </summary>
     /// <param name="frequency">The frequency of the quest (daily, weekly, monthly).</param>
@@ -35,7 +40,20 @@ class EternalQuest : Quest
     {
         _frequency = frequency;
         _initialDate = initialDate;
+        _lastCompletedDate = DateTime.MinValue;
     }
+
+    /// <summary>
+    /// Gets the frequency of this eternal quest.
+    /// </summary>
+    /// <returns>The frequency (daily, weekly, monthly).</returns>
+    public string GetFrequency() => _frequency;
+
+    /// <summary>
+    /// Gets the date when this eternal quest was last completed.
+    /// </summary>
+    /// <returns>The last completion date, or DateTime.MinValue if never completed.</returns>
+    public DateTime GetLastCompletedDate() => _lastCompletedDate;
 
     /// <summary>
     /// Records completion for this quest and awards XP if the condition is met.
@@ -46,6 +64,7 @@ class EternalQuest : Quest
     {
         if (conditional)
         {
+            _lastCompletedDate = DateTime.Now;
             CompleteQuest();
             player.AddXP(CalculateXpPerQuestType(player.GetLevel()));
         }
@@ -70,6 +89,7 @@ class EternalQuest : Quest
         QuestStatus["type"] = ETERNAL;
         QuestStatus["frequency"] = _frequency;
         QuestStatus["initialDate"] = _initialDate.ToString();
+        QuestStatus["lastCompletedDate"] = _lastCompletedDate.ToString();
         QuestStatus["name"] = GetName();
         QuestStatus["description"] = GetDescription();
         QuestStatus["active"] = GetActiveStatus().ToString();
