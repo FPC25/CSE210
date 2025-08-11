@@ -162,24 +162,107 @@ class QuestManager
     }
 
     /// <summary>
-    /// Displays all active quests for the player, grouped by category.
+    /// Displays all active quests for the player, grouped by category with improved formatting.
     /// </summary>
     public void DisplayActiveQuests()
     {
-        string separator = new string('-', 25);
+        string mainSeparator = new string('=', 50);
+        string subSeparator = new string('-', 30);
+        bool hasActiveQuests = false;
+
+        Console.WriteLine(mainSeparator);
+        Console.WriteLine("                ACTIVE QUESTS");
+        Console.WriteLine(mainSeparator);
+
         foreach (KeyValuePair<string, List<Quest>> category in _player.GetAllQuests())
         {
-            Console.WriteLine($"Category: {Utils.ToTitleCase(category.Key)}");
-            foreach (Quest quest in category.Value)
+            List<Quest> activeQuestsInCategory = category.Value.Where(q => q.GetActiveStatus()).ToList();
+
+            if (activeQuestsInCategory.Count > 0)
             {
-                if (quest.GetActiveStatus())
-                    Console.WriteLine(quest.GetDetailsString());
+                hasActiveQuests = true;
+                Console.WriteLine($"\n📋 {Utils.ToTitleCase(category.Key)} Quests:");
+                Console.WriteLine(subSeparator);
+
+                // Group eternal quests by frequency for better display
+                if (category.Key == ETERNAL)
+                {
+                    var dailyQuests = activeQuestsInCategory.Where(q => q is EternalQuest eq && eq.GetFrequency() == "daily").ToList();
+                    var weeklyQuests = activeQuestsInCategory.Where(q => q is EternalQuest eq && eq.GetFrequency() == "weekly").ToList();
+                    var monthlyQuests = activeQuestsInCategory.Where(q => q is EternalQuest eq && eq.GetFrequency() == "monthly").ToList();
+
+                    DisplayEternalQuestGroup(dailyQuests, "🌅 Daily Quests", "⏰");
+                    DisplayEternalQuestGroup(weeklyQuests, "📅 Weekly Quests", "🗓️");
+                    DisplayEternalQuestGroup(monthlyQuests, "🗓️ Monthly Quests", "📆");
+                }
+                else
+                {
+                    // Display simple and checklist quests
+                    string icon = category.Key == SIMPLE ? "✅" : "📝";
+                    foreach (Quest quest in activeQuestsInCategory)
+                    {
+                        Console.WriteLine($"  {icon} {quest.GetName()}");
+                        Console.WriteLine($"     {quest.GetDescription()}");
+
+                        // Show progress for checklist quests
+                        if (quest is ChecklistQuest checklistQuest)
+                        {
+                            int current = checklistQuest.GetAmountOfTime();
+                            int total = checklistQuest.GetTotalSteps();
+                            double progress = current / total;
+                            string progressBar = Utils.BuildProgressBar(progress, 20);
+                            Console.WriteLine($"     Progress: [{progressBar}] {current}/{total}");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+        }
+
+        if (!hasActiveQuests)
+        {
+            Console.WriteLine("\n🎉 No active quests! You're all caught up!");
+            Console.WriteLine("   Consider creating a custom quest or checking back later.");
+        }
+
+        Console.WriteLine(mainSeparator);
+        Console.WriteLine("Press Enter to return to the menu.");
+        Console.ReadLine();
+    }
+
+    /// <summary>
+    /// Helper method to display eternal quest groups with specific formatting.
+    /// </summary>
+    /// <param name="quests">List of quests in the frequency group.</param>
+    /// <param name="groupTitle">Title for the group (e.g., "Daily Quests").</param>
+    /// <param name="icon">Icon to display next to each quest.</param>
+    private void DisplayEternalQuestGroup(List<Quest> quests, string groupTitle, string icon)
+    {
+        if (quests.Count > 0)
+        {
+            Console.WriteLine($"\n  {groupTitle}:");
+            foreach (Quest quest in quests)
+            {
+                Console.WriteLine($"    {icon} {quest.GetName()}");
+                Console.WriteLine($"       {quest.GetDescription()}");
+
+                // Show last completion for eternal quests
+                if (quest is EternalQuest eternalQuest)
+                {
+                    DateTime lastCompleted = eternalQuest.GetLastCompletedDate();
+                    if (lastCompleted != DateTime.MinValue)
+                    {
+                        string timeAgo = GetTimeAgoString(lastCompleted);
+                        Console.WriteLine($"       Last completed: {timeAgo}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"       Never completed");
+                    }
+                }
                 Console.WriteLine();
             }
-            Console.WriteLine(separator);
         }
-        Console.WriteLine("\nPress Enter to return to the menu.");
-        Console.ReadLine();
     }
 
     /// <summary>
@@ -245,23 +328,119 @@ class QuestManager
     }
 
     /// <summary>
-    /// Displays all completed quests for the player.
+    /// Displays all completed quests for the player with improved formatting.
     /// </summary>
     public void DisplayCompletedQuests()
     {
         List<Quest> completedQuests = GetCompletedQuests();
+        string mainSeparator = new string('=', 50);
+        string subSeparator = new string('-', 30);
+
+        Console.WriteLine(mainSeparator);
+        Console.WriteLine("              COMPLETED QUESTS");
+        Console.WriteLine(mainSeparator);
+
         if (completedQuests.Count == 0)
         {
-            Console.WriteLine("No completed quests yet.");
+            Console.WriteLine("\n🎯 No completed quests yet.");
+            Console.WriteLine("   Start working on your active quests to see them here!");
+        }
+        else
+        {
+            // Group by category
+            var questsByCategory = completedQuests.GroupBy(q =>
+            {
+                if (q is SimpleQuest) return SIMPLE;
+                if (q is ChecklistQuest) return CHECKLIST;
+                if (q is EternalQuest) return ETERNAL;
+                return "unknown";
+            });
+
+            foreach (var category in questsByCategory)
+            {
+                Console.WriteLine($"\n🏆 {Utils.ToTitleCase(category.Key)} Quests Completed:");
+                Console.WriteLine(subSeparator);
+
+                if (category.Key == ETERNAL)
+                {
+                    var dailyCompleted = category.Where(q => q is EternalQuest eq && eq.GetFrequency() == "daily").ToList();
+                    var weeklyCompleted = category.Where(q => q is EternalQuest eq && eq.GetFrequency() == "weekly").ToList();
+                    var monthlyCompleted = category.Where(q => q is EternalQuest eq && eq.GetFrequency() == "monthly").ToList();
+
+                    DisplayCompletedEternalGroup(dailyCompleted, "🌅 Daily Quests");
+                    DisplayCompletedEternalGroup(weeklyCompleted, "📅 Weekly Quests");
+                    DisplayCompletedEternalGroup(monthlyCompleted, "🗓️ Monthly Quests");
+                }
+                else
+                {
+                    string icon = category.Key == SIMPLE ? "✅" : "📝";
+                    foreach (Quest quest in category)
+                    {
+                        Console.WriteLine($"  {icon} {quest.GetName()}");
+                        Console.WriteLine($"     {quest.GetDescription()}");
+
+                        // Show final stats for checklist quests
+                        if (quest is ChecklistQuest checklistQuest)
+                        {
+                            int total = checklistQuest.GetTotalSteps();
+                            Console.WriteLine($"     ✨ Completed all {total} steps!");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+
+            Console.WriteLine($"\n🎊 Total Completed: {completedQuests.Count} quests");
         }
 
-        foreach (Quest quest in completedQuests)
-        {
-            Console.WriteLine(quest.GetDetailsString());
-            Console.WriteLine();
-        }
-        Console.WriteLine("\nPress Enter to return to the menu.");
+        Console.WriteLine(mainSeparator);
+        Console.WriteLine("Press Enter to return to the menu.");
         Console.ReadLine();
+    }
+
+    /// <summary>
+    /// Helper method to display completed eternal quest groups.
+    /// </summary>
+    /// <param name="quests">List of completed quests in the frequency group.</param>
+    /// <param name="groupTitle">Title for the group.</param>
+    private void DisplayCompletedEternalGroup(List<Quest> quests, string groupTitle)
+    {
+        if (quests.Count > 0)
+        {
+            Console.WriteLine($"\n  {groupTitle}:");
+            foreach (Quest quest in quests)
+            {
+                Console.WriteLine($"    ✨ {quest.GetName()}");
+                Console.WriteLine($"       {quest.GetDescription()}");
+
+                if (quest is EternalQuest eternalQuest)
+                {
+                    DateTime lastCompleted = eternalQuest.GetLastCompletedDate();
+                    if (lastCompleted != DateTime.MinValue)
+                    {
+                        Console.WriteLine($"       Last completed: {lastCompleted.ToString("MM/dd/yyyy")}");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets a human-readable "time ago" string for a given date.
+    /// </summary>
+    /// <param name="date">The date to compare.</param>
+    /// <returns>A string like "2 days ago" or "Yesterday".</returns>
+    private string GetTimeAgoString(DateTime date)
+    {
+        TimeSpan timeDiff = DateTime.Now - date;
+        
+        if (timeDiff.Days == 0) return "Today";
+        if (timeDiff.Days == 1) return "Yesterday";
+        if (timeDiff.Days < 7) return $"{timeDiff.Days} days ago";
+        if (timeDiff.Days < 30) return $"{timeDiff.Days / 7} weeks ago";
+        
+        return date.ToString("MM/dd/yyyy");
     }
 
     /// <summary>
