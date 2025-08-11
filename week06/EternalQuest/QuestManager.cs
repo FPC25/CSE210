@@ -373,7 +373,7 @@ public class QuestManager
                 }
                 else
                 {
-                    string icon = category.Key == SIMPLE ? "✅" : "📝";
+                    string icon = category.Key == SIMPLE ? "📝" : "✅";
                     foreach (Quest quest in category)
                     {
                         Console.WriteLine($"  {icon} {quest.GetName()}");
