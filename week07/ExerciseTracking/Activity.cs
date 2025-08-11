@@ -26,6 +26,6 @@ abstract class Activity
 
     public virtual string GetSummary()
     {
-        return $"{_date} - {_name} ({_lengthInMinutes} min): Distance: {GetDistance()} km, Speed: {GetSpeed()} km/h, Pace: {GetPace()} min per km";
+        return $"{_date.ToString(@"dd MMM yyyy")} - {_name} ({_lengthInMinutes} min): Distance: {GetDistance()} km, Speed: {GetSpeed()} km/h, Pace: {GetPace()} min per km";
     }
 }
