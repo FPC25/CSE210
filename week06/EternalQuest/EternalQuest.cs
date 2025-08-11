@@ -56,6 +56,12 @@ class EternalQuest : Quest
     public DateTime GetLastCompletedDate() => _lastCompletedDate;
 
     /// <summary>
+    /// Sets the last completed date (for loading saves).
+    /// </summary>
+    /// <param name="date">Date to set.</param>
+    public void SetLastCompletedDate(DateTime date) => _lastCompletedDate = date;
+
+    /// <summary>
     /// Records completion for this quest and awards XP if the condition is met.
     /// </summary>
     /// <param name="player">The player's profile, used for updating XP.</param>
