@@ -2,11 +2,14 @@ using System;
 
 class Cycling : Activity
 {
+    private const string NAME = "Cycling";
+    
     private double _speed;
 
     public Cycling(DateTime date, int length, double speed) : base(date, length)
     {
         _speed = speed;
+        SetName(NAME);
     }
 
     public override double GetDistance()

@@ -2,12 +2,14 @@ using System;
 
 class Running : Activity
 {
-
+    private const string NAME = "Running";
+    
     private double _distance;
 
     public Running(DateTime date, int length, double distance) : base(date, length)
     {
         _distance = distance;
+        SetName(NAME);
     }   
 
     public override double GetDistance()
