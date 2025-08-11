@@ -114,8 +114,7 @@ class Game
 
                 case LOAD:
                     Console.Clear();
-                    Console.WriteLine("Still in development");
-                    Console.ReadLine();
+                    LoadGameMenu();
                     break;
 
                 case QUIT:
@@ -158,7 +157,7 @@ class Game
                 case PROFILE:
                     _player.DisplayPlayerInfo();
                     break;
-                    
+
                 case CHANGE:
                     _player.ProfileMenu();
                     CheckAutoCompleteQuests(); // Check after profile updates
@@ -190,8 +189,8 @@ class Game
                     break;
 
                 case SAVE:
-                    Console.WriteLine("Still in development");
-                    Console.ReadLine();
+                    Console.Clear();
+                    SaveGameMenu();
                     break;
 
                 case QUIT:
@@ -199,7 +198,7 @@ class Game
             }
         } while (selectedOption != QUIT);
     }
-    
+
     /// <summary>
     /// Automatically checks and completes all auto-check quests based on current profile status.
     /// </summary>
@@ -213,4 +212,70 @@ class Game
             }
         }
     }
+
+    /// <summary>
+    /// Displays the load game menu and handles loading.
+    /// </summary>
+    private void LoadGameMenu()
+    {
+        List<string> saves = SaveLoadService.GetAvailableSaves();
+
+        if (saves.Count == 0)
+        {
+            Console.WriteLine("No save files found!");
+            Console.WriteLine("Press Enter to return to main menu.");
+            Console.ReadLine();
+            return;
+        }
+
+        Console.WriteLine("Select a save file to load:");
+        saves.Add("Cancel");
+
+        string selectedSave = Utils.DecisionString(saves);
+
+        if (selectedSave == "Cancel")
+        {
+            return;
+        }
+
+        var loadResult = SaveLoadService.LoadGame(selectedSave);
+        if (loadResult.HasValue)
+        {
+            _player = loadResult.Value.player;
+            _questManager = loadResult.Value.questManager;
+
+            Console.WriteLine("Press Enter to continue to game menu.");
+            Console.ReadLine();
+            GameMenu();
+        }
+        else
+        {
+            Console.WriteLine("Press Enter to return to main menu.");
+            Console.ReadLine();
+        }
+    }
+
+    /// <summary>
+    /// Displays the save game menu and handles saving.
+    /// </summary>
+    private void SaveGameMenu()
+    {
+        Console.WriteLine("Enter a name for your save file:");
+        string saveName = Utils.ValidStringInput("Save name: ");
+
+        bool success = SaveLoadService.SaveGame(_player, _questManager, saveName);
+
+        if (success)
+        {
+            Console.WriteLine("Game saved successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Failed to save game!");
+        }
+
+        Console.WriteLine("Press Enter to continue.");
+        Console.ReadLine();
+    }
+
 }
