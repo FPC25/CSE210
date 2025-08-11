@@ -845,6 +845,19 @@ public class Profile
     /// </summary>
     public Dictionary<string, object?> DataToSaveDict()
     {
+        // Converter quests para formato de dicionário
+        Dictionary<string, object> questsData = new Dictionary<string, object>();
+        foreach (var category in _quests)
+        {
+            var questList = new List<Dictionary<string, string>>();
+            foreach (Quest quest in category.Value)
+            {
+                questList.Add(quest.GetDictRepresentation());
+            }
+            questsData[category.Key] = questList;
+        }
+
+
         return new Dictionary<string, object?>
             {
                 { "Name", _name },
@@ -863,7 +876,7 @@ public class Profile
                 { "FamilySearchAccount", _familysearchLink },
                 { "Callings", _callings },
                 { "Ordinances", _ordinances },
-                { "Quests", _quests}
+                { "Quests", questsData}
             };
     }
 }
