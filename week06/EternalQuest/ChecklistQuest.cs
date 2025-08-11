@@ -41,6 +41,10 @@ class ChecklistQuest : Quest
         _total = total;
     }
 
+    public int GetAmountOfTime() => _steps;
+
+    public int GetTotalSteps() => _total;
+
     /// <summary>
     /// Returns a formatted string with quest details, progress, and completion status.
     /// </summary>
