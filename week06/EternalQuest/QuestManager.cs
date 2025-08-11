@@ -198,7 +198,7 @@ class QuestManager
                 else
                 {
                     // Display simple and checklist quests
-                    string icon = category.Key == SIMPLE ? "✅" : "📝";
+                    string icon = category.Key == SIMPLE ? "📝" : "✅";
                     foreach (Quest quest in activeQuestsInCategory)
                     {
                         Console.WriteLine($"  {icon} {quest.GetName()}");
