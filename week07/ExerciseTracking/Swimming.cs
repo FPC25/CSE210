@@ -2,24 +2,26 @@ using System;
 
 class Swimming : Activity
 {
+    private const int POOLLENGTH = 50;
 
-    public Swimming(DateTime date, int length) : base(date, length)
+    private int _numberOfLaps;
+    public Swimming(DateTime date, int length, int numberOfLaps) : base(date, length)
     {
-
+        _numberOfLaps = numberOfLaps;
     }
 
     public override double GetDistance()
     {
-        return 0.1f;
-    }
-
-    public override double GetSpeed()
-    {
-        return 0.1f;
+        return _numberOfLaps * POOLLENGTH / 1000;
     }
 
     public override double GetPace()
     {
-        return 0.1f;
+        return GetLengthInMinutes() / GetDistance();
+    }
+
+    public override double GetSpeed()
+    {
+        return  60 / GetPace();
     }
 }
