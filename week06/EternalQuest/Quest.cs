@@ -5,7 +5,7 @@ using System;
 /// It manages quest details, completion status, activity status, and XP management.
 /// Derived classes must implement specific quest logic, including how events are recorded, completion is determined, and XP is calculated.
 /// </summary>
-abstract class Quest
+public abstract class Quest
 {
     /// <summary>
     /// Constant used for XP calculation.
@@ -93,6 +93,11 @@ abstract class Quest
         _active = false;
         _isCompleted = false;
     }
+
+    /// <summary>
+    /// Forces the quest to be completed (for loading saves).
+    /// </summary>
+    public void ForceComplete() => CompleteQuest();
 
     /// <summary>
     /// Sets the amount of XP awarded for completing this quest.

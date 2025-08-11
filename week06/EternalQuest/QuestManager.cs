@@ -9,7 +9,7 @@ using System.Text.Json;
 /// and provides methods to display active and completed quests. It also verifies quest requirements and handles
 /// quest activation logic based on both dependencies and profile-specific conditions.
 /// </summary>
-class QuestManager
+public class QuestManager
 {
     // --- File Paths for Quest Data ---
     private const string

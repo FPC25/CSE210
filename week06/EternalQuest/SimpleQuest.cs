@@ -5,7 +5,7 @@ using System;
 /// It inherits from the abstract Quest class and implements logic for auto-check and manual completion.
 /// SimpleQuest can be automatically completed based on profile status or manually marked as complete by the user.
 /// </summary>
-class SimpleQuest : Quest
+public class SimpleQuest : Quest
 {
     /// <summary>
     /// The maximum XP multiplier for a simple quest.

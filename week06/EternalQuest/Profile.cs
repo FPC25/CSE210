@@ -8,7 +8,7 @@ using System;
 /// The class provides methods for updating profile data, managing quests, handling XP and level progression,
 /// and displaying player information. It also supports logic for auto-completing quests based on profile status.
 /// </summary>
-class Profile
+public class Profile
 {
     private const string SIMPLE = "simple";
 
@@ -195,6 +195,73 @@ class Profile
     /// Gets the player's current level.
     /// </summary>
     public int GetLevel() => _level;
+
+    /// <summary>
+    /// Sets the player's level (for loading saves).
+    /// </summary>
+    /// <param name="level">The level to set.</param>
+    public void SetLevel(int level) => _level = level;
+
+    /// <summary>
+    /// Sets the player's XP (for loading saves).
+    /// </summary>
+    /// <param name="xp">The XP to set.</param>
+    public void SetXP(int xp) => _currentXP = xp;
+
+    /// <summary>
+    /// Sets married status (for loading saves).
+    /// </summary>
+    /// <param name="married">Married status.</param>
+    public void SetMarried(bool married) => _married = married;
+
+    /// <summary>
+    /// Sets working status (for loading saves).
+    /// </summary>
+    /// <param name="working">Working status.</param>
+    public void SetWorking(bool working) => _working = working;
+
+    /// <summary>
+    /// Sets patriarchal blessing status (for loading saves).
+    /// </summary>
+    /// <param name="blessing">Patriarchal blessing status.</param>
+    public void SetPatriarchalBlessing(bool blessing) => _patriarchalBlessing = blessing;
+
+    /// <summary>
+    /// Sets sacramental time (for loading saves).
+    /// </summary>
+    /// <param name="time">Sacramental time.</param>
+    public void SetSacramentalTime(TimeSpan time) => _sacramentalTime = time;
+
+    /// <summary>
+    /// Sets recommendation due date (for loading saves).
+    /// </summary>
+    /// <param name="date">Recommendation due date.</param>
+    public void SetRecommendationDueDate(DateTime date) => _recommendationDueDate = date;
+
+
+    /// <summary>
+    /// Sets priesthood (for loading saves).
+    /// </summary>
+    /// <param name="priesthood">Priesthood office.</param>
+    public void SetPriesthood(string priesthood) => _priesthood = priesthood;
+
+    /// <summary>
+    /// Sets LDS account (for loading saves).
+    /// </summary>
+    /// <param name="account">LDS account.</param>
+    public void SetLdsAccount(string account) => _ldsAccount = account;
+
+    /// <summary>
+    /// Sets FamilySearch link (for loading saves).
+    /// </summary>
+    /// <param name="link">FamilySearch link.</param>
+    public void SetFamilysearchLink(string link) => _familysearchLink = link;
+
+    /// <summary>
+    /// Adds a calling directly (for loading saves).
+    /// </summary>
+    /// <param name="calling">Calling to add.</param>
+    public void AddCallingDirect(string calling) => _callings.Add(calling);
 
     /// <summary>
     /// Checks if the player should level up and updates level/Xp accordingly.

@@ -7,7 +7,7 @@ using System;
 /// The class provides methods for recording progress, checking completion, displaying quest details,
 /// and serializing quest status for saving or display.
 /// </summary>
-class ChecklistQuest : Quest
+public class ChecklistQuest : Quest
 {
     /// <summary>
     /// XP multiplier for each step and for the bonus when the quest is completed.

@@ -8,7 +8,7 @@ using System;
 /// The class provides methods for recording completion, checking status, displaying quest details,
 /// and serializing quest status for saving or display.
 /// </summary>
-class EternalQuest : Quest
+public class EternalQuest : Quest
 {
     /// <summary>
     /// XP multipliers for daily, weekly, and monthly eternal quests.
