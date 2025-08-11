@@ -22,7 +22,7 @@ public class QuestManager
         WEEKLYPATH = "./Quests/WeeklyEternalQuests.json",
         MONTHLYPATH = "./Quests/MonthlyEternalQuests.json";
 
-    private const int MAXREP = 12;
+    private const int MAXREP = 10;
 
     // --- Reference to Player Profile ---
     private Profile _player;
@@ -82,7 +82,7 @@ public class QuestManager
                 case CHECKLIST:
                     string initial = q.GetProperty("first_part_description").GetString();
                     string final = q.GetProperty("second_part_description").GetString();
-                    int total = q.TryGetProperty("total", out var totalProp) ? CalculateTotalSteps(_player.GetLevel()) : 1;
+                    int total = q.TryGetProperty("total", out var totalProp) ? totalProp.GetInt32() : CalculateTotalSteps(_player.GetLevel());;
                     int steps = q.TryGetProperty("steps", out var stepsProp) ? stepsProp.GetInt32() : 0;
                     description = $"{initial} {total} {final}";
                     quests.Add(new ChecklistQuest(name, description, active, xpNextLevel, steps, total, requirements));
@@ -104,13 +104,11 @@ public class QuestManager
     /// The value grows gradually from 3 to a maximum of around 15.
     /// </summary>
     /// <param name="playerLevel">The current player level.</param>
-    /// <returns>Number of steps required (3-15 range).</returns>
+    /// <returns>Number of steps required (3-Max range).</returns>
     private int CalculateTotalSteps(int playerLevel)
     {
-        // Fórmula: 3 + (level * 0.6) com cap de 15
         int calculatedSteps = 3 + (int)(playerLevel * 0.6);
 
-        // Garante que não passe de 15
         return Math.Min(calculatedSteps, MAXREP);
     }
 
@@ -198,7 +196,7 @@ public class QuestManager
                 else
                 {
                     // Display simple and checklist quests
-                    string icon = category.Key == SIMPLE ? "✅": "📝";
+                    string icon = "📝";
                     foreach (Quest quest in activeQuestsInCategory)
                     {
                         Console.WriteLine($"  {icon} {quest.GetName()}");
@@ -373,7 +371,7 @@ public class QuestManager
                 }
                 else
                 {
-                    string icon = category.Key == SIMPLE ? "✅" : "📝";
+                    string icon = "✅";
                     foreach (Quest quest in category)
                     {
                         Console.WriteLine($"  {icon} {quest.GetName()}");
