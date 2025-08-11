@@ -2,24 +2,25 @@ using System;
 
 class Cycling : Activity
 {
+    private double _speed;
 
-    public Cycling(DateTime date, int length) : base(date, length)
+    public Cycling(DateTime date, int length, double speed) : base(date, length)
     {
-
+        _speed = speed;
     }
 
     public override double GetDistance()
     {
-        return 0.1f;
+        return _speed * GetLengthInMinutes() / 60;
     }
 
     public override double GetSpeed()
     {
-        return 0.1f;
+        return _speed;
     }
 
     public override double GetPace()
     {
-        return 0.1f;
+        return 60 / _speed;
     }
 }
